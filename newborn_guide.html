@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🍼 신생아 성장 가이드</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; background: #f8f9ff; color: #222; font-size: 14px; }
+  .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; text-align: center; }
+  .header h1 { font-size: 20px; font-weight: 700; }
+  .header p { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+  .badge-row { display: flex; gap: 8px; justify-content: center; margin-top: 12px; flex-wrap: wrap; }
+  .badge { background: rgba(255,255,255,0.2); border-radius: 20px; padding: 4px 12px; font-size: 12px; }
+  .tabs { display: flex; background: #fff; border-bottom: 2px solid #eee; overflow-x: auto; position: sticky; top: 0; z-index: 10; }
+  .tab { flex: none; padding: 12px 16px; cursor: pointer; font-size: 13px; color: #888; white-space: nowrap; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+  .tab.active { color: #667eea; border-bottom-color: #667eea; font-weight: 600; }
+  .content { display: none; padding: 16px; max-width: 700px; margin: 0 auto; }
+  .content.active { display: block; }
+
+  .period { background: white; border-radius: 12px; margin-bottom: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+  .period-header { padding: 12px 16px; display: flex; align-items: center; gap: 10px; cursor: pointer; }
+  .period-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .period-title { font-weight: 700; font-size: 15px; }
+  .period-sub { font-size: 12px; color: #888; margin-left: auto; }
+  .period-body { padding: 0 16px 14px; display: none; }
+  .period-body.open { display: block; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 10px; }
+  .info-card { background: #f8f9ff; border-radius: 8px; padding: 10px; }
+  .info-card .label { font-size: 11px; color: #888; margin-bottom: 3px; }
+  .info-card .val { font-size: 13px; font-weight: 600; color: #333; }
+  .tag { display: inline-block; background: #ede9fe; color: #6d28d9; border-radius: 12px; padding: 2px 8px; font-size: 11px; margin: 2px; }
+  .tag.warn { background: #fef3c7; color: #d97706; }
+  .tag.good { background: #d1fae5; color: #065f46; }
+  .tag.red { background: #fee2e2; color: #991b1b; }
+  .note { background: #fffbeb; border-left: 3px solid #f59e0b; padding: 8px 12px; border-radius: 0 8px 8px 0; font-size: 12px; color: #78350f; margin-top: 10px; line-height: 1.7; }
+  .note.blue { background: #eff6ff; border-color: #3b82f6; color: #1e40af; }
+  .note.green { background: #f0fdf4; border-color: #22c55e; color: #14532d; }
+
+  .chart-wrap { background: white; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 14px; }
+  .chart-title { font-weight: 700; font-size: 14px; margin-bottom: 12px; }
+  .bar-row { display: flex; align-items: center; margin-bottom: 8px; gap: 8px; }
+  .bar-label { width: 60px; font-size: 12px; color: #666; text-align: right; flex-shrink: 0; }
+  .bar-track { flex: 1; background: #f0f0f5; border-radius: 6px; height: 22px; position: relative; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; padding-left: 8px; font-size: 11px; color: white; font-weight: 600; }
+
+  .today-card { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; }
+  .today-card h3 { font-size: 15px; font-weight: 700; }
+  .today-card p { font-size: 12px; opacity: 0.85; margin-top: 4px; }
+  .today-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+  .today-item { background: rgba(255,255,255,0.15); border-radius: 8px; padding: 8px; }
+  .today-item .tl { font-size: 10px; opacity: 0.8; }
+  .today-item .tv { font-size: 13px; font-weight: 700; }
+
+  .section-title { font-weight: 700; font-size: 14px; margin: 14px 0 8px; color: #444; }
+  .cry-row { background: white; border-radius: 10px; padding: 12px; margin-bottom: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); line-height: 1.6; }
+  .cry-row h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .cry-row p { font-size: 12px; color: #555; }
+
+  .emergency { background: #fff1f2; border: 1px solid #fda4af; border-radius: 10px; padding: 12px; margin-top: 10px; }
+  .emergency h4 { color: #be123c; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+  .emergency li { font-size: 12px; color: #9f1239; margin-left: 16px; margin-bottom: 3px; line-height: 1.6; }
+
+  table { width: 100%; font-size: 12px; border-collapse: collapse; }
+  th { padding: 8px; text-align: left; background: #f3f4ff; }
+  td { padding: 8px; border-bottom: 1px solid #eee; }
+  tr:nth-child(even) td { background: #fafafe; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🍼 신생아 성장 가이드</h1>
+  <p>우리 아이 맞춤 월령별 발달 로드맵</p>
+  <div class="badge-row">
+    <span class="badge">👦 남아</span>
+    <span class="badge">📅 2026.05.01 출생</span>
+    <span class="badge">⚖️ 3.7kg 출생</span>
+    <span class="badge">✅ 4일차 체중 회복</span>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('today', this)">📍 지금</div>
+  <div class="tab" onclick="showTab('month1', this)">0~1개월</div>
+  <div class="tab" onclick="showTab('month2', this)">2~3개월</div>
+  <div class="tab" onclick="showTab('month4', this)">4~6개월</div>
+  <div class="tab" onclick="showTab('month7', this)">7~12개월</div>
+  <div class="tab" onclick="showTab('cry', this)">울음 해독</div>
+  <div class="tab" onclick="showTab('growth', this)">성장 차트</div>
+</div>
+
+<!-- 지금 탭 -->
+<div id="today" class="content active">
+  <div class="today-card">
+    <h3>📍 현재 — 생후 5일 (1주차)</h3>
+    <p>출생 후 첫 번째 주. 체중을 이미 회복했으니 아주 순조로운 시작! 🎉</p>
+    <div class="today-grid">
+      <div class="today-item"><div class="tl">예상 체중</div><div class="tv">3.7~3.8kg</div></div>
+      <div class="today-item"><div class="tl">수유 간격</div><div class="tv">2~3시간마다</div></div>
+      <div class="today-item"><div class="tl">1회 수유량</div><div class="tv">60~90ml</div></div>
+      <div class="today-item"><div class="tl">수면</div><div class="tv">16~18시간/일</div></div>
+    </div>
+  </div>
+  <div class="note green">
+    ✅ <b>4일차 체중 회복은 훌륭한 신호!</b> 보통 신생아는 7~10일 내 회복하는데, 4일만에 회복했다는 건 수유가 잘 되고 있다는 뜻.
+  </div>
+  <div class="section-title">지금 이 시기 주요 특징</div>
+  <div class="grid2">
+    <div class="info-card"><div class="label">⏰ 각성 패턴</div><div class="val">하루 16~18시간 수면, 깨어있는 시간 1~2시간</div></div>
+    <div class="info-card"><div class="label">🍼 배변</div><div class="val">태변(검정) → 노란 겨자색으로 변화 중</div></div>
+    <div class="info-card"><div class="label">👁️ 시야</div><div class="val">20~30cm 거리만 보임 (엄마 얼굴 거리)</div></div>
+    <div class="info-card"><div class="label">🫁 호흡</div><div class="val">불규칙해 보여도 정상. 40~60회/분</div></div>
+  </div>
+  <div class="section-title">이번 주 할 일</div>
+  <div class="note blue">
+    📋 <b>지금 당장 챙길 것들</b><br>
+    • 황달 수치 모니터링 (보통 3~5일 피크)<br>
+    • 배꼽 소독 — 마르고 떨어질 때까지 (2~3주)<br>
+    • 신생아 청각·대사이상 검사 (병원에서)<br>
+    • 비타민D 보충 시작 (400IU/일, 모유수유 시 필수)
+  </div>
+</div>
+
+<!-- 0~1개월 -->
+<div id="month1" class="content">
+  <div class="period" style="border-left: 4px solid #667eea;">
+    <div class="period-header" onclick="togglePeriod(this)">
+      <div class="period-dot" style="background:#667eea"></div>
+      <div><div class="period-title">1~2주 (신생아 초기)</div><div style="font-size:12px;color:#888;">5/1 ~ 5/14</div></div>
+      <div class="period-sub">▼ 탭하여 펼치기</div>
+    </div>
+    <div class="period-body">
+      <div class="grid3">
+        <div class="info-card"><div class="label">💤 수면</div><div class="val">16~18시간</div></div>
+        <div class="info-card"><div class="label">🍼 수유횟수</div><div class="val">8~12회/일</div></div>
+        <div class="info-card"><div class="label">💩 배변</div><div class="val">3~8회/일</div></div>
+      </div>
+      <div class="grid2" style="margin-top:8px;">
+        <div class="info-card"><div class="label">📏 성장속도</div><div class="val">+0.5~1cm/주</div></div>
+        <div class="info-card"><div class="label">⚖️ 체중증가</div><div class="val">+150~200g/주</div></div>
+      </div>
+      <div class="note" style="margin-top:10px;">
+        ⚠️ 이 시기 가장 힘든 것: <b>밤낮 구분 없는 수유.</b> 생체시계가 아직 없음. 2~3시간마다 무조건 깨움.
+      </div>
+      <div style="margin-top:8px;">
+        <span class="tag">배꼽 소독</span>
+        <span class="tag">황달 모니터</span>
+        <span class="tag good">체중 회복 완료 ✅</span>
+        <span class="tag">신생아 검사</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="period" style="border-left: 4px solid #7c3aed;">
+    <div class="period-header" onclick="togglePeriod(this)">
+      <div class="period-dot" style="background:#7c3aed"></div>
+      <div><div class="period-title">2~4주 (첫 번째 성장급등)</div><div style="font-size:12px;color:#888;">5/14 ~ 5/29</div></div>
+      <div class="period-sub">▼ 탭하여 펼치기</div>
+    </div>
+    <div class="period-body">
+      <div class="note" style="margin-top:0;">
+        🔥 <b>첫 번째 성장급등기 (2~3주)!</b> 갑자기 더 자주 먹으려 하고, 보채는 시간 증가. 젖이 부족한 게 아니라 성장하는 것.
+      </div>
+      <div class="grid3" style="margin-top:10px;">
+        <div class="info-card"><div class="label">💤 수면</div><div class="val">15~17시간</div></div>
+        <div class="info-card"><div class="label">🍼 수유</div><div class="val">10~12회/일</div></div>
+        <div class="info-card"><div class="label">😊 발달</div><div class="val">반사적 미소 시작</div></div>
+      </div>
+      <div style="margin-top:8px;">
+        <span class="tag warn">성장급등 주의</span>
+        <span class="tag">소화불량↑</span>
+        <span class="tag">젖량 증가 필요</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="period" style="border-left: 4px solid #9333ea;">
+    <div class="period-header" onclick="togglePeriod(this)">
+      <div class="period-dot" style="background:#9333ea"></div>
+      <div><div class="period-title">1개월 건강검진</div><div style="font-size:12px;color:#888;">6/1 ~</div></div>
+      <div class="period-sub">▼ 탭하여 펼치기</div>
+    </div>
+    <div class="period-body">
+      <div class="grid2">
+        <div class="info-card"><div class="label">예상 체중</div><div class="val">약 4.5~5.0kg</div></div>
+        <div class="info-card"><div class="label">예상 키</div><div class="val">약 53~55cm</div></div>
+      </div>
+      <div class="grid3" style="margin-top:8px;">
+        <div class="info-card"><div class="label">💤 수면</div><div class="val">14~16시간</div></div>
+        <div class="info-card"><div class="label">🍼 수유</div><div class="val">7~9회/일</div></div>
+        <div class="info-card"><div class="label">😊 발달</div><div class="val">얼굴 따라보기</div></div>
+      </div>
+      <div class="note blue" style="margin-top:10px;">
+        💉 <b>1개월 건강검진</b> (소아과) — 발육 평가, B형간염 2차 접종
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2~3개월 -->
+<div id="month2" class="content">
+  <div class="period" style="border-left: 4px solid #ec4899;">
+    <div class="period-header" onclick="togglePeriod(this)">
+      <div class="period-dot" style="background:#ec4899"></div>
+      <div><div class="period-title">2개월 (7월 초)</div><div style="font-size:12px;color:#888;">약 7/1 ~</div></div>
+      <div class="period-sub">▼ 탭하여 펼치기</div>
+    </div>
+    <div class="period-body">
+      <div class="grid2">
+        <div class="info-card"><div class="label">예상 체중</div><div class="val">약 5.0~5.6kg</div></div>
+        <div class="info-card"><div class="label">예상 키</div><div class="val">약 56~58cm</div></div>
+      </div>
+      <div class="grid3" style="margin-top:8px;">
+        <div class="info-card"><div class="label">💤 수면</div><div class="val">14~16시간</div></div>
+        <div class="info-card"><div class="label">🍼 수유</div><div class="val">6~8회/일</div></div>
+        <div class="info-card"><div class="label">🌙 밤수면</div><div class="val">4~5시간 연속</div></div>
+      </div>
+      <div class="note green" style="margin-top:10px;">
+        😊 <b>사회적 미소 시작!</b> 엄마 아빠 얼굴 보고 방긋. 눈 맞춤 늘어남. 소리 반응↑
+      </div>
+      <div style="margin-top:8px;">
+        <span class="tag warn">6주 성장급등</span>
+        <span class="tag good">사회적 미소</span>
+        <span class="tag">옹알이 시작</span>
+      </div>
+      <div class="note blue" style="margin-top:8px;">
+        💉 <b>2개월 접종:</b> DTaP, 폴리오, b형헤모필루스, 폐렴구균, 로타바이러스
+      </div>
+    </div>
+  </div>
+
+  <div class="period" style="border-left: 4px solid #f43f5e;">
+    <div class="period-header" onclick="togglePeriod(this)">
+      <div class="period-dot" style="background:#f43f5e"></div>
+      <div><div class="period-title">3개월 (8월 초)</div><div style="font-size:12px;color:#888;">약 8/1 ~</div></div>
+      <div class="period-sub">▼ 탭하여 펼치기</div>
+    </div>
+    <div class="period-body">
+      <div class="grid2">
+        <div class="info-card"><div class="label">예상 체중</div><div class="val">약 6.0~6.5kg</div></div>
+        <div class="info-card"><div class="label">예상 키</div><div class="val">약 59~61cm</div></div>
+      </div>
+      <div class="grid3" style="margin-top:8px;">
+        <div class="info-card"><div class="label">💤 수면</div><div class="val">13~15시간</div></div>
+        <div class="info-card"><div class="label">🌙 밤수면</div><div class="val">5~6시간 연속</div></div>
+        <div class="info-card"><div class="label">🍼 수유</div><div class="val">5~6회/일</div></div>
+      </div>
+      <div class="note" style="margin-top:10px;">
+        ⚠️ <b>3~4개월 수면퇴행 주의!</b> 잘 자던 아이가 갑자기 자주 깸. 발달 급등 때문. 1~3주 지나면 회복.
+      </div>
+      <div style="margin-top:8px;">
+        <span class="tag good">목 가누기 시작</span>
+        <span class="tag good">손으로 물건 잡기</span>
+        <span class="tag warn">3~4개월 수면퇴행</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4~6개월 -->
+<div id="month4" class="content">
+  <div class="period" style="border-left: 4px solid #f97316;">
+    <div class="period-header" onclick="togglePeriod(this)">
+      <div class="period-dot" style="background:#f97316"></div>
+      <div><div class="period-title">4개월 (9월 초)</div></div>
+      <div class="period-sub">▼ 탭하여 펼치기</div>
+    </div>
+    <div class="period-body">
+      <div class="grid2">
+        <div class="info-card"><div class="label">예상 체중</div><div class="val">약 6.7~7.0kg</div></div>
+        <div class="info-card"><div class="label">예상 키</div><div class="val">약 62~64cm</div></div>
+      </div>
+      <div class="note green" style="margin-top:10px;">
+        🎯 <b>출생 체중의 약 2배</b> 도달하는 시기! 뒤집기 준비. 수면 패턴 규칙적으로 변화 시작.
+      </div>
+      <div style="margin-top:8px;">
+        <span class="tag good">뒤집기 시작</span>
+        <span class="tag good">소리 내며 웃기</span>
+        <span class="tag warn">4개월 수면퇴행</span>
+        <span class="tag">이앓이 준비</span>
+      </div>
+      <div class="note blue" style="margin-top:8px;">
+        💉 <b>4개월 접종:</b> DTaP, 폴리오, b형헤모필루스, 폐렴구균, 로타바이러스 2차
+      </div>
+    </div>
+  </div>
+
+  <div class="period" style="border-left: 4px solid #eab308;">
+    <div class="period-header" onclick="togglePeriod(this)">
+      <div class="period-dot" style="background:#eab308"></div>
+      <div><div class="period-title">6개월 — 이유식 시작! (11월 초)</div></div>
+      <div class="period-sub">▼ 탭하여 펼치기</div>
+    </div>
+    <div class="period-body">
+      <div class="grid2">
+        <div class="info-card"><div class="label">예상 체중</div><div class="val">약 7.5~8.2kg</div></div>
+        <div class="info-card"><div class="label">예상 키</div><div class="val">약 65~68cm</div></div>
+      </div>
+      <div class="note" style="margin-top:10px;">
+        🥣 <b>이유식 시작 시기!</b> 6개월부터 철분 포함 이유식 권장. 쌀미음부터 시작.
+      </div>
+      <div style="margin-top:8px;">
+        <span class="tag good">앉기 시도</span>
+        <span class="tag good">이유식 시작</span>
+        <span class="tag good">밤에 6~8시간 연속 수면</span>
+        <span class="tag warn">분리불안 시작</span>
+      </div>
+      <div class="note blue" style="margin-top:8px;">
+        💉 <b>6개월:</b> DTaP 3차, 폴리오, 독감(10월부터), B형간염 3차
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 7~12개월 -->
+<div id="month7" class="content">
+  <div class="period" style="border-left: 4px solid #22c55e;">
+    <div class="period-header" onclick="togglePeriod(this)">
+      <div class="period-dot" style="background:#22c55e"></div>
+      <div><div class="period-title">7~9개월</div><div style="font-size:12px;color:#888;">2026년 12월 ~ 2027년 2월</div></div>
+      <div class="period-sub">▼ 탭하여 펼치기</div>
+    </div>
+    <div class="period-body">
+      <div class="grid2">
+        <div class="info-card"><div class="label">예상 체중</div><div class="val">약 8.5~9.5kg</div></div>
+        <div class="info-card"><div class="label">예상 키</div><div class="val">약 68~73cm</div></div>
+      </div>
+      <div style="margin-top:8px;">
+        <span class="tag good">기어다니기</span>
+        <span class="tag good">혼자 앉기</span>
+        <span class="tag good">잡고 서기</span>
+        <span class="tag warn">분리불안 피크</span>
+        <span class="tag">첫 이 나기</span>
+        <span class="tag">손가락 음식 시도</span>
+      </div>
+      <div class="note" style="margin-top:10px;">
+        ⚠️ <b>낯가림 + 분리불안 최고조.</b> 엄마아빠만 찾고 낯선 사람 보면 울음. 정상 발달 신호!
+      </div>
+    </div>
+  </div>
+
+  <div class="period" style="border-left: 4px solid #06b6d4;">
+    <div class="period-header" onclick="togglePeriod(this)">
+      <div class="period-dot" style="background:#06b6d4"></div>
+      <div><div class="period-title">10~12개월 — 돌잔치 준비!</div><div style="font-size:12px;color:#888;">2027년 3월 ~ 5월</div></div>
+      <div class="period-sub">▼ 탭하여 펼치기</div>
+    </div>
+    <div class="period-body">
+      <div class="grid2">
+        <div class="info-card"><div class="label">예상 체중</div><div class="val">약 9.5~10.5kg</div></div>
+        <div class="info-card"><div class="label">예상 키</div><div class="val">약 73~78cm</div></div>
+      </div>
+      <div class="note green" style="margin-top:10px;">
+        🎂 <b>생후 1년:</b> 출생 체중의 약 3배, 키는 약 1.5배. 첫 걸음마 시도. 첫 단어 (엄마/아빠).
+      </div>
+      <div style="margin-top:8px;">
+        <span class="tag good">첫 걸음마</span>
+        <span class="tag good">첫 단어</span>
+        <span class="tag good">컵으로 마시기</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 울음 해독 -->
+<div id="cry" class="content">
+  <div class="section-title">😭 울음 종류별 해독 가이드</div>
+
+  <div class="cry-row">
+    <h4>🍼 배고픔 (가장 흔함, 60~70%)</h4>
+    <p>리듬감 있는 "응애응애", 입 오물거림, 손을 입으로 가져감, 고개 돌리며 젖 찾기(루팅 반사). 마지막 수유 후 2~3시간 경과.</p>
+  </div>
+  <div class="cry-row">
+    <h4>💩 기저귀 (젖거나 더럽거나)</h4>
+    <p>갑작스럽고 짧은 울음. 기저귀 확인하면 바로 해결. 신생아는 대변 후 피부 자극으로 울기도 함.</p>
+  </div>
+  <div class="cry-row">
+    <h4>😴 졸린데 못 자는 울음</h4>
+    <p>칭얼거리는 약한 울음. 눈 비비기, 하품, 멍한 표정. 이때 바로 재워야 함 — 늦으면 오히려 흥분해서 더 못 잠.</p>
+  </div>
+  <div class="cry-row">
+    <h4>🤗 안아달라는 울음</h4>
+    <p>안으면 바로 그침. 내려놓으면 다시 울기 시작. "안아주면 버릇 든다" — 신생아는 버릇 없음, 마음껏 안아줘도 됨!</p>
+  </div>
+  <div class="cry-row">
+    <h4>😣 가스 / 영아산통</h4>
+    <p>고음의 격렬한 울음. 다리를 배 쪽으로 당김. 배가 단단함. 특히 <b>저녁 6시~10시</b> 집중 (황혼 울음). 2주~3개월 피크.</p>
+  </div>
+  <div class="cry-row">
+    <h4>🌡️ 아프거나 불편한 울음</h4>
+    <p>평소와 다른 고음의 날카로운 울음. 달래도 계속됨. 열, 구토, 수유 거부 동반 시 병원.</p>
+  </div>
+
+  <div class="note" style="margin-top:0; margin-bottom: 10px;">
+    🕐 <b>저녁 황혼 울음 (Purple Crying):</b> 생후 2주~3개월, 특히 저녁에 이유 없이 우는 시기. 모든 아기가 겪음. 평균 하루 2~3시간. 정상이고, 반드시 끝이 있음.
+  </div>
+
+  <div class="emergency">
+    <h4>🚨 즉시 병원 가야 하는 상황</h4>
+    <ul>
+      <li>38도 이상 발열 (특히 생후 3개월 미만)</li>
+      <li>달래도 2시간 이상 계속 우는 경우</li>
+      <li>울음소리가 날카롭고 비명 같을 때</li>
+      <li>수유 거부가 2회 이상 지속</li>
+      <li>무기력하게 잠만 자고 잘 깨지 않을 때</li>
+      <li>배가 딱딱하고 구토 동반</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 성장 차트 -->
+<div id="growth" class="content">
+  <div class="chart-wrap">
+    <div class="chart-title">⚖️ 남아 체중 예상치 (WHO 50백분위수 기준)</div>
+    <div class="bar-row"><div class="bar-label">출생</div><div class="bar-track"><div class="bar-fill" style="width:37%;background:linear-gradient(90deg,#667eea,#764ba2)">3.7kg ✅</div></div></div>
+    <div class="bar-row"><div class="bar-label">1개월</div><div class="bar-track"><div class="bar-fill" style="width:47%;background:linear-gradient(90deg,#667eea,#764ba2)">~4.7kg</div></div></div>
+    <div class="bar-row"><div class="bar-label">2개월</div><div class="bar-track"><div class="bar-fill" style="width:55%;background:linear-gradient(90deg,#667eea,#764ba2)">~5.5kg</div></div></div>
+    <div class="bar-row"><div class="bar-label">4개월</div><div class="bar-track"><div class="bar-fill" style="width:68%;background:linear-gradient(90deg,#667eea,#764ba2)">~6.8kg</div></div></div>
+    <div class="bar-row"><div class="bar-label">6개월</div><div class="bar-track"><div class="bar-fill" style="width:78%;background:linear-gradient(90deg,#667eea,#764ba2)">~7.8kg</div></div></div>
+    <div class="bar-row"><div class="bar-label">9개월</div><div class="bar-track"><div class="bar-fill" style="width:88%;background:linear-gradient(90deg,#667eea,#764ba2)">~8.9kg</div></div></div>
+    <div class="bar-row"><div class="bar-label">12개월</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#22c55e,#16a34a)">~10.5kg 🎂</div></div></div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">📏 키 예상치 (남아 50백분위수)</div>
+    <div class="bar-row"><div class="bar-label">출생</div><div class="bar-track"><div class="bar-fill" style="width:42%;background:linear-gradient(90deg,#ec4899,#be185d)">50.5cm</div></div></div>
+    <div class="bar-row"><div class="bar-label">1개월</div><div class="bar-track"><div class="bar-fill" style="width:50%;background:linear-gradient(90deg,#ec4899,#be185d)">~54cm</div></div></div>
+    <div class="bar-row"><div class="bar-label">3개월</div><div class="bar-track"><div class="bar-fill" style="width:62%;background:linear-gradient(90deg,#ec4899,#be185d)">~60cm</div></div></div>
+    <div class="bar-row"><div class="bar-label">6개월</div><div class="bar-track"><div class="bar-fill" style="width:75%;background:linear-gradient(90deg,#ec4899,#be185d)">~67cm</div></div></div>
+    <div class="bar-row"><div class="bar-label">12개월</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#22c55e,#16a34a)">~76cm 🎂</div></div></div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">🌙 월령별 수면 패턴 변화</div>
+    <table>
+      <thead>
+        <tr><th>월령</th><th>총 수면</th><th>밤 연속수면</th><th>낮잠 횟수</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>신생아 (0~1개월)</td><td>16~18시간</td><td>2~3시간</td><td>4~5회</td></tr>
+        <tr><td>2~3개월</td><td>14~16시간</td><td>4~6시간</td><td>3~4회</td></tr>
+        <tr><td>4~6개월</td><td>13~15시간</td><td>6~8시간</td><td>2~3회</td></tr>
+        <tr><td>7~9개월</td><td>12~14시간</td><td>8~10시간</td><td>2회</td></tr>
+        <tr><td>10~12개월</td><td>12~14시간</td><td>10~11시간</td><td>1~2회</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    📌 <b>성장급등 시기:</b> 2~3주, 6주, 3개월, 6개월, 9개월.<br>이때 갑자기 더 많이 먹고 보채는 것 정상. 젖 부족이 아님!
+  </div>
+</div>
+
+<script>
+function showTab(id, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+  window.scrollTo(0, 0);
+}
+function togglePeriod(header) {
+  const body = header.nextElementSibling;
+  const arrow = header.querySelector('.period-sub');
+  if (body.classList.contains('open')) {
+    body.classList.remove('open');
+    arrow.textContent = '▼ 탭하여 펼치기';
+  } else {
+    body.classList.add('open');
+    arrow.textContent = '▲ 접기';
+  }
+}
+</script>
+</body>
+</html>
