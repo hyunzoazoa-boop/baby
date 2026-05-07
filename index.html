@@ -19,24 +19,24 @@ body {
 .header {
   background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
   color: white;
-  padding: 22px 16px 26px;
+  padding: 18px 16px 20px;
   text-align: center;
 }
-.header h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
-.header-sub { font-size: 13px; opacity: 0.85; margin-top: 4px; }
-.badge-row { display: flex; gap: 8px; justify-content: center; margin-top: 12px; flex-wrap: wrap; }
+.header h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+.badge-row { display: flex; gap: 10px; justify-content: center; margin-top: 10px; flex-wrap: wrap; }
 .badge {
   background: rgba(255,255,255,0.22);
   border-radius: 20px;
-  padding: 5px 13px;
+  padding: 5px 14px;
   font-size: 13px;
   font-weight: 600;
 }
 .badge.dday {
   background: rgba(255,255,255,0.38);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 800;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 6px 16px;
 }
 
 /* ===== TABS ===== */
@@ -194,6 +194,48 @@ tr:last-child td { border-bottom: none; }
 
 .record-empty { text-align: center; padding: 40px 16px; color: #9ca3af; font-size: 14px; line-height: 2.2; }
 
+/* ===== SUB TABS ===== */
+.sub-tabs {
+  display: flex;
+  background: #e8f5e9;
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 14px;
+  gap: 2px;
+}
+.sub-tab {
+  flex: 1;
+  text-align: center;
+  padding: 9px 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.sub-tab.active { background: #fff; color: #16a34a; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+.sub-content { display: none; }
+.sub-content.active { display: block; }
+
+/* ===== TYPE BUTTON GROUP ===== */
+.btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
+.type-btn {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.type-btn.active { border-color: #22c55e; background: #f0fdf4; color: #16a34a; }
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 360px) {
   .grid3 { grid-template-columns: 1fr 1fr; }
@@ -206,11 +248,9 @@ tr:last-child td { border-bottom: none; }
 
 <div class="header">
   <h1>🌱 새싹이 성장 가이드</h1>
-  <p class="header-sub">2026.05.01 출생 · 남아 · 출생 3.7kg</p>
   <div class="badge-row">
     <span class="badge dday" id="ddayBadge">🌱 D+5</span>
     <span class="badge" id="ageBadge">생후 5일</span>
-    <span class="badge">✅ 4일차 체중 회복</span>
   </div>
 </div>
 
@@ -251,33 +291,136 @@ tr:last-child td { border-bottom: none; }
 
 <!-- ==================== 성장기록 ==================== -->
 <div id="record" class="content">
-  <div class="record-form">
-    <div class="section-title" style="margin-top:0">📏 측정값 기록</div>
-    <div class="form-row">
-      <label class="form-label">측정 날짜</label>
-      <input type="date" class="form-input" id="recDate">
-    </div>
-    <div class="form-row-2">
-      <div>
-        <label class="form-label">체중 (kg)</label>
-        <input type="number" class="form-input" id="recWeight" placeholder="3.70" step="0.01" min="1" max="20">
-      </div>
-      <div>
-        <label class="form-label">키 (cm)</label>
-        <input type="number" class="form-input" id="recHeight" placeholder="51.0" step="0.1" min="30" max="110">
-      </div>
-    </div>
-    <div class="form-row" style="margin-bottom:0">
-      <label class="form-label">메모 (선택)</label>
-      <input type="text" class="form-input" id="recNote" placeholder="예: 1개월 검진, 예방접종 날...">
-    </div>
-  </div>
-  <button class="btn-primary" onclick="addRecord()">+ 기록 저장</button>
 
-  <div class="section-title">📋 기록 목록 <span id="recCount" style="font-weight:400;font-size:13px;color:#6b7280"></span></div>
-  <div id="recList">
-    <div class="record-empty">아직 기록이 없어요.<br>첫 번째 측정값을 입력해 보세요! 🌱</div>
+  <!-- 서브탭 -->
+  <div class="sub-tabs">
+    <div class="sub-tab active" data-sub="growth-rec" onclick="showSub('growth-rec',this)">⚖️ 성장측정</div>
+    <div class="sub-tab" data-sub="feed-rec" onclick="showSub('feed-rec',this)">🍼 수유기록</div>
+    <div class="sub-tab" data-sub="sleep-rec" onclick="showSub('sleep-rec',this)">💤 수면기록</div>
+    <div class="sub-tab" data-sub="diaper-rec" onclick="showSub('diaper-rec',this)">💩 기저귀</div>
   </div>
+
+  <!-- ① 성장 측정 -->
+  <div id="growth-rec" class="sub-content active">
+    <div class="record-form">
+      <div class="section-title" style="margin-top:0">📏 체중 · 키 측정</div>
+      <div class="form-row">
+        <label class="form-label">측정 날짜</label>
+        <input type="date" class="form-input" id="recDate">
+      </div>
+      <div class="form-row-2">
+        <div>
+          <label class="form-label">체중 (kg)</label>
+          <input type="number" class="form-input" id="recWeight" placeholder="3.70" step="0.01" min="1" max="20">
+        </div>
+        <div>
+          <label class="form-label">키 (cm)</label>
+          <input type="number" class="form-input" id="recHeight" placeholder="51.0" step="0.1" min="30" max="110">
+        </div>
+      </div>
+      <div class="form-row" style="margin-bottom:0">
+        <label class="form-label">메모 (선택)</label>
+        <input type="text" class="form-input" id="recNote" placeholder="예: 1개월 검진, 예방접종 날...">
+      </div>
+    </div>
+    <button class="btn-primary" onclick="addRecord()">+ 기록 저장</button>
+    <div class="section-title">📋 측정 기록 <span id="recCount" style="font-weight:400;font-size:13px;color:#6b7280"></span></div>
+    <div id="recList"><div class="record-empty">아직 기록이 없어요.<br>첫 번째 측정값을 입력해 보세요! 🌱</div></div>
+  </div>
+
+  <!-- ② 수유 기록 -->
+  <div id="feed-rec" class="sub-content">
+    <div class="record-form">
+      <div class="section-title" style="margin-top:0">🍼 수유 기록</div>
+      <div class="form-row">
+        <label class="form-label">수유 시각</label>
+        <input type="datetime-local" class="form-input" id="feedTime">
+      </div>
+      <div class="form-row">
+        <label class="form-label">수유 방법</label>
+        <div class="btn-group" id="feedTypeGroup">
+          <button class="type-btn active" data-val="모유" onclick="selectType(this,'feedTypeGroup')">🤱 모유</button>
+          <button class="type-btn" data-val="분유" onclick="selectType(this,'feedTypeGroup')">🍼 분유</button>
+          <button class="type-btn" data-val="혼합" onclick="selectType(this,'feedTypeGroup')">✨ 혼합</button>
+        </div>
+      </div>
+      <div class="form-row-2">
+        <div>
+          <label class="form-label">양 (ml, 선택)</label>
+          <input type="number" class="form-input" id="feedAmt" placeholder="80" step="5" min="0" max="300">
+        </div>
+        <div>
+          <label class="form-label">수유 시간 (분, 선택)</label>
+          <input type="number" class="form-input" id="feedMin" placeholder="15" step="1" min="0" max="60">
+        </div>
+      </div>
+      <div class="form-row" style="margin-bottom:0">
+        <label class="form-label">메모 (선택)</label>
+        <input type="text" class="form-input" id="feedNote" placeholder="예: 잘 먹음, 토했음...">
+      </div>
+    </div>
+    <button class="btn-primary" onclick="addFeed()">+ 수유 저장</button>
+    <div class="section-title">📋 수유 기록 <span id="feedCount" style="font-weight:400;font-size:13px;color:#6b7280"></span></div>
+    <div id="feedList"><div class="record-empty">아직 기록이 없어요. 🍼</div></div>
+  </div>
+
+  <!-- ③ 수면 기록 -->
+  <div id="sleep-rec" class="sub-content">
+    <div class="record-form">
+      <div class="section-title" style="margin-top:0">💤 수면 기록</div>
+      <div class="form-row-2">
+        <div>
+          <label class="form-label">잠든 시각</label>
+          <input type="datetime-local" class="form-input" id="sleepStart">
+        </div>
+        <div>
+          <label class="form-label">일어난 시각</label>
+          <input type="datetime-local" class="form-input" id="sleepEnd">
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="form-label">수면 종류</label>
+        <div class="btn-group" id="sleepTypeGroup">
+          <button class="type-btn active" data-val="밤잠" onclick="selectType(this,'sleepTypeGroup')">🌙 밤잠</button>
+          <button class="type-btn" data-val="낮잠" onclick="selectType(this,'sleepTypeGroup')">☀️ 낮잠</button>
+        </div>
+      </div>
+      <div class="form-row" style="margin-bottom:0">
+        <label class="form-label">메모 (선택)</label>
+        <input type="text" class="form-input" id="sleepNote" placeholder="예: 잘 잠, 자주 깸...">
+      </div>
+    </div>
+    <button class="btn-primary" onclick="addSleep()">+ 수면 저장</button>
+    <div class="section-title">📋 수면 기록 <span id="sleepCount" style="font-weight:400;font-size:13px;color:#6b7280"></span></div>
+    <div id="sleepList"><div class="record-empty">아직 기록이 없어요. 💤</div></div>
+  </div>
+
+  <!-- ④ 기저귀 기록 -->
+  <div id="diaper-rec" class="sub-content">
+    <div class="record-form">
+      <div class="section-title" style="margin-top:0">💩 기저귀 기록</div>
+      <div class="form-row">
+        <label class="form-label">시각</label>
+        <input type="datetime-local" class="form-input" id="diaperTime">
+      </div>
+      <div class="form-row">
+        <label class="form-label">종류</label>
+        <div class="btn-group" id="diaperTypeGroup">
+          <button class="type-btn active" data-val="소변" onclick="selectType(this,'diaperTypeGroup')">💧 소변</button>
+          <button class="type-btn" data-val="대변" onclick="selectType(this,'diaperTypeGroup')">💩 대변</button>
+          <button class="type-btn" data-val="혼합" onclick="selectType(this,'diaperTypeGroup')">💧💩 혼합</button>
+        </div>
+      </div>
+      <div class="form-row" style="margin-bottom:0">
+        <label class="form-label">메모 (색깔·상태 등, 선택)</label>
+        <input type="text" class="form-input" id="diaperNote" placeholder="예: 황금색, 묽음...">
+      </div>
+    </div>
+    <button class="btn-primary" onclick="addDiaper()">+ 기저귀 저장</button>
+    <div class="section-title">📋 기저귀 기록 <span id="diaperCount" style="font-weight:400;font-size:13px;color:#6b7280"></span> <span id="diaperToday" style="font-weight:600;font-size:13px;color:#16a34a"></span></div>
+    <div id="diaperList"><div class="record-empty">아직 기록이 없어요. 💩</div></div>
+  </div>
+
 </div>
 
 <!-- ==================== 0~1개월 ==================== -->
@@ -824,7 +967,195 @@ function renderRecords() {
   }).join('');
 }
 
-window.addEventListener('DOMContentLoaded', initPage);
+/* ===== SUB TABS ===== */
+function showSub(id, el) {
+  const parent = el.closest('.content');
+  parent.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+  parent.querySelectorAll('.sub-content').forEach(c => c.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+
+function selectType(btn, groupId) {
+  document.getElementById(groupId).querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function getSelectedType(groupId) {
+  const active = document.querySelector(`#${groupId} .type-btn.active`);
+  return active ? active.dataset.val : '';
+}
+
+/* ===== FEED ===== */
+function getFeeds()  { try { return JSON.parse(localStorage.getItem('babyFeeds')  || '[]'); } catch { return []; } }
+function saveFeeds(r) { localStorage.setItem('babyFeeds', JSON.stringify(r)); }
+
+function addFeed() {
+  const time  = document.getElementById('feedTime').value;
+  const type  = getSelectedType('feedTypeGroup');
+  const amt   = parseInt(document.getElementById('feedAmt').value) || null;
+  const min   = parseInt(document.getElementById('feedMin').value) || null;
+  const note  = document.getElementById('feedNote').value.trim() || null;
+  if (!time) { alert('수유 시각을 입력해 주세요.'); return; }
+  const feeds = getFeeds();
+  feeds.unshift({ time, type, amt, min, note });
+  saveFeeds(feeds);
+  document.getElementById('feedAmt').value = '';
+  document.getElementById('feedMin').value = '';
+  document.getElementById('feedNote').value = '';
+  renderFeeds();
+}
+
+function deleteFeed(i) {
+  if (!confirm('삭제할까요?')) return;
+  const feeds = getFeeds(); feeds.splice(i,1); saveFeeds(feeds); renderFeeds();
+}
+
+function renderFeeds() {
+  const feeds = getFeeds();
+  document.getElementById('feedCount').textContent = feeds.length > 0 ? `(${feeds.length}건)` : '';
+  const list = document.getElementById('feedList');
+  if (!feeds.length) { list.innerHTML = '<div class="record-empty">아직 기록이 없어요. 🍼</div>'; return; }
+  list.innerHTML = feeds.map((f, i) => {
+    const d = new Date(f.time);
+    const dateStr = `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    const detail = [f.amt ? `${f.amt}ml` : null, f.min ? `${f.min}분` : null].filter(Boolean).join(' · ');
+    return `<div class="card" style="margin-bottom:8px"><div class="card-body">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <span style="font-weight:700;font-size:14px">${dateStr}</span>
+          <span style="margin-left:8px;font-size:13px;color:#16a34a;font-weight:600">${f.type}</span>
+          ${detail ? `<span style="margin-left:6px;font-size:12px;color:#6b7280">${detail}</span>` : ''}
+        </div>
+        <button class="btn-del" onclick="deleteFeed(${i})">삭제</button>
+      </div>
+      ${f.note ? `<div style="font-size:12px;color:#6b7280;margin-top:4px">${f.note}</div>` : ''}
+    </div></div>`;
+  }).join('');
+}
+
+/* ===== SLEEP ===== */
+function getSleeps()  { try { return JSON.parse(localStorage.getItem('babySleeps')  || '[]'); } catch { return []; } }
+function saveSleeps(r) { localStorage.setItem('babySleeps', JSON.stringify(r)); }
+
+function addSleep() {
+  const start = document.getElementById('sleepStart').value;
+  const end   = document.getElementById('sleepEnd').value;
+  const type  = getSelectedType('sleepTypeGroup');
+  const note  = document.getElementById('sleepNote').value.trim() || null;
+  if (!start) { alert('잠든 시각을 입력해 주세요.'); return; }
+  const sleeps = getSleeps();
+  sleeps.unshift({ start, end: end || null, type, note });
+  saveSleeps(sleeps);
+  document.getElementById('sleepNote').value = '';
+  renderSleeps();
+}
+
+function deleteSleep(i) {
+  if (!confirm('삭제할까요?')) return;
+  const s = getSleeps(); s.splice(i,1); saveSleeps(s); renderSleeps();
+}
+
+function fmtDT(dtStr) {
+  if (!dtStr) return '—';
+  const d = new Date(dtStr);
+  return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+}
+
+function sleepDuration(start, end) {
+  if (!start || !end) return '';
+  const diff = (new Date(end) - new Date(start)) / 60000;
+  if (diff <= 0) return '';
+  const h = Math.floor(diff / 60), m = Math.round(diff % 60);
+  return h > 0 ? `${h}시간 ${m}분` : `${m}분`;
+}
+
+function renderSleeps() {
+  const sleeps = getSleeps();
+  document.getElementById('sleepCount').textContent = sleeps.length > 0 ? `(${sleeps.length}건)` : '';
+  const list = document.getElementById('sleepList');
+  if (!sleeps.length) { list.innerHTML = '<div class="record-empty">아직 기록이 없어요. 💤</div>'; return; }
+  list.innerHTML = sleeps.map((s, i) => {
+    const dur = sleepDuration(s.start, s.end);
+    return `<div class="card" style="margin-bottom:8px"><div class="card-body">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <span style="font-weight:700;font-size:13px">${fmtDT(s.start)} → ${fmtDT(s.end)}</span>
+          ${dur ? `<span style="margin-left:6px;background:#f0fdf4;color:#16a34a;border-radius:8px;padding:2px 7px;font-size:11px;font-weight:700">${dur}</span>` : ''}
+        </div>
+        <button class="btn-del" onclick="deleteSleep(${i})">삭제</button>
+      </div>
+      <div style="margin-top:4px">
+        <span style="font-size:12px;color:#16a34a;font-weight:600">${s.type}</span>
+        ${s.note ? `<span style="font-size:12px;color:#6b7280;margin-left:6px">${s.note}</span>` : ''}
+      </div>
+    </div></div>`;
+  }).join('');
+}
+
+/* ===== DIAPER ===== */
+function getDiapers()  { try { return JSON.parse(localStorage.getItem('babyDiapers')  || '[]'); } catch { return []; } }
+function saveDiapers(r) { localStorage.setItem('babyDiapers', JSON.stringify(r)); }
+
+function addDiaper() {
+  const time  = document.getElementById('diaperTime').value;
+  const type  = getSelectedType('diaperTypeGroup');
+  const note  = document.getElementById('diaperNote').value.trim() || null;
+  if (!time) { alert('시각을 입력해 주세요.'); return; }
+  const diapers = getDiapers();
+  diapers.unshift({ time, type, note });
+  saveDiapers(diapers);
+  document.getElementById('diaperNote').value = '';
+  renderDiapers();
+}
+
+function deleteDiaper(i) {
+  if (!confirm('삭제할까요?')) return;
+  const d = getDiapers(); d.splice(i,1); saveDiapers(d); renderDiapers();
+}
+
+function renderDiapers() {
+  const diapers = getDiapers();
+  document.getElementById('diaperCount').textContent = diapers.length > 0 ? `(${diapers.length}건)` : '';
+
+  // 오늘 기저귀 횟수
+  const todayStr = new Date().toISOString().split('T')[0];
+  const todayCount = diapers.filter(d => d.time.startsWith(todayStr)).length;
+  document.getElementById('diaperToday').textContent = todayCount > 0 ? `· 오늘 ${todayCount}회` : '';
+
+  const list = document.getElementById('diaperList');
+  if (!diapers.length) { list.innerHTML = '<div class="record-empty">아직 기록이 없어요. 💩</div>'; return; }
+
+  const typeEmoji = { '소변': '💧', '대변': '💩', '혼합': '💧💩' };
+  list.innerHTML = diapers.map((d, i) => {
+    const dt = new Date(d.time);
+    const dateStr = `${dt.getMonth()+1}/${dt.getDate()} ${String(dt.getHours()).padStart(2,'0')}:${String(dt.getMinutes()).padStart(2,'0')}`;
+    return `<div class="card" style="margin-bottom:8px"><div class="card-body">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <span style="font-size:20px;margin-right:6px">${typeEmoji[d.type]||'💩'}</span>
+          <span style="font-weight:700;font-size:14px">${d.type}</span>
+          <span style="font-size:12px;color:#6b7280;margin-left:8px">${dateStr}</span>
+        </div>
+        <button class="btn-del" onclick="deleteDiaper(${i})">삭제</button>
+      </div>
+      ${d.note ? `<div style="font-size:12px;color:#6b7280;margin-top:4px">${d.note}</div>` : ''}
+    </div></div>`;
+  }).join('');
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+  initPage();
+  // 현재 시각을 datetime-local 기본값으로 설정
+  const nowLocal = new Date(Date.now() - new Date().getTimezoneOffset()*60000).toISOString().slice(0,16);
+  ['feedTime','sleepStart','sleepEnd','diaperTime'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = nowLocal;
+  });
+  renderFeeds();
+  renderSleeps();
+  renderDiapers();
+});
 </script>
 </body>
 </html>
