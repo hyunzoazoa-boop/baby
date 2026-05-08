@@ -114,9 +114,39 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
 .dq-btn span { font-size: 12px; font-weight: 700; color: #374151; }
 .dq-btn:active { background: #f0fdf4; border-color: #22c55e; }
 
+/* GUIDE TAB */
+.guide-period { background: #fff; border-radius: 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); overflow: hidden; }
+.guide-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; min-height: 60px; }
+.guide-color { width: 10px; border-radius: 5px; flex-shrink: 0; }
+.guide-meta { flex: 1; }
+.guide-label { font-weight: 800; font-size: 15px; }
+.guide-date  { font-size: 12px; color: #9ca3af; margin-top: 1px; }
+.guide-arrow { color: #9ca3af; font-size: 13px; flex-shrink: 0; transition: transform 0.2s; }
+.guide-body  { display: none; padding: 0 16px 16px; }
+.guide-body.open { display: block; }
+.guide-header.open .guide-arrow { transform: rotate(180deg); }
+
+.gblock { margin-bottom: 14px; }
+.gblock-title { font-size: 12px; font-weight: 800; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.gitem { display: flex; gap: 10px; margin-bottom: 8px; align-items: flex-start; }
+.gitem-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+.gitem-text { font-size: 13px; color: #374151; line-height: 1.65; }
+.gitem-text b { color: #15803d; }
+.warn-box { background: #fff7ed; border: 1px solid #fed7aa; border-radius: 10px; padding: 10px 12px; margin-top: 8px; }
+.warn-box .wt { font-size: 12px; font-weight: 800; color: #c2410c; margin-bottom: 6px; }
+.warn-box .wi { font-size: 12px; color: #9a3412; line-height: 1.7; }
+.check-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 10px 12px; margin-top: 8px; }
+.check-box .ct { font-size: 12px; font-weight: 800; color: #15803d; margin-bottom: 6px; }
+.check-box .ci { font-size: 12px; color: #14532d; line-height: 1.8; }
+.milestone-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.ms-box { background: #f8fafc; border-radius: 10px; padding: 10px 12px; }
+.ms-box .ml { font-size: 11px; color: #6b7280; font-weight: 700; margin-bottom: 5px; }
+.ms-box .mv { font-size: 12px; color: #1a2e1a; line-height: 1.6; }
+
 @media (max-width: 360px) {
   .g3 { grid-template-columns: 1fr 1fr; }
   .tab { padding: 0 10px; font-size: 12px; }
+  .milestone-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -138,6 +168,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
   <div class="tab" data-tab="feed" onclick="showTab('feed',this)">🍼 수유</div>
   <div class="tab" data-tab="diaper" onclick="showTab('diaper',this)">💩 기저귀</div>
   <div class="tab" data-tab="sleep" onclick="showTab('sleep',this)">💤 수면</div>
+  <div class="tab" data-tab="guide" onclick="showTab('guide',this)">📚 성장가이드</div>
 </div>
 
 <!-- ====== 📍 지금 ====== -->
@@ -344,6 +375,274 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
 
   <div class="stitle">📋 최근 기록</div>
   <div id="dList"><div class="empty">아직 기록이 없어요. 💩</div></div>
+</div>
+
+<!-- ====== 📚 성장가이드 ====== -->
+<div id="guide" class="content">
+  <div class="note blue" style="margin-bottom:14px">📖 월령별 발달 특징과 부모가 알아야 할 것들을 정리했어요. 탭을 눌러 펼쳐보세요.</div>
+
+  <!-- 0~1개월 -->
+  <div class="guide-period">
+    <div class="guide-header" onclick="toggleGuide(this)">
+      <div class="guide-color" style="background:#22c55e;height:36px"></div>
+      <div class="guide-meta">
+        <div class="guide-label">🌱 0~1개월 — 신생아기</div>
+        <div class="guide-date">출생 ~ 생후 30일</div>
+      </div>
+      <div class="guide-arrow">▼</div>
+    </div>
+    <div class="guide-body">
+      <div class="milestone-grid">
+        <div class="ms-box"><div class="ml">⚖️ 체중</div><div class="mv">출생 후 10% 감소 후 회복<br>이후 주당 150~200g 증가</div></div>
+        <div class="ms-box"><div class="ml">🍼 수유</div><div class="mv">8~12회/일<br>모유: 2~3시간 간격</div></div>
+        <div class="ms-box"><div class="ml">💤 수면</div><div class="mv">16~18시간/일<br>밤낮 구분 없음</div></div>
+        <div class="ms-box"><div class="ml">💩 배변</div><div class="mv">태변→황금색<br>하루 3~8회</div></div>
+      </div>
+      <div class="gblock">
+        <div class="gblock-title">🧠 이 시기 발달 특징</div>
+        <div class="gitem"><div class="gitem-dot" style="background:#22c55e"></div><div class="gitem-text">시야 <b>20~30cm</b> — 엄마 얼굴 거리가 딱 맞아요. 더 멀리는 흐릿하게 보여요</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#22c55e"></div><div class="gitem-text">반사반응(모로, 빨기, 파악, 루팅)이 아기의 주요 행동. 점차 사라지며 의도적 행동으로 발전</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#22c55e"></div><div class="gitem-text">울음이 유일한 소통 수단. 배고픔(60~70%), 기저귀(20%), 안아달라(10%)</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#22c55e"></div><div class="gitem-text"><b>2~3주 첫 성장급등</b> — 갑자기 더 자주 먹으려 함. 젖량 부족이 아니에요</div></div>
+      </div>
+      <div class="gblock">
+        <div class="gblock-title">💡 부모가 해줄 것</div>
+        <div class="gitem"><div class="gitem-dot" style="background:#4ade80"></div><div class="gitem-text">많이 안아줘도 돼요 — 이 시기엔 <b>버릇이 들지 않아요</b>. 스킨십이 뇌 발달에 도움</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#4ade80"></div><div class="gitem-text">밤에도 3~4시간 간격 수유 유지. 체중이 충분히 늘 때까지 밤 통잠은 나중 일</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#4ade80"></div><div class="gitem-text">모유수유 중이면 매일 <b>비타민D 400IU</b> 필수</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#4ade80"></div><div class="gitem-text">낮엔 밝게, 밤엔 어둡고 조용하게 — 지금부터 밤낮 구분 환경을 만들어요</div></div>
+      </div>
+      <div class="check-box">
+        <div class="ct">✅ 이 시기 필수 체크</div>
+        <div class="ci">□ 신생아 청각 검사 완료<br>□ 대사이상 검사 완료<br>□ 황달 소실 확인<br>□ 배꼽 탈락 확인<br>□ 비타민D 시작<br>□ 1개월 건강검진 예약</div>
+      </div>
+      <div class="warn-box">
+        <div class="wt">🚨 즉시 병원</div>
+        <div class="wi">• 38도 이상 발열 (생후 3개월 미만 절대 기준)<br>• 수유 거부 2회 이상 연속<br>• 심하게 노랗고 축 처짐<br>• 6시간 이상 소변 없음<br>• 호흡 60회/분 초과 또는 중단</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2~3개월 -->
+  <div class="guide-period">
+    <div class="guide-header" onclick="toggleGuide(this)">
+      <div class="guide-color" style="background:#4ade80;height:36px"></div>
+      <div class="guide-meta">
+        <div class="guide-label">😊 2~3개월 — 사회적 반응기</div>
+        <div class="guide-date">생후 31일 ~ 90일 (7월~8월)</div>
+      </div>
+      <div class="guide-arrow">▼</div>
+    </div>
+    <div class="guide-body">
+      <div class="milestone-grid">
+        <div class="ms-box"><div class="ml">⚖️ 체중</div><div class="mv">5.6~6.5kg 예상<br>주당 120~150g 증가</div></div>
+        <div class="ms-box"><div class="ml">🍼 수유</div><div class="mv">6~8회/일<br>간격 3~4시간</div></div>
+        <div class="ms-box"><div class="ml">💤 수면</div><div class="mv">14~16시간/일<br>밤 4~6시간 연속 시작</div></div>
+        <div class="ms-box"><div class="ml">💉 접종</div><div class="mv">2개월: DTaP, 폴리오,<br>헤모필루스, 폐렴, 로타</div></div>
+      </div>
+      <div class="gblock">
+        <div class="gblock-title">🧠 이 시기 발달 특징</div>
+        <div class="gitem"><div class="gitem-dot" style="background:#4ade80"></div><div class="gitem-text"><b>사회적 미소 시작 (6주)</b> — 엄마 아빠를 보고 의도적으로 웃어요. 이건 진짜 감정 표현의 시작</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#4ade80"></div><div class="gitem-text">목 가누기 시작 — 엎드리면 잠깐 머리를 들 수 있어요. 3개월엔 90도까지 올려요</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#4ade80"></div><div class="gitem-text">옹알이 시작 — "아~", "구~" 소리를 내요. 반응해줄수록 언어 발달이 빨라져요</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#4ade80"></div><div class="gitem-text"><b>6주 두 번째 성장급등</b> — 다시 더 자주 먹으려 해요. 2~3일 후 안정</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#4ade80"></div><div class="gitem-text">손을 쥐었다 폈다 하며 탐색. 손에 딸랑이 쥐여주면 잠깐 쥐고 있어요</div></div>
+      </div>
+      <div class="gblock">
+        <div class="gblock-title">💡 부모가 해줄 것</div>
+        <div class="gitem"><div class="gitem-dot" style="background:#4ade80"></div><div class="gitem-text"><b>터미타임 시작</b> — 하루 3~5회, 처음엔 3분씩. 목·등 근육 발달 필수. 단, 잘 때는 절대 엎드리면 안 돼요</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#4ade80"></div><div class="gitem-text">눈 앞 20~30cm에서 천천히 물건 움직이기 — 시각 추적 능력 발달시켜요</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#4ade80"></div><div class="gitem-text">수면 루틴 시작 — 목욕→수유→자장가→침대. 매일 같은 순서가 중요해요</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#4ade80"></div><div class="gitem-text"><b>3~4개월 수면퇴행 예고</b> — 잘 자다가 갑자기 자주 깰 수 있어요. 1~3주 후 자연 회복</div></div>
+      </div>
+      <div class="warn-box">
+        <div class="wt">⚠️ 이때까지 없으면 확인</div>
+        <div class="wi">• 사회적 미소 없음 (3개월까지)<br>• 소리에 전혀 반응 없음<br>• 눈 맞춤 안 됨<br>• 고개를 전혀 못 들음 (3개월)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4~6개월 -->
+  <div class="guide-period">
+    <div class="guide-header" onclick="toggleGuide(this)">
+      <div class="guide-color" style="background:#f97316;height:36px"></div>
+      <div class="guide-meta">
+        <div class="guide-label">🔄 4~6개월 — 운동 발달 급증</div>
+        <div class="guide-date">생후 91일 ~ 180일 (9월~11월)</div>
+      </div>
+      <div class="guide-arrow">▼</div>
+    </div>
+    <div class="guide-body">
+      <div class="milestone-grid">
+        <div class="ms-box"><div class="ml">⚖️ 체중</div><div class="mv">6.7~8.2kg 예상<br>출생 체중 약 2배</div></div>
+        <div class="ms-box"><div class="ml">🍼 수유</div><div class="mv">5~6회/일<br>6개월부터 이유식 시작</div></div>
+        <div class="ms-box"><div class="ml">💤 수면</div><div class="mv">13~15시간/일<br>밤 6~8시간 연속 가능</div></div>
+        <div class="ms-box"><div class="ml">💉 접종</div><div class="mv">4개월: DTaP 2차 등<br>6개월: DTaP 3차, 독감</div></div>
+      </div>
+      <div class="gblock">
+        <div class="gblock-title">🧠 이 시기 발달 특징</div>
+        <div class="gitem"><div class="gitem-dot" style="background:#f97316"></div><div class="gitem-text"><b>뒤집기 성공 (4~5개월)</b> — 앞뒤 뒤집기 가능. 성공하는 순간부터 혼자 두면 낙상 위험</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#f97316"></div><div class="gitem-text">손으로 물건 잡기 → 입으로 가져가기. 탐색 행동이에요. 작은 이물질 제거 필수</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#f97316"></div><div class="gitem-text">소리 내어 웃기 시작 — 까꿍, 간지럼 등에 깔깔 웃어요</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#f97316"></div><div class="gitem-text"><b>4개월 수면퇴행</b> — 가장 힘든 수면퇴행. 2~4주간 자주 깸. 수면 교육 시작 적기</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#f97316"></div><div class="gitem-text">6개월: 받쳐주면 앉기 가능. 이유식 시작 신호(목 가눔 + 음식 관심 + 혀로 밀어내지 않음)</div></div>
+      </div>
+      <div class="gblock">
+        <div class="gblock-title">🥣 이유식 시작 가이드 (6개월)</div>
+        <div class="gitem"><div class="gitem-dot" style="background:#f97316"></div><div class="gitem-text">쌀미음 1~2 숟가락부터. 하루 1회, 오전 10~11시가 가장 좋아요(반응 관찰용)</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#f97316"></div><div class="gitem-text">새 식재료는 <b>3~5일 간격</b>으로 하나씩. 알레르기 반응 확인 필수</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#f97316"></div><div class="gitem-text">이유식 = 주식이 아니에요. 이 시기엔 <b>맛과 경험</b>이 목적. 모유/분유가 여전히 주영양원</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#f97316"></div><div class="gitem-text"><b>철분이 중요한 시기</b> — 소고기, 닭고기 등 철분 풍부한 식재료를 초기부터 포함해요</div></div>
+      </div>
+      <div class="warn-box">
+        <div class="wt">⚠️ 이때까지 없으면 확인</div>
+        <div class="wi">• 뒤집기 시도 전혀 없음 (6개월)<br>• 물건을 손으로 잡으려 하지 않음<br>• 소리 내어 웃지 않음<br>• 엄마 아빠 얼굴 인식 못 함</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7~9개월 -->
+  <div class="guide-period">
+    <div class="guide-header" onclick="toggleGuide(this)">
+      <div class="guide-color" style="background:#8b5cf6;height:36px"></div>
+      <div class="guide-meta">
+        <div class="guide-label">🐛 7~9개월 — 이동의 시작</div>
+        <div class="guide-date">생후 181일 ~ 270일 (12월~2027년 2월)</div>
+      </div>
+      <div class="guide-arrow">▼</div>
+    </div>
+    <div class="guide-body">
+      <div class="milestone-grid">
+        <div class="ms-box"><div class="ml">⚖️ 체중</div><div class="mv">8.3~9.8kg 예상</div></div>
+        <div class="ms-box"><div class="ml">🍼 수유</div><div class="mv">3~4회/일<br>이유식 2회로 증가</div></div>
+        <div class="ms-box"><div class="ml">💤 수면</div><div class="mv">12~14시간/일<br>밤 8~10시간 연속</div></div>
+        <div class="ms-box"><div class="ml">🦷 치아</div><div class="mv">아래 앞니 2개 먼저<br>이앓이 시작</div></div>
+      </div>
+      <div class="gblock">
+        <div class="gblock-title">🧠 이 시기 발달 특징</div>
+        <div class="gitem"><div class="gitem-dot" style="background:#8b5cf6"></div><div class="gitem-text"><b>기어다니기</b> — 배밀이 → 네발기기. 시작하면 집 안 전체가 탐험 대상이에요</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#8b5cf6"></div><div class="gitem-text">혼자 앉기 (7~8개월) — 양손을 자유롭게 써서 물건을 탐색해요</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#8b5cf6"></div><div class="gitem-text"><b>잡고 서기 (9개월)</b> — 가구를 잡고 일어서려 해요. 하지만 앉지 못하고 울기도 해요</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#8b5cf6"></div><div class="gitem-text"><b>분리불안 피크</b> — 엄마가 안 보이면 울어요. 정상 발달. "잠깐 다녀올게" 말하는 습관</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#8b5cf6"></div><div class="gitem-text">엄마/아빠 등 특정 소리를 흉내 냄. "마마마", "바바바" 옹알이가 활발</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#8b5cf6"></div><div class="gitem-text">핀셋 쥐기(엄지+검지) 발달 — 아주 작은 것도 집으려 해요. <b>이물질 위험 최고조</b></div></div>
+      </div>
+      <div class="gblock">
+        <div class="gblock-title">💡 부모가 해줄 것</div>
+        <div class="gitem"><div class="gitem-dot" style="background:#8b5cf6"></div><div class="gitem-text"><b>집 안전 대비 지금 해야 해요</b> — 전기 콘센트 커버, 서랍 잠금, 모서리 보호대, 계단 문</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#8b5cf6"></div><div class="gitem-text">손가락 음식(핑거푸드) 시작 — 바나나 조각, 찐 감자 등. 씹는 연습과 자율성 발달</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#8b5cf6"></div><div class="gitem-text">이가 나면 저녁 수유 후 거즈로 닦아줘요. 처음부터 구강 위생 습관 들이기</div></div>
+      </div>
+      <div class="warn-box">
+        <div class="wt">⚠️ 이때까지 없으면 확인</div>
+        <div class="wi">• 이동 시도(기어가기, 배밀이) 전혀 없음 (9개월)<br>• 이름 불러도 돌아보지 않음<br>• 까꿍 게임에 반응 없음<br>• 물건을 한 손에서 다른 손으로 옮기지 못함</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10~12개월 -->
+  <div class="guide-period">
+    <div class="guide-header" onclick="toggleGuide(this)">
+      <div class="guide-color" style="background:#06b6d4;height:36px"></div>
+      <div class="guide-meta">
+        <div class="guide-label">🎂 10~12개월 — 첫 돌 준비</div>
+        <div class="guide-date">생후 271일 ~ 365일 (2027년 3월~5월)</div>
+      </div>
+      <div class="guide-arrow">▼</div>
+    </div>
+    <div class="guide-body">
+      <div class="milestone-grid">
+        <div class="ms-box"><div class="ml">⚖️ 체중</div><div class="mv">9.5~10.5kg 예상<br>출생 체중 약 3배</div></div>
+        <div class="ms-box"><div class="ml">📏 키</div><div class="mv">73~78cm 예상<br>출생 키 약 1.5배</div></div>
+        <div class="ms-box"><div class="ml">🍼 수유</div><div class="mv">2~3회/일<br>이유식 3회 주식</div></div>
+        <div class="ms-box"><div class="ml">💤 수면</div><div class="mv">12~14시간/일<br>낮잠 1~2회</div></div>
+      </div>
+      <div class="gblock">
+        <div class="gblock-title">🧠 이 시기 발달 특징</div>
+        <div class="gitem"><div class="gitem-dot" style="background:#06b6d4"></div><div class="gitem-text"><b>첫 걸음마 (11~14개월)</b> — 가구 잡고 이동하다 손 놓고 몇 걸음. 넘어지는 건 정상이에요</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#06b6d4"></div><div class="gitem-text"><b>첫 단어 (12개월 전후)</b> — "엄마", "아빠", "맘마" 등 의미 있는 단어 1~3개</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#06b6d4"></div><div class="gitem-text">손 흔들기(바이바이), 박수, 고개 젓기 등 제스처 모방</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#06b6d4"></div><div class="gitem-text">컵으로 마시기 연습 시작. 빨대컵 또는 오픈컵 모두 괜찮아요</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#06b6d4"></div><div class="gitem-text">간단한 지시 이해 — "줘봐", "안 돼" 같은 말을 이해해요</div></div>
+      </div>
+      <div class="gblock">
+        <div class="gblock-title">💡 돌 전후 체크리스트</div>
+        <div class="gitem"><div class="gitem-dot" style="background:#06b6d4"></div><div class="gitem-text">분유 → 생우유 전환 (12개월 이후, 하루 400~500ml). 두유나 식물성 음료는 영양 부족 주의</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#06b6d4"></div><div class="gitem-text">이유식 → 유아식 전환. 가족과 같은 음식, 단 염분·당 최소화</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#06b6d4"></div><div class="gitem-text">돌 건강검진 + 예방접종 (MMR, 수두, A형간염, 일본뇌염)</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#06b6d4"></div><div class="gitem-text">치아 6~8개 — 치과 첫 방문 권장. 불소 도포 시작</div></div>
+      </div>
+      <div class="warn-box">
+        <div class="wt">⚠️ 12개월까지 없으면 소아과 상담</div>
+        <div class="wi">• 의미 있는 단어 1개도 없음<br>• 손 흔들기 등 제스처 없음<br>• 잡고 서기를 전혀 시도 안 함<br>• 이름 불러도 반응 없음<br>• 눈 맞춤 거의 없음</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 수면교육 -->
+  <div class="guide-period">
+    <div class="guide-header" onclick="toggleGuide(this)">
+      <div class="guide-color" style="background:#64748b;height:36px"></div>
+      <div class="guide-meta">
+        <div class="guide-label">😴 수면교육 — 언제, 어떻게</div>
+        <div class="guide-date">3개월 이후부터 가능</div>
+      </div>
+      <div class="guide-arrow">▼</div>
+    </div>
+    <div class="guide-body">
+      <div class="gblock">
+        <div class="gblock-title">📅 적기</div>
+        <div class="gitem"><div class="gitem-dot" style="background:#64748b"></div><div class="gitem-text"><b>4~6개월</b>이 수면교육 황금기. 너무 일찍(3개월 이전)은 아직 수면 패턴이 없어요</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#64748b"></div><div class="gitem-text">수면교육 전 전제: 건강하고, 충분히 먹고, 잠자리가 안전한 환경</div></div>
+      </div>
+      <div class="gblock">
+        <div class="gblock-title">🔑 핵심 원칙</div>
+        <div class="gitem"><div class="gitem-dot" style="background:#64748b"></div><div class="gitem-text"><b>잠자리 연상 제거</b> — 안고 재우다 내려놓으면 안돼요. 졸린 상태에서 침대에 눕혀 스스로 잠들게 연습</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#64748b"></div><div class="gitem-text"><b>수면 루틴 고정</b> — 목욕→마사지→수유→자장가→침대. 매일 같은 순서, 같은 시간</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#64748b"></div><div class="gitem-text">낮잠을 너무 오래 자면 밤잠에 영향. 저녁 낮잠은 오후 4시 전에 끝내요</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#64748b"></div><div class="gitem-text"><b>수면 창</b> — 피곤해 보이면(눈 비비기, 하품) 바로 재워요. 너무 지나치면 오히려 흥분해서 못 자요</div></div>
+      </div>
+      <div class="gblock">
+        <div class="gblock-title">😭 울음 방치법 (Cry It Out) — 현실적 조언</div>
+        <div class="gitem"><div class="gitem-dot" style="background:#64748b"></div><div class="gitem-text">완전 방치법(Ferber)은 6개월 이후 가능. 효과는 있지만 부모가 버텨야 해요(보통 3~5일)</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#64748b"></div><div class="gitem-text">방치가 힘들면 페이딩(Fading) — 옆에 있되 점점 개입을 줄여나가는 방식. 더 오래 걸리지만 스트레스 적어요</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#64748b"></div><div class="gitem-text">어떤 방법이든 <b>일관성</b>이 핵심. 중간에 포기하면 오히려 더 심해져요</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 영아산통 -->
+  <div class="guide-period">
+    <div class="guide-header" onclick="toggleGuide(this)">
+      <div class="guide-color" style="background:#ef4444;height:36px"></div>
+      <div class="guide-meta">
+        <div class="guide-label">😣 영아산통 — 황혼 울음</div>
+        <div class="guide-date">생후 2주 ~ 3개월 피크</div>
+      </div>
+      <div class="guide-arrow">▼</div>
+    </div>
+    <div class="guide-body">
+      <div class="gblock">
+        <div class="gblock-title">📋 영아산통이란?</div>
+        <div class="gitem"><div class="gitem-dot" style="background:#ef4444"></div><div class="gitem-text">건강한 아기가 하루 <b>3시간 이상, 주 3일 이상, 3주 이상</b> 이유 없이 우는 것</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#ef4444"></div><div class="gitem-text"><b>저녁 6~10시</b>에 집중. "황혼 울음"이라고도 불러요</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#ef4444"></div><div class="gitem-text">모든 아기의 약 20%에서 나타나요. 원인은 아직 불명확(장 발달, 신경계 미성숙 등)</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#ef4444"></div><div class="gitem-text"><b>반드시 3~4개월이면 끝나요.</b> 끝이 있어요</div></div>
+      </div>
+      <div class="gblock">
+        <div class="gblock-title">💡 대처법</div>
+        <div class="gitem"><div class="gitem-dot" style="background:#ef4444"></div><div class="gitem-text">배를 아래로 해서 안기(트럼펫 자세), 공갈젖꼭지, 흰 소음(선풍기, 청소기 소리)</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#ef4444"></div><div class="gitem-text">카시트에 태우고 드라이브, 유모차 산책 — 움직임이 효과적이에요</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#ef4444"></div><div class="gitem-text">모유수유 중이면 카페인·유제품·양파·브로콜리 줄여보기(효과는 개인차)</div></div>
+        <div class="gitem"><div class="gitem-dot" style="background:#ef4444"></div><div class="gitem-text"><b>부모가 지칠 때</b> — 아기를 안전한 곳에 눕히고 5분 자리를 피해도 괜찮아요. 이건 방치가 아니에요</div></div>
+      </div>
+      <div class="warn-box">
+        <div class="wt">🚨 산통이 아닐 수 있는 신호</div>
+        <div class="wi">• 발열 동반<br>• 배가 딱딱하게 부풀어 있음<br>• 혈변<br>• 먹기를 거부함<br>• 평소와 다른 울음 톤</div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -916,6 +1215,14 @@ function renderDiaperList() {
 }
 
 window.addEventListener('DOMContentLoaded', initPage);
+
+function toggleGuide(header) {
+  const body = header.nextElementSibling;
+  const arrow = header.querySelector('.guide-arrow');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  if (arrow) arrow.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+}
 </script>
 </body>
 </html>
