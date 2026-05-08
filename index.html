@@ -6,756 +6,375 @@
 <title>🌱 새싹이 성장 가이드</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-body {
-  font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-  background: #f0fdf4;
-  color: #1a2e1a;
-  font-size: 15px;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-}
+body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background: #f0fdf4; color: #1a2e1a; font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
 
-/* ===== HEADER ===== */
-.header {
-  background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
-  color: white;
-  padding: 18px 16px 20px;
-  text-align: center;
-}
-.header h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
-.badge-row { display: flex; gap: 10px; justify-content: center; margin-top: 10px; flex-wrap: wrap; }
-.badge {
-  background: rgba(255,255,255,0.22);
-  border-radius: 20px;
-  padding: 5px 14px;
-  font-size: 13px;
-  font-weight: 600;
-}
-.badge.dday {
-  background: rgba(255,255,255,0.38);
-  font-size: 16px;
-  font-weight: 800;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  padding: 6px 16px;
-}
+/* HEADER */
+.header { background: linear-gradient(135deg, #22c55e, #15803d); color: white; padding: 16px 20px 18px; text-align: center; }
+.header h1 { font-size: 18px; font-weight: 800; }
+.header-badges { display: flex; gap: 10px; justify-content: center; margin-top: 8px; }
+.hbadge { background: rgba(255,255,255,0.25); border-radius: 20px; padding: 4px 14px; font-size: 13px; font-weight: 700; }
+.hbadge.big { background: rgba(255,255,255,0.38); font-size: 17px; padding: 5px 16px; }
 
-/* ===== TABS ===== */
-.tabs {
-  display: flex;
-  background: #fff;
-  border-bottom: 2px solid #e5e7eb;
-  overflow-x: auto;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
-}
+/* TABS */
+.tabs { display: flex; background: #fff; border-bottom: 2px solid #e5e7eb; overflow-x: auto; position: sticky; top: 0; z-index: 100; scrollbar-width: none; box-shadow: 0 2px 6px rgba(0,0,0,0.07); }
 .tabs::-webkit-scrollbar { display: none; }
-.tab {
-  flex: none;
-  padding: 0 14px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  font-size: 13px;
-  color: #6b7280;
-  white-space: nowrap;
-  border-bottom: 3px solid transparent;
-  margin-bottom: -2px;
-  font-weight: 500;
-  transition: color 0.15s;
-}
+.tab { flex: none; padding: 0 14px; height: 48px; display: flex; align-items: center; cursor: pointer; font-size: 13px; color: #6b7280; white-space: nowrap; border-bottom: 3px solid transparent; margin-bottom: -2px; font-weight: 500; }
 .tab.active { color: #16a34a; border-bottom-color: #16a34a; font-weight: 700; }
 
-/* ===== CONTENT ===== */
+/* CONTENT */
 .content { display: none; padding: 16px; max-width: 600px; margin: 0 auto; padding-bottom: max(32px, env(safe-area-inset-bottom, 32px)); }
 .content.active { display: block; }
 
-/* ===== TODAY CARD ===== */
-.today-card {
-  background: linear-gradient(135deg, #22c55e, #15803d);
-  color: white;
-  border-radius: 18px;
-  padding: 18px 16px;
-  margin-bottom: 14px;
-  box-shadow: 0 4px 16px rgba(22,163,74,0.3);
-}
-.today-card h3 { font-size: 16px; font-weight: 800; }
-.today-card .desc { font-size: 13px; opacity: 0.88; margin-top: 4px; }
-.today-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
-.today-item { background: rgba(255,255,255,0.18); border-radius: 10px; padding: 10px 12px; }
-.today-item .tl { font-size: 11px; opacity: 0.8; }
-.today-item .tv { font-size: 15px; font-weight: 800; margin-top: 2px; }
-
-/* ===== GENERAL CARDS ===== */
-.card { background: white; border-radius: 14px; margin-bottom: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+/* CARDS */
+.card { background: #fff; border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 12px; overflow: hidden; }
 .card-body { padding: 14px 16px; }
+.card-title { font-weight: 800; font-size: 14px; color: #15803d; margin-bottom: 10px; }
 
-/* ===== PERIOD ACCORDION ===== */
-.period { background: white; border-radius: 14px; margin-bottom: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
-.period-header { padding: 14px 16px; display: flex; align-items: center; gap: 10px; cursor: pointer; min-height: 58px; }
-.period-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
-.period-info { flex: 1; }
-.period-title { font-weight: 700; font-size: 15px; }
-.period-date { font-size: 12px; color: #9ca3af; margin-top: 2px; }
-.period-arrow { color: #9ca3af; font-size: 12px; flex-shrink: 0; transition: transform 0.2s; }
-.period-body { padding: 0 16px 16px; display: none; }
-.period-body.open { display: block; }
+/* HERO CARD */
+.hero { background: linear-gradient(135deg, #22c55e, #15803d); color: white; border-radius: 18px; padding: 18px; margin-bottom: 14px; box-shadow: 0 4px 16px rgba(22,163,74,0.3); }
+.hero h2 { font-size: 16px; font-weight: 800; }
+.hero .sub { font-size: 13px; opacity: 0.85; margin-top: 3px; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.hero-item { background: rgba(255,255,255,0.18); border-radius: 10px; padding: 10px 12px; }
+.hero-item .hl { font-size: 11px; opacity: 0.8; }
+.hero-item .hv { font-size: 15px; font-weight: 800; margin-top: 2px; }
 
-/* ===== GRIDS ===== */
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 10px; }
-.info-card { background: #f0fdf4; border-radius: 10px; padding: 10px 12px; }
-.info-card .label { font-size: 11px; color: #6b7280; margin-bottom: 4px; }
-.info-card .val { font-size: 14px; font-weight: 700; color: #166534; }
+/* PERCENTILE BAR */
+.pct-wrap { margin: 10px 0 4px; }
+.pct-track { position: relative; height: 18px; border-radius: 9px; background: linear-gradient(90deg,#fee2e2 0%,#fef3c7 25%,#dcfce7 40%,#dcfce7 60%,#fef3c7 75%,#fee2e2 100%); overflow: visible; }
+.pct-pin { position: absolute; top: 50%; transform: translate(-50%,-50%); width: 24px; height: 24px; border-radius: 50%; background: #15803d; border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.25); transition: left 0.4s; }
+.pct-labels { display: flex; justify-content: space-between; font-size: 10px; color: #9ca3af; margin-top: 6px; }
+.pct-result { text-align: center; font-size: 13px; font-weight: 700; color: #15803d; margin-top: 6px; }
 
-/* ===== TAGS ===== */
-.tag         { display: inline-block; border-radius: 12px; padding: 3px 10px; font-size: 12px; margin: 2px; font-weight: 600; background: #dcfce7; color: #166534; }
-.tag.warn    { background: #fef3c7; color: #b45309; }
-.tag.good    { background: #d1fae5; color: #065f46; }
-.tag.red     { background: #fee2e2; color: #991b1b; }
-.tag.blue    { background: #dbeafe; color: #1d4ed8; }
+/* GRID */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.stat-box { background: #f0fdf4; border-radius: 12px; padding: 12px; text-align: center; }
+.stat-box .sl { font-size: 11px; color: #6b7280; }
+.stat-box .sv { font-size: 18px; font-weight: 800; color: #15803d; margin-top: 2px; }
+.stat-box .ss { font-size: 11px; color: #9ca3af; margin-top: 1px; }
 
-/* ===== NOTES ===== */
-.note { border-left: 3px solid #f59e0b; background: #fffbeb; padding: 10px 13px; border-radius: 0 10px 10px 0; font-size: 13px; color: #78350f; margin-top: 10px; line-height: 1.75; }
-.note.blue  { background: #eff6ff; border-color: #3b82f6; color: #1e3a8a; }
-.note.green { background: #f0fdf4; border-color: #22c55e; color: #14532d; }
+/* FORM */
+.form-section { background: #fff; border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 16px; margin-bottom: 12px; }
+.fl { font-size: 13px; font-weight: 700; color: #374151; margin-bottom: 6px; display: block; }
+.fi { width: 100%; height: 48px; border: 1.5px solid #d1d5db; border-radius: 10px; padding: 0 14px; font-size: 16px; color: #111; background: #fff; -webkit-appearance: none; }
+.fi:focus { outline: none; border-color: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,0.12); }
+.frow { margin-bottom: 12px; }
+.frow2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+.btn-save { width: 100%; height: 52px; background: linear-gradient(135deg, #22c55e, #15803d); color: white; border: none; border-radius: 14px; font-size: 16px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 12px rgba(22,163,74,0.3); margin-bottom: 14px; }
+.btn-save:active { transform: scale(0.98); }
 
-/* ===== SECTION TITLE ===== */
-.section-title { font-weight: 800; font-size: 15px; margin: 16px 0 10px; color: #15803d; }
+/* TYPE BUTTONS */
+.type-row { display: flex; gap: 8px; }
+.tb { flex: 1; height: 44px; border: 1.5px solid #d1d5db; border-radius: 10px; background: #fff; font-size: 13px; font-weight: 600; color: #6b7280; cursor: pointer; }
+.tb.on { border-color: #22c55e; background: #f0fdf4; color: #16a34a; }
 
-/* ===== CRY ===== */
-.cry-row { background: white; border-radius: 12px; padding: 14px; margin-bottom: 10px; box-shadow: 0 1px 6px rgba(0,0,0,0.07); }
-.cry-row h4 { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
-.cry-row p { font-size: 13px; color: #4b5563; line-height: 1.65; }
+/* SECTION TITLE */
+.stitle { font-weight: 800; font-size: 14px; color: #15803d; margin: 16px 0 10px; }
 
-/* ===== EMERGENCY ===== */
-.emergency { background: #fff1f2; border: 1px solid #fda4af; border-radius: 12px; padding: 14px 16px; margin-top: 12px; }
-.emergency h4 { color: #be123c; font-size: 14px; font-weight: 800; margin-bottom: 8px; }
-.emergency li { font-size: 13px; color: #9f1239; margin-left: 18px; margin-bottom: 5px; line-height: 1.65; }
+/* RECORD ITEMS */
+.rec-item { background: #fff; border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); display: flex; justify-content: space-between; align-items: flex-start; }
+.rec-main { flex: 1; }
+.rec-date { font-weight: 700; font-size: 14px; }
+.rec-sub { font-size: 12px; color: #6b7280; margin-top: 2px; }
+.rec-val { font-size: 13px; font-weight: 600; color: #15803d; margin-top: 4px; }
+.btn-del { background: none; border: none; color: #d1d5db; font-size: 18px; cursor: pointer; padding: 2px 4px; line-height: 1; }
+.btn-del:active { color: #ef4444; }
 
-/* ===== CHART ===== */
-.chart-wrap { background: white; border-radius: 14px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 14px; }
-.chart-title { font-weight: 800; font-size: 14px; margin-bottom: 14px; color: #15803d; }
-.bar-row { display: flex; align-items: center; margin-bottom: 10px; gap: 8px; }
-.bar-label { width: 64px; font-size: 12px; color: #6b7280; text-align: right; flex-shrink: 0; }
-.bar-track { flex: 1; background: #e5e7eb; border-radius: 6px; height: 26px; overflow: hidden; }
-.bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; padding-left: 10px; font-size: 11px; color: white; font-weight: 700; }
+/* PCT BADGE */
+.pb { display: inline-block; border-radius: 8px; padding: 2px 8px; font-size: 11px; font-weight: 700; margin-left: 4px; }
+.pb.top { background: #dbeafe; color: #1d4ed8; }
+.pb.mid { background: #dcfce7; color: #166534; }
+.pb.low { background: #fef3c7; color: #d97706; }
 
-/* ===== TABLE ===== */
-table { width: 100%; font-size: 13px; border-collapse: collapse; }
-th { padding: 10px 8px; text-align: left; background: #f0fdf4; color: #166534; font-weight: 700; }
-td { padding: 10px 8px; border-bottom: 1px solid #f3f4f6; }
-tr:last-child td { border-bottom: none; }
+/* NOTES */
+.note { border-left: 3px solid #22c55e; background: #f0fdf4; padding: 10px 13px; border-radius: 0 10px 10px 0; font-size: 13px; color: #14532d; line-height: 1.75; margin-bottom: 12px; }
+.note.yellow { background: #fffbeb; border-color: #f59e0b; color: #78350f; }
+.note.blue { background: #eff6ff; border-color: #3b82f6; color: #1e3a8a; }
 
-/* ===== RECORD TAB ===== */
-.record-form { background: white; border-radius: 14px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 14px; }
-.form-label { font-size: 13px; font-weight: 700; color: #374151; margin-bottom: 6px; display: block; }
-.form-input {
-  width: 100%;
-  height: 48px;
-  border: 1.5px solid #d1d5db;
-  border-radius: 10px;
-  padding: 0 14px;
-  font-size: 16px;
-  color: #111827;
-  background: #fff;
-  transition: border-color 0.15s;
-  -webkit-appearance: none;
-  appearance: none;
-}
-.form-input:focus { outline: none; border-color: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,0.15); }
-.form-row { margin-bottom: 14px; }
-.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
-.btn-primary {
-  width: 100%;
-  height: 52px;
-  background: linear-gradient(135deg, #22c55e, #15803d);
-  color: white;
-  border: none;
-  border-radius: 14px;
-  font-size: 16px;
-  font-weight: 800;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(22,163,74,0.3);
-  margin-bottom: 4px;
-}
-.btn-primary:active { transform: scale(0.98); }
-.btn-del { background: none; border: none; color: #ef4444; font-size: 12px; cursor: pointer; padding: 6px 8px; }
+/* TIP ROWS */
+.tip { display: flex; gap: 10px; align-items: flex-start; background: #fff; border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.tip-icon { font-size: 22px; flex-shrink: 0; }
+.tip-text h4 { font-size: 13px; font-weight: 700; }
+.tip-text p { font-size: 12px; color: #4b5563; margin-top: 3px; line-height: 1.6; }
 
-/* ===== COMPARISON BADGES ===== */
-.cmp { display: inline-block; border-radius: 8px; padding: 2px 8px; font-size: 11px; font-weight: 700; }
-.cmp.high { background: #dbeafe; color: #1d4ed8; }
-.cmp.avg  { background: #dcfce7; color: #166534; }
-.cmp.low  { background: #fef3c7; color: #d97706; }
+/* EMPTY */
+.empty { text-align: center; padding: 36px 16px; color: #9ca3af; font-size: 14px; line-height: 2.2; }
 
-.record-empty { text-align: center; padding: 40px 16px; color: #9ca3af; font-size: 14px; line-height: 2.2; }
+/* SVG CHART */
+.chart-box { background: #fff; border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 14px 14px 10px; margin-bottom: 12px; }
+.chart-box svg { width: 100%; height: auto; display: block; }
+.chart-toggle { display: flex; background: #f0fdf4; border-radius: 10px; padding: 3px; margin-bottom: 12px; }
+.ct-btn { flex: 1; text-align: center; padding: 8px; font-size: 13px; font-weight: 600; color: #6b7280; border-radius: 8px; cursor: pointer; }
+.ct-btn.on { background: #fff; color: #16a34a; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
 
-/* ===== SUB TABS ===== */
-.sub-tabs {
-  display: flex;
-  background: #e8f5e9;
-  border-radius: 12px;
-  padding: 4px;
-  margin-bottom: 14px;
-  gap: 2px;
-}
-.sub-tab {
-  flex: 1;
-  text-align: center;
-  padding: 9px 4px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #6b7280;
-  border-radius: 9px;
-  cursor: pointer;
-  transition: all 0.15s;
-  white-space: nowrap;
-}
-.sub-tab.active { background: #fff; color: #16a34a; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
-.sub-content { display: none; }
-.sub-content.active { display: block; }
+/* DIAPER QUICK */
+.dq-row { display: flex; gap: 10px; margin-bottom: 14px; }
+.dq-btn { flex: 1; height: 70px; border: 2px solid #e5e7eb; border-radius: 14px; background: #fff; font-size: 22px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+.dq-btn span { font-size: 12px; font-weight: 700; color: #374151; }
+.dq-btn:active { background: #f0fdf4; border-color: #22c55e; }
 
-/* ===== TYPE BUTTON GROUP ===== */
-.btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
-.type-btn {
-  flex: 1;
-  min-width: 0;
-  height: 44px;
-  border: 1.5px solid #d1d5db;
-  border-radius: 10px;
-  background: #fff;
-  font-size: 13px;
-  font-weight: 600;
-  color: #6b7280;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.type-btn.active { border-color: #22c55e; background: #f0fdf4; color: #16a34a; }
-
-/* ===== RESPONSIVE ===== */
 @media (max-width: 360px) {
-  .grid3 { grid-template-columns: 1fr 1fr; }
+  .g3 { grid-template-columns: 1fr 1fr; }
   .tab { padding: 0 10px; font-size: 12px; }
-  .today-item .tv { font-size: 14px; }
 }
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <div class="header">
   <h1>🌱 새싹이 성장 가이드</h1>
-  <div class="badge-row">
-    <span class="badge dday" id="ddayBadge">🌱 D+5</span>
-    <span class="badge" id="ageBadge">생후 5일</span>
+  <div class="header-badges">
+    <span class="hbadge big" id="ddayBadge">🌱 D+0</span>
+    <span class="hbadge" id="ageBadge">생후 0일</span>
   </div>
 </div>
 
+<!-- TABS -->
 <div class="tabs">
-  <div class="tab active" data-tab="today" onclick="showTab('today',this)">📍 지금</div>
-  <div class="tab" data-tab="record" onclick="showTab('record',this)">📊 성장기록</div>
-  <div class="tab" data-tab="month1" onclick="showTab('month1',this)">0~1개월</div>
-  <div class="tab" data-tab="month2" onclick="showTab('month2',this)">2~3개월</div>
-  <div class="tab" data-tab="month4" onclick="showTab('month4',this)">4~6개월</div>
-  <div class="tab" data-tab="month7" onclick="showTab('month7',this)">7~12개월</div>
-  <div class="tab" data-tab="cry" onclick="showTab('cry',this)">울음해독</div>
-  <div class="tab" data-tab="growth" onclick="showTab('growth',this)">성장차트</div>
+  <div class="tab active" data-tab="now" onclick="showTab('now',this)">📍 지금</div>
+  <div class="tab" data-tab="growth" onclick="showTab('growth',this)">📊 성장기록</div>
+  <div class="tab" data-tab="feed" onclick="showTab('feed',this)">🍼 수유</div>
+  <div class="tab" data-tab="sleep" onclick="showTab('sleep',this)">💤 수면</div>
+  <div class="tab" data-tab="diaper" onclick="showTab('diaper',this)">💩 기저귀</div>
 </div>
 
-<!-- ==================== 지금 ==================== -->
-<div id="today" class="content active">
-  <div class="today-card">
-    <h3 id="todayTitle">📍 현재 — 생후 5일 (1주차)</h3>
-    <p class="desc" id="todayDesc">출생 후 첫 번째 주. 4일차 체중 회복으로 순조로운 시작! 🎉</p>
-    <div class="today-grid">
-      <div class="today-item"><div class="tl">예상 체중</div><div class="tv" id="todayWeight">3.7~3.9kg</div></div>
-      <div class="today-item"><div class="tl">수유 간격</div><div class="tv" id="todayFeedFreq">2~3시간</div></div>
-      <div class="today-item"><div class="tl">1회 수유량</div><div class="tv" id="todayFeedAmt">60~90ml</div></div>
-      <div class="today-item"><div class="tl">수면</div><div class="tv" id="todaySleep">16~18시간/일</div></div>
+<!-- ====== 📍 지금 ====== -->
+<div id="now" class="content active">
+  <div class="hero">
+    <h2 id="nowTitle">📍 현재 — 생후 0일</h2>
+    <p class="sub" id="nowSub">새싹이가 무럭무럭 자라고 있어요 🌱</p>
+    <div class="hero-grid">
+      <div class="hero-item"><div class="hl">마지막 체중</div><div class="hv" id="nowWeight">—</div></div>
+      <div class="hero-item"><div class="hl">마지막 키</div><div class="hv" id="nowHeight">—</div></div>
+      <div class="hero-item"><div class="hl">오늘 수유</div><div class="hv" id="nowFeed">—</div></div>
+      <div class="hero-item"><div class="hl">오늘 수면</div><div class="hv" id="nowSleep">—</div></div>
     </div>
   </div>
-  <div class="note green" id="todayNote">✅ <b>4일차 체중 회복은 훌륭한 신호!</b> 보통 7~10일 내 회복인데 4일만에 달성. 수유가 잘 되고 있어요.</div>
-  <div class="section-title">이번 시기 주요 특징</div>
-  <div class="grid2" id="todayFeatures">
-    <div class="info-card"><div class="val" style="font-size:13px;font-weight:500">⏰ 하루 16~18시간 수면, 1~2시간 각성</div></div>
-    <div class="info-card"><div class="val" style="font-size:13px;font-weight:500">🍼 태변→노란 겨자색으로 변화 중</div></div>
-    <div class="info-card"><div class="val" style="font-size:13px;font-weight:500">👁️ 20~30cm 거리 인식 (엄마 얼굴)</div></div>
-    <div class="info-card"><div class="val" style="font-size:13px;font-weight:500">🫁 호흡 40~60회/분 (불규칙 정상)</div></div>
-  </div>
-  <div class="section-title">지금 챙길 것들</div>
-  <div class="note blue" id="todayTodo">📋 <b>이번 주 체크리스트</b><br>• 황달 수치 모니터링 (3~5일 피크)<br>• 배꼽 소독 (마르고 떨어질 때까지)<br>• 신생아 청각·대사이상 검사<br>• 비타민D 400IU/일 시작 (모유수유 필수)</div>
-</div>
-
-<!-- ==================== 성장기록 ==================== -->
-<div id="record" class="content">
-
-  <!-- 서브탭 -->
-  <div class="sub-tabs">
-    <div class="sub-tab active" data-sub="growth-rec" onclick="showSub('growth-rec',this)">⚖️ 성장측정</div>
-    <div class="sub-tab" data-sub="feed-rec" onclick="showSub('feed-rec',this)">🍼 수유기록</div>
-    <div class="sub-tab" data-sub="sleep-rec" onclick="showSub('sleep-rec',this)">💤 수면기록</div>
-    <div class="sub-tab" data-sub="diaper-rec" onclick="showSub('diaper-rec',this)">💩 기저귀</div>
-  </div>
-
-  <!-- ① 성장 측정 -->
-  <div id="growth-rec" class="sub-content active">
-    <div class="record-form">
-      <div class="section-title" style="margin-top:0">📏 체중 · 키 측정</div>
-      <div class="form-row">
-        <label class="form-label">측정 날짜</label>
-        <input type="date" class="form-input" id="recDate">
-      </div>
-      <div class="form-row-2">
+  <div id="nowPctCard" style="display:none" class="card">
+    <div class="card-body">
+      <div class="card-title">📊 또래 대비 위치</div>
+      <div class="g2">
         <div>
-          <label class="form-label">체중 (kg)</label>
-          <input type="number" class="form-input" id="recWeight" placeholder="3.70" step="0.01" min="1" max="20">
+          <div style="font-size:12px;color:#6b7280;margin-bottom:4px">⚖️ 체중</div>
+          <div class="pct-wrap" id="wPctWrap"></div>
         </div>
         <div>
-          <label class="form-label">키 (cm)</label>
-          <input type="number" class="form-input" id="recHeight" placeholder="51.0" step="0.1" min="30" max="110">
+          <div style="font-size:12px;color:#6b7280;margin-bottom:4px">📏 키</div>
+          <div class="pct-wrap" id="hPctWrap"></div>
         </div>
-      </div>
-      <div class="form-row" style="margin-bottom:0">
-        <label class="form-label">메모 (선택)</label>
-        <input type="text" class="form-input" id="recNote" placeholder="예: 1개월 검진, 예방접종 날...">
       </div>
     </div>
-    <button class="btn-primary" onclick="addRecord()">+ 기록 저장</button>
-    <div class="section-title">📋 측정 기록 <span id="recCount" style="font-weight:400;font-size:13px;color:#6b7280"></span></div>
-    <div id="recList"><div class="record-empty">아직 기록이 없어요.<br>첫 번째 측정값을 입력해 보세요! 🌱</div></div>
   </div>
-
-  <!-- ② 수유 기록 -->
-  <div id="feed-rec" class="sub-content">
-    <div class="record-form">
-      <div class="section-title" style="margin-top:0">🍼 수유 기록</div>
-      <div class="form-row">
-        <label class="form-label">수유 시각</label>
-        <input type="datetime-local" class="form-input" id="feedTime">
-      </div>
-      <div class="form-row">
-        <label class="form-label">수유 방법</label>
-        <div class="btn-group" id="feedTypeGroup">
-          <button class="type-btn active" data-val="모유" onclick="selectType(this,'feedTypeGroup')">🤱 모유</button>
-          <button class="type-btn" data-val="분유" onclick="selectType(this,'feedTypeGroup')">🍼 분유</button>
-          <button class="type-btn" data-val="혼합" onclick="selectType(this,'feedTypeGroup')">✨ 혼합</button>
-        </div>
-      </div>
-      <div class="form-row-2">
-        <div>
-          <label class="form-label">양 (ml, 선택)</label>
-          <input type="number" class="form-input" id="feedAmt" placeholder="80" step="5" min="0" max="300">
-        </div>
-        <div>
-          <label class="form-label">수유 시간 (분, 선택)</label>
-          <input type="number" class="form-input" id="feedMin" placeholder="15" step="1" min="0" max="60">
-        </div>
-      </div>
-      <div class="form-row" style="margin-bottom:0">
-        <label class="form-label">메모 (선택)</label>
-        <input type="text" class="form-input" id="feedNote" placeholder="예: 잘 먹음, 토했음...">
-      </div>
-    </div>
-    <button class="btn-primary" onclick="addFeed()">+ 수유 저장</button>
-    <div class="section-title">📋 수유 기록 <span id="feedCount" style="font-weight:400;font-size:13px;color:#6b7280"></span></div>
-    <div id="feedList"><div class="record-empty">아직 기록이 없어요. 🍼</div></div>
-  </div>
-
-  <!-- ③ 수면 기록 -->
-  <div id="sleep-rec" class="sub-content">
-    <div class="record-form">
-      <div class="section-title" style="margin-top:0">💤 수면 기록</div>
-      <div class="form-row-2">
-        <div>
-          <label class="form-label">잠든 시각</label>
-          <input type="datetime-local" class="form-input" id="sleepStart">
-        </div>
-        <div>
-          <label class="form-label">일어난 시각</label>
-          <input type="datetime-local" class="form-input" id="sleepEnd">
-        </div>
-      </div>
-      <div class="form-row">
-        <label class="form-label">수면 종류</label>
-        <div class="btn-group" id="sleepTypeGroup">
-          <button class="type-btn active" data-val="밤잠" onclick="selectType(this,'sleepTypeGroup')">🌙 밤잠</button>
-          <button class="type-btn" data-val="낮잠" onclick="selectType(this,'sleepTypeGroup')">☀️ 낮잠</button>
-        </div>
-      </div>
-      <div class="form-row" style="margin-bottom:0">
-        <label class="form-label">메모 (선택)</label>
-        <input type="text" class="form-input" id="sleepNote" placeholder="예: 잘 잠, 자주 깸...">
-      </div>
-    </div>
-    <button class="btn-primary" onclick="addSleep()">+ 수면 저장</button>
-    <div class="section-title">📋 수면 기록 <span id="sleepCount" style="font-weight:400;font-size:13px;color:#6b7280"></span></div>
-    <div id="sleepList"><div class="record-empty">아직 기록이 없어요. 💤</div></div>
-  </div>
-
-  <!-- ④ 기저귀 기록 -->
-  <div id="diaper-rec" class="sub-content">
-    <div class="record-form">
-      <div class="section-title" style="margin-top:0">💩 기저귀 기록</div>
-      <div class="form-row">
-        <label class="form-label">시각</label>
-        <input type="datetime-local" class="form-input" id="diaperTime">
-      </div>
-      <div class="form-row">
-        <label class="form-label">종류</label>
-        <div class="btn-group" id="diaperTypeGroup">
-          <button class="type-btn active" data-val="소변" onclick="selectType(this,'diaperTypeGroup')">💧 소변</button>
-          <button class="type-btn" data-val="대변" onclick="selectType(this,'diaperTypeGroup')">💩 대변</button>
-          <button class="type-btn" data-val="혼합" onclick="selectType(this,'diaperTypeGroup')">💧💩 혼합</button>
-        </div>
-      </div>
-      <div class="form-row" style="margin-bottom:0">
-        <label class="form-label">메모 (색깔·상태 등, 선택)</label>
-        <input type="text" class="form-input" id="diaperNote" placeholder="예: 황금색, 묽음...">
-      </div>
-    </div>
-    <button class="btn-primary" onclick="addDiaper()">+ 기저귀 저장</button>
-    <div class="section-title">📋 기저귀 기록 <span id="diaperCount" style="font-weight:400;font-size:13px;color:#6b7280"></span> <span id="diaperToday" style="font-weight:600;font-size:13px;color:#16a34a"></span></div>
-    <div id="diaperList"><div class="record-empty">아직 기록이 없어요. 💩</div></div>
-  </div>
-
+  <div class="stitle">💡 이 시기 핵심 포인트</div>
+  <div id="nowTips"></div>
+  <div id="nowNote"></div>
 </div>
 
-<!-- ==================== 0~1개월 ==================== -->
-<div id="month1" class="content">
-  <div class="period" style="border-left:4px solid #22c55e">
-    <div class="period-header" onclick="togglePeriod(this)">
-      <div class="period-dot" style="background:#22c55e"></div>
-      <div class="period-info">
-        <div class="period-title">1~2주 (신생아 초기)</div>
-        <div class="period-date">5/1 ~ 5/14</div>
-      </div>
-      <div class="period-arrow">▼</div>
-    </div>
-    <div class="period-body">
-      <div class="grid3">
-        <div class="info-card"><div class="label">💤 수면</div><div class="val">16~18시간</div></div>
-        <div class="info-card"><div class="label">🍼 수유</div><div class="val">8~12회/일</div></div>
-        <div class="info-card"><div class="label">💩 배변</div><div class="val">3~8회/일</div></div>
-      </div>
-      <div class="grid2" style="margin-top:8px">
-        <div class="info-card"><div class="label">📏 성장속도</div><div class="val">+0.5~1cm/주</div></div>
-        <div class="info-card"><div class="label">⚖️ 체중증가</div><div class="val">+150~200g/주</div></div>
-      </div>
-      <div class="note">⚠️ 이 시기 가장 힘든 것: <b>밤낮 구분 없는 수유.</b> 생체시계가 아직 없음. 2~3시간마다 무조건 깨워야 해요.</div>
-      <div style="margin-top:8px">
-        <span class="tag">배꼽 소독</span>
-        <span class="tag">황달 모니터</span>
-        <span class="tag good">체중 회복 완료 ✅</span>
-        <span class="tag">신생아 검사</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="period" style="border-left:4px solid #16a34a">
-    <div class="period-header" onclick="togglePeriod(this)">
-      <div class="period-dot" style="background:#16a34a"></div>
-      <div class="period-info">
-        <div class="period-title">2~4주 (첫 번째 성장급등)</div>
-        <div class="period-date">5/14 ~ 5/29</div>
-      </div>
-      <div class="period-arrow">▼</div>
-    </div>
-    <div class="period-body">
-      <div class="note" style="margin-top:0">🔥 <b>첫 번째 성장급등기 (2~3주)!</b> 갑자기 더 자주 먹으려 하고 보채는 시간 증가. 젖이 부족한 게 아니라 성장하는 것!</div>
-      <div class="grid3" style="margin-top:10px">
-        <div class="info-card"><div class="label">💤 수면</div><div class="val">15~17시간</div></div>
-        <div class="info-card"><div class="label">🍼 수유</div><div class="val">10~12회/일</div></div>
-        <div class="info-card"><div class="label">😊 발달</div><div class="val">반사적 미소</div></div>
-      </div>
-      <div style="margin-top:8px">
-        <span class="tag warn">성장급등 주의</span>
-        <span class="tag">소화불량↑</span>
-        <span class="tag">젖량 증가 필요</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="period" style="border-left:4px solid #15803d">
-    <div class="period-header" onclick="togglePeriod(this)">
-      <div class="period-dot" style="background:#15803d"></div>
-      <div class="period-info">
-        <div class="period-title">1개월 건강검진</div>
-        <div class="period-date">6/1 이후 소아과</div>
-      </div>
-      <div class="period-arrow">▼</div>
-    </div>
-    <div class="period-body">
-      <div class="grid2">
-        <div class="info-card"><div class="label">예상 체중</div><div class="val">4.5~5.0kg</div></div>
-        <div class="info-card"><div class="label">예상 키</div><div class="val">53~55cm</div></div>
-      </div>
-      <div class="grid3" style="margin-top:8px">
-        <div class="info-card"><div class="label">💤 수면</div><div class="val">14~16시간</div></div>
-        <div class="info-card"><div class="label">🍼 수유</div><div class="val">7~9회/일</div></div>
-        <div class="info-card"><div class="label">😊 발달</div><div class="val">얼굴 따라보기</div></div>
-      </div>
-      <div class="note blue" style="margin-top:10px">💉 <b>1개월 건강검진</b> (소아과) — 발육 평가, B형간염 2차 접종</div>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== 2~3개월 ==================== -->
-<div id="month2" class="content">
-  <div class="period" style="border-left:4px solid #4ade80">
-    <div class="period-header" onclick="togglePeriod(this)">
-      <div class="period-dot" style="background:#4ade80"></div>
-      <div class="period-info">
-        <div class="period-title">2개월</div>
-        <div class="period-date">약 7월 초</div>
-      </div>
-      <div class="period-arrow">▼</div>
-    </div>
-    <div class="period-body">
-      <div class="grid2">
-        <div class="info-card"><div class="label">예상 체중</div><div class="val">5.0~5.6kg</div></div>
-        <div class="info-card"><div class="label">예상 키</div><div class="val">56~58cm</div></div>
-      </div>
-      <div class="grid3" style="margin-top:8px">
-        <div class="info-card"><div class="label">💤 수면</div><div class="val">14~16시간</div></div>
-        <div class="info-card"><div class="label">🍼 수유</div><div class="val">6~8회/일</div></div>
-        <div class="info-card"><div class="label">🌙 밤수면</div><div class="val">4~5시간</div></div>
-      </div>
-      <div class="note green" style="margin-top:10px">😊 <b>사회적 미소 시작!</b> 엄마 아빠 얼굴 보고 방긋. 눈 맞춤 늘어남. 소리 반응↑</div>
-      <div style="margin-top:8px">
-        <span class="tag warn">6주 성장급등</span>
-        <span class="tag good">사회적 미소</span>
-        <span class="tag">옹알이 시작</span>
-      </div>
-      <div class="note blue" style="margin-top:8px">💉 <b>2개월 접종:</b> DTaP, 폴리오, b형헤모필루스, 폐렴구균, 로타바이러스</div>
-    </div>
-  </div>
-
-  <div class="period" style="border-left:4px solid #34d399">
-    <div class="period-header" onclick="togglePeriod(this)">
-      <div class="period-dot" style="background:#34d399"></div>
-      <div class="period-info">
-        <div class="period-title">3개월</div>
-        <div class="period-date">약 8월 초</div>
-      </div>
-      <div class="period-arrow">▼</div>
-    </div>
-    <div class="period-body">
-      <div class="grid2">
-        <div class="info-card"><div class="label">예상 체중</div><div class="val">6.0~6.5kg</div></div>
-        <div class="info-card"><div class="label">예상 키</div><div class="val">59~61cm</div></div>
-      </div>
-      <div class="grid3" style="margin-top:8px">
-        <div class="info-card"><div class="label">💤 수면</div><div class="val">13~15시간</div></div>
-        <div class="info-card"><div class="label">🌙 밤수면</div><div class="val">5~6시간</div></div>
-        <div class="info-card"><div class="label">🍼 수유</div><div class="val">5~6회/일</div></div>
-      </div>
-      <div class="note" style="margin-top:10px">⚠️ <b>3~4개월 수면퇴행 주의!</b> 잘 자던 아이가 갑자기 자주 깸. 발달 급등 때문. 1~3주 지나면 자연히 회복.</div>
-      <div style="margin-top:8px">
-        <span class="tag good">목 가누기 시작</span>
-        <span class="tag good">손으로 물건 잡기</span>
-        <span class="tag warn">3~4개월 수면퇴행</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== 4~6개월 ==================== -->
-<div id="month4" class="content">
-  <div class="period" style="border-left:4px solid #f97316">
-    <div class="period-header" onclick="togglePeriod(this)">
-      <div class="period-dot" style="background:#f97316"></div>
-      <div class="period-info">
-        <div class="period-title">4개월</div>
-        <div class="period-date">약 9월 초</div>
-      </div>
-      <div class="period-arrow">▼</div>
-    </div>
-    <div class="period-body">
-      <div class="grid2">
-        <div class="info-card"><div class="label">예상 체중</div><div class="val">6.7~7.0kg</div></div>
-        <div class="info-card"><div class="label">예상 키</div><div class="val">62~64cm</div></div>
-      </div>
-      <div class="note green" style="margin-top:10px">🎯 <b>출생 체중의 약 2배</b> 도달하는 시기! 뒤집기 준비. 수면 패턴이 규칙적으로 변화 시작.</div>
-      <div style="margin-top:8px">
-        <span class="tag good">뒤집기 시작</span>
-        <span class="tag good">소리 내며 웃기</span>
-        <span class="tag warn">4개월 수면퇴행</span>
-        <span class="tag">이앓이 준비</span>
-      </div>
-      <div class="note blue" style="margin-top:8px">💉 <b>4개월 접종:</b> DTaP, 폴리오, b형헤모필루스, 폐렴구균, 로타바이러스 2차</div>
-    </div>
-  </div>
-
-  <div class="period" style="border-left:4px solid #eab308">
-    <div class="period-header" onclick="togglePeriod(this)">
-      <div class="period-dot" style="background:#eab308"></div>
-      <div class="period-info">
-        <div class="period-title">6개월 — 이유식 시작!</div>
-        <div class="period-date">약 11월 초</div>
-      </div>
-      <div class="period-arrow">▼</div>
-    </div>
-    <div class="period-body">
-      <div class="grid2">
-        <div class="info-card"><div class="label">예상 체중</div><div class="val">7.5~8.2kg</div></div>
-        <div class="info-card"><div class="label">예상 키</div><div class="val">65~68cm</div></div>
-      </div>
-      <div class="note" style="margin-top:10px">🥣 <b>이유식 시작 시기!</b> 6개월부터 철분 포함 이유식 권장. 쌀미음부터 천천히.</div>
-      <div style="margin-top:8px">
-        <span class="tag good">앉기 시도</span>
-        <span class="tag good">이유식 시작</span>
-        <span class="tag good">밤 6~8시간 연속 수면</span>
-        <span class="tag warn">분리불안 시작</span>
-      </div>
-      <div class="note blue" style="margin-top:8px">💉 <b>6개월:</b> DTaP 3차, 폴리오, 독감(10월부터), B형간염 3차</div>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== 7~12개월 ==================== -->
-<div id="month7" class="content">
-  <div class="period" style="border-left:4px solid #22c55e">
-    <div class="period-header" onclick="togglePeriod(this)">
-      <div class="period-dot" style="background:#22c55e"></div>
-      <div class="period-info">
-        <div class="period-title">7~9개월</div>
-        <div class="period-date">2026년 12월 ~ 2027년 2월</div>
-      </div>
-      <div class="period-arrow">▼</div>
-    </div>
-    <div class="period-body">
-      <div class="grid2">
-        <div class="info-card"><div class="label">예상 체중</div><div class="val">8.5~9.5kg</div></div>
-        <div class="info-card"><div class="label">예상 키</div><div class="val">68~73cm</div></div>
-      </div>
-      <div style="margin-top:8px">
-        <span class="tag good">기어다니기</span>
-        <span class="tag good">혼자 앉기</span>
-        <span class="tag good">잡고 서기</span>
-        <span class="tag warn">분리불안 피크</span>
-        <span class="tag">첫 이 나기</span>
-        <span class="tag">손가락 음식 시도</span>
-      </div>
-      <div class="note" style="margin-top:10px">⚠️ <b>낯가림 + 분리불안 최고조.</b> 엄마아빠만 찾고 낯선 사람 보면 울음. 정상 발달 신호!</div>
-    </div>
-  </div>
-
-  <div class="period" style="border-left:4px solid #06b6d4">
-    <div class="period-header" onclick="togglePeriod(this)">
-      <div class="period-dot" style="background:#06b6d4"></div>
-      <div class="period-info">
-        <div class="period-title">10~12개월 — 돌잔치 준비!</div>
-        <div class="period-date">2027년 3월 ~ 5월</div>
-      </div>
-      <div class="period-arrow">▼</div>
-    </div>
-    <div class="period-body">
-      <div class="grid2">
-        <div class="info-card"><div class="label">예상 체중</div><div class="val">9.5~10.5kg</div></div>
-        <div class="info-card"><div class="label">예상 키</div><div class="val">73~78cm</div></div>
-      </div>
-      <div class="note green" style="margin-top:10px">🎂 <b>생후 1년:</b> 출생 체중의 약 3배, 키는 약 1.5배. 첫 걸음마 시도. 첫 단어 (엄마/아빠).</div>
-      <div style="margin-top:8px">
-        <span class="tag good">첫 걸음마</span>
-        <span class="tag good">첫 단어</span>
-        <span class="tag good">컵으로 마시기</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== 울음해독 ==================== -->
-<div id="cry" class="content">
-  <div class="section-title" style="margin-top:0">😭 울음 종류별 해독 가이드</div>
-  <div class="cry-row">
-    <h4>🍼 배고픔 (60~70%)</h4>
-    <p>리듬감 있는 "응애응애", 입 오물거림, 손을 입으로 가져감, 고개 돌리며 젖 찾기(루팅 반사). 마지막 수유 후 2~3시간 경과.</p>
-  </div>
-  <div class="cry-row">
-    <h4>💩 기저귀 (젖거나 더럽거나)</h4>
-    <p>갑작스럽고 짧은 울음. 기저귀 확인하면 바로 해결. 신생아는 대변 후 피부 자극으로 울기도 함.</p>
-  </div>
-  <div class="cry-row">
-    <h4>😴 졸린데 못 자는 울음</h4>
-    <p>칭얼거리는 약한 울음. 눈 비비기, 하품, 멍한 표정. 이때 바로 재워야 함 — 늦으면 오히려 흥분해서 더 못 잠.</p>
-  </div>
-  <div class="cry-row">
-    <h4>🤗 안아달라는 울음</h4>
-    <p>안으면 바로 그침. 내려놓으면 다시 울기 시작. "안아주면 버릇 든다" — 신생아는 버릇 없음, 마음껏 안아줘도 됩니다!</p>
-  </div>
-  <div class="cry-row">
-    <h4>😣 가스 / 영아산통</h4>
-    <p>고음의 격렬한 울음. 다리를 배 쪽으로 당김. 배가 단단함. 특히 <b>저녁 6시~10시</b> 집중 (황혼 울음). 2주~3개월 피크.</p>
-  </div>
-  <div class="cry-row">
-    <h4>🌡️ 아프거나 불편한 울음</h4>
-    <p>평소와 다른 고음의 날카로운 울음. 달래도 계속됨. 열, 구토, 수유 거부 동반 시 즉시 병원.</p>
-  </div>
-  <div class="note" style="margin-top:4px">🕐 <b>저녁 황혼 울음 (Purple Crying):</b> 생후 2주~3개월, 특히 저녁에 이유 없이 우는 시기. 모든 아기가 겪음. 평균 2~3시간. 반드시 끝이 있어요.</div>
-  <div class="emergency">
-    <h4>🚨 즉시 병원 가야 하는 상황</h4>
-    <ul>
-      <li>38도 이상 발열 (특히 생후 3개월 미만)</li>
-      <li>달래도 2시간 이상 계속 우는 경우</li>
-      <li>울음소리가 날카롭고 비명 같을 때</li>
-      <li>수유 거부가 2회 이상 지속</li>
-      <li>무기력하게 잠만 자고 잘 깨지 않을 때</li>
-      <li>배가 딱딱하고 구토 동반</li>
-    </ul>
-  </div>
-</div>
-
-<!-- ==================== 성장차트 ==================== -->
+<!-- ====== 📊 성장기록 ====== -->
 <div id="growth" class="content">
-  <div class="chart-wrap">
-    <div class="chart-title">⚖️ 남아 체중 예상치 (WHO 50백분위수)</div>
-    <div class="bar-row"><div class="bar-label">출생</div><div class="bar-track"><div class="bar-fill" style="width:37%;background:linear-gradient(90deg,#22c55e,#15803d)">3.7kg ✅</div></div></div>
-    <div class="bar-row"><div class="bar-label">1개월</div><div class="bar-track"><div class="bar-fill" style="width:44%;background:linear-gradient(90deg,#22c55e,#15803d)">~4.5kg</div></div></div>
-    <div class="bar-row"><div class="bar-label">2개월</div><div class="bar-track"><div class="bar-fill" style="width:55%;background:linear-gradient(90deg,#22c55e,#15803d)">~5.6kg</div></div></div>
-    <div class="bar-row"><div class="bar-label">4개월</div><div class="bar-track"><div class="bar-fill" style="width:68%;background:linear-gradient(90deg,#22c55e,#15803d)">~6.8kg</div></div></div>
-    <div class="bar-row"><div class="bar-label">6개월</div><div class="bar-track"><div class="bar-fill" style="width:79%;background:linear-gradient(90deg,#22c55e,#15803d)">~7.9kg</div></div></div>
-    <div class="bar-row"><div class="bar-label">9개월</div><div class="bar-track"><div class="bar-fill" style="width:89%;background:linear-gradient(90deg,#22c55e,#15803d)">~8.9kg</div></div></div>
-    <div class="bar-row"><div class="bar-label">12개월</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#4ade80,#16a34a)">~9.7kg 🎂</div></div></div>
+  <div class="form-section">
+    <div class="stitle" style="margin-top:0">📏 측정값 입력</div>
+    <div class="frow">
+      <label class="fl">측정 날짜</label>
+      <input type="date" class="fi" id="gDate">
+    </div>
+    <div class="frow2">
+      <div>
+        <label class="fl">체중 (kg)</label>
+        <input type="number" class="fi" id="gWeight" placeholder="3.70" step="0.01" min="1" max="20">
+      </div>
+      <div>
+        <label class="fl">키 (cm)</label>
+        <input type="number" class="fi" id="gHeight" placeholder="51.0" step="0.1" min="30" max="110">
+      </div>
+    </div>
+    <div class="frow" style="margin-bottom:0">
+      <label class="fl">메모 (선택)</label>
+      <input type="text" class="fi" id="gNote" placeholder="예: 1개월 검진...">
+    </div>
+  </div>
+  <button class="btn-save" onclick="saveGrowth()">+ 기록 저장</button>
+
+  <!-- CHART -->
+  <div id="chartArea" style="display:none">
+    <div class="chart-toggle">
+      <div class="ct-btn on" id="ctW" onclick="switchChart('w')">⚖️ 체중</div>
+      <div class="ct-btn" id="ctH" onclick="switchChart('h')">📏 키</div>
+    </div>
+    <div class="chart-box">
+      <div class="card-title" id="chartTitle">⚖️ 체중 성장 곡선 (WHO 기준)</div>
+      <svg id="growthSvg" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid meet"></svg>
+      <div style="display:flex;gap:12px;margin-top:8px;font-size:11px;color:#6b7280;flex-wrap:wrap">
+        <span><span style="display:inline-block;width:20px;height:3px;background:rgba(34,197,94,0.2);vertical-align:middle;border-radius:2px;margin-right:3px"></span>정상 범위 (P10~P90)</span>
+        <span><span style="display:inline-block;width:14px;height:2px;background:#22c55e;vertical-align:middle;margin-right:3px;border-top:2px dashed #22c55e"></span>평균 (P50)</span>
+        <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#15803d;vertical-align:middle;margin-right:3px"></span>새싹이</span>
+      </div>
+    </div>
   </div>
 
-  <div class="chart-wrap">
-    <div class="chart-title">📏 키 예상치 (남아 50백분위수)</div>
-    <div class="bar-row"><div class="bar-label">출생</div><div class="bar-track"><div class="bar-fill" style="width:66%;background:linear-gradient(90deg,#34d399,#059669)">49.9cm</div></div></div>
-    <div class="bar-row"><div class="bar-label">1개월</div><div class="bar-track"><div class="bar-fill" style="width:72%;background:linear-gradient(90deg,#34d399,#059669)">~54.7cm</div></div></div>
-    <div class="bar-row"><div class="bar-label">3개월</div><div class="bar-track"><div class="bar-fill" style="width:81%;background:linear-gradient(90deg,#34d399,#059669)">~61.4cm</div></div></div>
-    <div class="bar-row"><div class="bar-label">6개월</div><div class="bar-track"><div class="bar-fill" style="width:89%;background:linear-gradient(90deg,#34d399,#059669)">~67.6cm</div></div></div>
-    <div class="bar-row"><div class="bar-label">12개월</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#4ade80,#16a34a)">~75.7cm 🎂</div></div></div>
+  <div class="stitle">📋 기록 목록 <span id="gCount" style="font-weight:400;font-size:13px;color:#9ca3af"></span></div>
+  <div id="gList"><div class="empty">아직 기록이 없어요.<br>첫 번째 측정값을 입력해 보세요! 🌱</div></div>
+</div>
+
+<!-- ====== 🍼 수유 ====== -->
+<div id="feed" class="content">
+  <!-- 오늘 통계 -->
+  <div class="card" id="feedTodayCard">
+    <div class="card-body">
+      <div class="card-title">오늘 수유 현황</div>
+      <div class="g3">
+        <div class="stat-box"><div class="sl">횟수</div><div class="sv" id="ftCount">0</div><div class="ss">회</div></div>
+        <div class="stat-box"><div class="sl">총량</div><div class="sv" id="ftAmt">—</div><div class="ss">ml</div></div>
+        <div class="stat-box"><div class="sl">마지막</div><div class="sv" id="ftLast" style="font-size:14px">—</div></div>
+      </div>
+    </div>
   </div>
 
-  <div class="chart-wrap">
-    <div class="chart-title">🌙 월령별 수면 패턴</div>
-    <table>
-      <thead><tr><th>월령</th><th>총 수면</th><th>밤 연속</th><th>낮잠</th></tr></thead>
-      <tbody>
-        <tr><td>0~1개월</td><td>16~18시간</td><td>2~3시간</td><td>4~5회</td></tr>
-        <tr><td>2~3개월</td><td>14~16시간</td><td>4~6시간</td><td>3~4회</td></tr>
-        <tr><td>4~6개월</td><td>13~15시간</td><td>6~8시간</td><td>2~3회</td></tr>
-        <tr><td>7~9개월</td><td>12~14시간</td><td>8~10시간</td><td>2회</td></tr>
-        <tr><td>10~12개월</td><td>12~14시간</td><td>10~11시간</td><td>1~2회</td></tr>
-      </tbody>
-    </table>
+  <div class="form-section">
+    <div class="stitle" style="margin-top:0">🍼 수유 기록</div>
+    <div class="frow">
+      <label class="fl">수유 시각</label>
+      <input type="datetime-local" class="fi" id="fTime">
+    </div>
+    <div class="frow">
+      <label class="fl">방법</label>
+      <div class="type-row" id="fTypeG">
+        <button class="tb on" data-v="모유" onclick="selType(this,'fTypeG')">🤱 모유</button>
+        <button class="tb" data-v="분유" onclick="selType(this,'fTypeG')">🍼 분유</button>
+        <button class="tb" data-v="혼합" onclick="selType(this,'fTypeG')">✨ 혼합</button>
+      </div>
+    </div>
+    <div class="frow2" style="margin-bottom:0">
+      <div><label class="fl">양 (ml)</label><input type="number" class="fi" id="fAmt" placeholder="80" step="5" min="0" max="300"></div>
+      <div><label class="fl">시간 (분)</label><input type="number" class="fi" id="fMin" placeholder="15" step="1" min="0" max="60"></div>
+    </div>
   </div>
-  <div class="note">📌 <b>성장급등 시기:</b> 2~3주, 6주, 3개월, 6개월, 9개월.<br>이때 갑자기 더 많이 먹고 보채는 것 정상. 젖 부족이 아니에요!</div>
+  <button class="btn-save" onclick="saveFeed()">+ 수유 저장</button>
+
+  <div class="stitle">📋 최근 기록</div>
+  <div id="fList"><div class="empty">아직 기록이 없어요. 🍼</div></div>
+</div>
+
+<!-- ====== 💤 수면 ====== -->
+<div id="sleep" class="content">
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">오늘 수면 현황</div>
+      <div class="g2">
+        <div class="stat-box"><div class="sl">총 수면</div><div class="sv" id="stTotal">—</div><div class="ss">시간</div></div>
+        <div class="stat-box"><div class="sl">횟수</div><div class="sv" id="stCount">0</div><div class="ss">회</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="stitle" style="margin-top:0">💤 수면 기록</div>
+    <div class="frow2">
+      <div><label class="fl">잠든 시각</label><input type="datetime-local" class="fi" id="sStart"></div>
+      <div><label class="fl">일어난 시각</label><input type="datetime-local" class="fi" id="sEnd"></div>
+    </div>
+    <div class="frow" style="margin-bottom:0">
+      <label class="fl">종류</label>
+      <div class="type-row" id="sTypeG">
+        <button class="tb on" data-v="밤잠" onclick="selType(this,'sTypeG')">🌙 밤잠</button>
+        <button class="tb" data-v="낮잠" onclick="selType(this,'sTypeG')">☀️ 낮잠</button>
+      </div>
+    </div>
+  </div>
+  <button class="btn-save" onclick="saveSleep()">+ 수면 저장</button>
+
+  <div class="stitle">📋 최근 기록</div>
+  <div id="sList"><div class="empty">아직 기록이 없어요. 💤</div></div>
+</div>
+
+<!-- ====== 💩 기저귀 ====== -->
+<div id="diaper" class="content">
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">오늘 기저귀 현황</div>
+      <div class="g3">
+        <div class="stat-box"><div class="sl">전체</div><div class="sv" id="dtAll">0</div><div class="ss">회</div></div>
+        <div class="stat-box"><div class="sl">💧 소변</div><div class="sv" id="dtWet">0</div><div class="ss">회</div></div>
+        <div class="stat-box"><div class="sl">💩 대변</div><div class="sv" id="dtPoo">0</div><div class="ss">회</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stitle">빠른 기록</div>
+  <div class="dq-row">
+    <button class="dq-btn" onclick="quickDiaper('소변')">💧<span>소변</span></button>
+    <button class="dq-btn" onclick="quickDiaper('대변')">💩<span>대변</span></button>
+    <button class="dq-btn" onclick="quickDiaper('혼합')">💧💩<span>혼합</span></button>
+  </div>
+
+  <div class="form-section">
+    <div class="stitle" style="margin-top:0">상세 기록</div>
+    <div class="frow"><label class="fl">시각</label><input type="datetime-local" class="fi" id="dTime"></div>
+    <div class="frow">
+      <label class="fl">종류</label>
+      <div class="type-row" id="dTypeG">
+        <button class="tb on" data-v="소변" onclick="selType(this,'dTypeG')">💧 소변</button>
+        <button class="tb" data-v="대변" onclick="selType(this,'dTypeG')">💩 대변</button>
+        <button class="tb" data-v="혼합" onclick="selType(this,'dTypeG')">💧💩 혼합</button>
+      </div>
+    </div>
+    <div class="frow" style="margin-bottom:0"><label class="fl">메모 (색깔·상태)</label><input type="text" class="fi" id="dNote" placeholder="예: 황금색, 묽음..."></div>
+  </div>
+  <button class="btn-save" onclick="saveDiaper()">+ 기저귀 저장</button>
+
+  <div class="stitle">📋 최근 기록</div>
+  <div id="dList"><div class="empty">아직 기록이 없어요. 💩</div></div>
 </div>
 
 <script>
+/* ============================================================
+   CONSTANTS
+   ============================================================ */
 const BIRTH = new Date('2026-05-01T00:00:00');
-const WHO_WEIGHT = [3.53,4.47,5.57,6.37,7.00,7.51,7.93,8.30,8.62,8.90,9.16,9.40,9.65];
-const WHO_HEIGHT = [49.9,54.7,58.4,61.4,63.9,65.9,67.6,69.2,70.6,72.0,73.3,74.5,75.7];
 
-function getDays() {
-  return Math.floor((new Date() - BIRTH) / 86400000);
-}
+// WHO Boys weight-for-age [P3, P10, P25, P50, P75, P90, P97] kg
+const WHO_W = [
+  [2.5,2.9,3.2,3.5,3.9,4.2,4.6],
+  [3.4,3.8,4.2,4.5,5.0,5.4,5.8],
+  [4.3,4.7,5.1,5.6,6.1,6.6,7.1],
+  [5.0,5.4,5.9,6.4,7.0,7.5,8.0],
+  [5.6,6.0,6.5,7.0,7.7,8.2,8.7],
+  [6.1,6.5,7.0,7.5,8.3,8.8,9.3],
+  [6.4,6.8,7.4,7.9,8.7,9.3,9.8],
+  [6.7,7.1,7.7,8.3,9.1,9.7,10.3],
+  [7.0,7.4,8.0,8.6,9.5,10.2,10.8],
+  [7.2,7.7,8.3,8.9,9.8,10.5,11.2],
+  [7.5,7.9,8.5,9.2,10.1,10.9,11.6],
+  [7.7,8.1,8.8,9.4,10.4,11.2,11.9],
+  [7.8,8.4,9.0,9.6,10.6,11.5,12.2],
+];
+// WHO Boys height-for-age [P3, P10, P25, P50, P75, P90, P97] cm
+const WHO_H = [
+  [46.1,47.5,48.7,49.9,51.2,52.3,53.5],
+  [50.8,52.2,53.5,54.7,56.0,57.1,58.4],
+  [54.4,55.8,57.1,58.4,59.7,61.0,62.2],
+  [57.3,58.7,60.1,61.4,62.7,64.0,65.1],
+  [59.7,61.2,62.6,63.9,65.2,66.5,67.6],
+  [61.7,63.3,64.7,65.9,67.3,68.6,69.7],
+  [63.3,64.9,66.4,67.6,69.0,70.4,71.4],
+  [64.8,66.5,67.9,69.2,70.6,72.0,73.1],
+  [66.2,67.9,69.4,70.6,72.1,73.5,74.6],
+  [67.5,69.2,70.8,72.0,73.5,75.0,76.1],
+  [68.7,70.5,72.1,73.3,74.9,76.3,77.5],
+  [69.9,71.7,73.3,74.5,76.1,77.6,78.8],
+  [71.0,72.9,74.5,75.7,77.4,78.9,80.1],
+];
+const PCT_VALS = [3,10,25,50,75,90,97];
 
-function getAgeLabel(days) {
+/* ============================================================
+   UTILS
+   ============================================================ */
+function getDays() { return Math.floor((new Date() - BIRTH) / 86400000); }
+function getMonths(days) { return days / 30.44; }
+
+function ageLabel(days) {
   if (days < 7)  return `생후 ${days}일 (1주차)`;
   if (days < 14) return `생후 ${days}일 (2주차)`;
   if (days < 21) return `생후 ${days}일 (3주차)`;
@@ -765,96 +384,65 @@ function getAgeLabel(days) {
   return r > 0 ? `생후 ${m}개월 ${r}일` : `생후 ${m}개월`;
 }
 
-function getAgeInfo(days) {
-  if (days <= 7) return {
-    weight:'3.7~3.9kg', freq:'2~3시간', amt:'60~90ml', sleep:'16~18시간/일',
-    note:'✅ <b>4일차 체중 회복은 훌륭한 신호!</b> 보통 7~10일 내 회복인데 4일만에 달성. 수유가 잘 되고 있어요.',
-    features:['⏰ 하루 16~18시간 수면, 1~2시간 각성','🍼 태변(검정)→노란 겨자색 변화 중','👁️ 20~30cm 거리 인식 (엄마 얼굴)','🫁 호흡 40~60회/분 (불규칙 정상)'],
-    todo:'📋 <b>이번 주 체크리스트</b><br>• 황달 수치 모니터링 (3~5일 피크)<br>• 배꼽 소독 (마르고 떨어질 때까지)<br>• 신생아 청각·대사이상 검사<br>• 비타민D 400IU/일 시작'
-  };
-  if (days <= 14) return {
-    weight:'3.9~4.2kg', freq:'2~3시간', amt:'70~100ml', sleep:'16~17시간/일',
-    note:'🌱 배꼽이 거의 다 떨어질 시기. 체중이 꾸준히 늘고 있는지 체크해요!',
-    features:['🍼 수유 간격이 조금씩 안정화','💩 황금색 변으로 완전 전환','👁️ 시야 범위 서서히 확대','🤱 빨기 반사 강해짐'],
-    todo:'📋 <b>2주차 체크리스트</b><br>• 배꼽 소독 계속<br>• 수유 후 트림 꼭 시키기<br>• 황달 사라졌는지 확인<br>• 체중 꾸준히 증가 중인지 체크'
-  };
-  if (days <= 28) return {
-    weight:'4.2~4.8kg', freq:'2~3시간', amt:'90~120ml', sleep:'15~17시간/일',
-    note:'🔥 <b>2~3주 성장급등기!</b> 더 자주 먹으려 하는 건 정상. 젖이 부족한 게 아니에요.',
-    features:['📈 갑자기 더 많이 먹으려 함','😊 반사적 미소 시작','💪 목 근육 조금씩 발달','🌙 밤낮 구분 아직 없음'],
-    todo:'📋 <b>성장급등기 대처</b><br>• 수유 자주 해도 OK<br>• 엄마 젖량 부족 걱정 No<br>• 아기 체중 매주 체크<br>• 배꼽 완전히 떨어졌는지 확인'
-  };
-  if (days <= 60) return {
-    weight:'4.5~5.5kg', freq:'2.5~3시간', amt:'120~150ml', sleep:'14~16시간/일',
-    note:'😊 <b>사회적 미소가 시작돼요!</b> 엄마 아빠를 알아보고 방긋.',
-    features:['😊 사회적 미소 (6주 전후)','👂 목소리에 반응','👁️ 얼굴 따라 눈동자 움직임','🌙 밤에 조금씩 길게 자기 시작'],
-    todo:'📋 <b>1개월 체크리스트</b><br>• 1개월 건강검진 (소아과)<br>• B형간염 2차 접종<br>• 수면 패턴 기록 시작<br>• 비타민D 계속'
-  };
-  if (days <= 90) return {
-    weight:'5.5~6.5kg', freq:'3~4시간', amt:'150~180ml', sleep:'13~15시간/일',
-    note:'💪 <b>목 가누기 시작!</b> 엎드려 놀기(터미타임)를 시작해요.',
-    features:['💪 목 가누기 (엎드려 들기)','😄 소리 내며 웃기','🤲 손으로 물건 잡으려 함','⚠️ 3~4개월 수면퇴행 주의'],
-    todo:'📋 <b>2~3개월 체크리스트</b><br>• 2개월 접종 (DTaP, 폴리오 등)<br>• 터미타임 하루 2~3회<br>• 수면 루틴 만들기 시작<br>• 수면퇴행 대비하기'
-  };
-  if (days <= 120) return {
-    weight:'6.5~7.0kg', freq:'3.5~4시간', amt:'150~180ml', sleep:'13~14시간/일',
-    note:'🎯 <b>출생 체중 약 2배 도달!</b> 뒤집기 연습을 시작해요.',
-    features:['🔄 뒤집기 준비 시작','😂 소리 내며 크게 웃기','👁️ 색깔 인식','⚠️ 4개월 수면퇴행'],
-    todo:'📋 <b>4개월 체크리스트</b><br>• 4개월 접종<br>• 뒤집기 연습 공간 확보<br>• 낙상 주의 (뒤집기 성공 후)<br>• 이유식 준비 공부 시작'
-  };
-  if (days <= 180) return {
-    weight:'7.0~8.0kg', freq:'4시간', amt:'180~210ml', sleep:'12~14시간/일',
-    note:'🥣 <b>이유식 시작 시기!</b> 6개월부터 쌀미음으로 시작해요.',
-    features:['🥣 이유식 시작 (6개월)','🪑 앉기 시도','🌙 밤 6~8시간 연속 수면','🦷 첫 이앓이'],
-    todo:'📋 <b>6개월 체크리스트</b><br>• 6개월 접종<br>• 이유식 시작 (쌀미음)<br>• 철분 보충 신경쓰기<br>• 수유 횟수 줄이기 시작'
-  };
-  return {
-    weight:'8.0~10kg', freq:'4~5시간', amt:'이유식+수유', sleep:'12~13시간/일',
-    note:'🚀 <b>세상이 너무 신기한 시기!</b> 기어다니고 잡고 서요.',
-    features:['🐛 기어다니기','🦷 이 나기','👋 바이바이 흉내','🏃 잡고 서기'],
-    todo:'📋 <b>후기 체크리스트</b><br>• 낙상·안전사고 주의<br>• 이물질 삼킴 조심<br>• 돌 준비 (12개월)<br>• 첫 걸음마 준비'
-  };
+function calcPct(value, days, table) {
+  const mi = Math.min(Math.max(Math.round(getMonths(days)), 0), 12);
+  const row = table[mi];
+  if (value <= row[0]) return 3;
+  if (value >= row[6]) return 97;
+  for (let i = 0; i < 6; i++) {
+    if (value >= row[i] && value < row[i+1]) {
+      const f = (value - row[i]) / (row[i+1] - row[i]);
+      return Math.round(PCT_VALS[i] + f * (PCT_VALS[i+1] - PCT_VALS[i]));
+    }
+  }
+  return 50;
 }
 
-function getAutoTab(days) {
-  if (days <= 35)  return 'today';
-  if (days <= 100) return 'month2';
-  if (days <= 190) return 'month4';
-  return 'month7';
+function pctLabel(p) {
+  if (p >= 75) return { cls:'top', txt:`상위 ${100-p}% (100명 중 ${p}번째)` };
+  if (p >= 25) return { cls:'mid', txt:`평균 수준 (100명 중 ${p}번째)` };
+  return { cls:'low', txt:`하위 ${p}% (100명 중 ${p}번째)` };
 }
 
-function initPage() {
-  const days = getDays();
-  const info = getAgeInfo(days);
-  const label = getAgeLabel(days);
+function renderPctBar(pct, containerId) {
+  const pos = Math.max(4, Math.min(96, ((pct - 3) / 94) * 100));
+  const info = pctLabel(pct);
+  document.getElementById(containerId).innerHTML = `
+    <div class="pct-track"><div class="pct-pin" style="left:${pos}%"></div></div>
+    <div class="pct-labels"><span>P3</span><span>P50</span><span>P97</span></div>
+    <div class="pct-result"><span class="pb ${info.cls}">${info.txt}</span></div>`;
+}
 
-  document.getElementById('ddayBadge').textContent = `🌱 D+${days}`;
-  document.getElementById('ageBadge').textContent = label;
+function nowLocalStr() {
+  return new Date(Date.now() - new Date().getTimezoneOffset()*60000).toISOString().slice(0,16);
+}
+function todayStr() { return new Date().toISOString().split('T')[0]; }
 
-  document.getElementById('todayTitle').textContent = `📍 현재 — ${label}`;
-  document.getElementById('todayDesc').textContent = days <= 7
-    ? '출생 후 첫 번째 주. 4일차 체중 회복으로 순조로운 시작! 🎉'
-    : '새싹이가 무럭무럭 자라고 있어요! 🌱';
-  document.getElementById('todayWeight').textContent = info.weight;
-  document.getElementById('todayFeedFreq').textContent = info.freq;
-  document.getElementById('todayFeedAmt').textContent = info.amt;
-  document.getElementById('todaySleep').textContent = info.sleep;
-  document.getElementById('todayNote').innerHTML = info.note;
-  document.getElementById('todayFeatures').innerHTML = info.features
-    .map(f => `<div class="info-card"><div class="val" style="font-size:13px;font-weight:500">${f}</div></div>`)
-    .join('');
-  document.getElementById('todayTodo').innerHTML = info.todo;
+function fmtDT(s) {
+  if (!s) return '—';
+  const d = new Date(s);
+  return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+}
+function fmtTime(s) {
+  if (!s) return '—';
+  const d = new Date(s);
+  return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+}
+function durMin(a, b) {
+  if (!a || !b) return 0;
+  return Math.max(0, Math.round((new Date(b) - new Date(a)) / 60000));
+}
 
-  const autoTab = getAutoTab(days);
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
-  document.getElementById(autoTab).classList.add('active');
-  document.querySelector(`[data-tab="${autoTab}"]`).classList.add('active');
+function load(key) { try { return JSON.parse(localStorage.getItem(key)||'[]'); } catch { return []; } }
+function save(key, v) { localStorage.setItem(key, JSON.stringify(v)); }
 
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('recDate').value = today;
-
-  renderRecords();
+function selType(btn, gid) {
+  document.getElementById(gid).querySelectorAll('.tb').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+function getType(gid) {
+  const b = document.querySelector(`#${gid} .tb.on`);
+  return b ? b.dataset.v : '';
 }
 
 function showTab(id, el) {
@@ -862,300 +450,405 @@ function showTab(id, el) {
   document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   el.classList.add('active');
-  window.scrollTo(0, 0);
+  window.scrollTo(0,0);
+  if (id === 'growth') renderChart();
 }
 
-function togglePeriod(header) {
-  const body = header.nextElementSibling;
-  const arrow = header.querySelector('.period-arrow');
-  const isOpen = body.classList.contains('open');
-  body.classList.toggle('open', !isOpen);
-  arrow.textContent = isOpen ? '▼' : '▲';
+/* ============================================================
+   AGE TIPS
+   ============================================================ */
+function getAgeTips(days) {
+  if (days <= 7) return {
+    sub: '출생 첫 주 — 체중 회복 중',
+    tips: [
+      { icon:'🍼', title:'수유 간격 2~3시간', body:'배고픔 신호(입 오물거리기, 손 빨기)가 보이면 바로 수유해요. 8~12회/일이 정상이에요.' },
+      { icon:'💛', title:'황달 모니터링', body:'눈 흰자와 피부가 노란지 확인하세요. 3~5일이 피크예요. 심하면 병원.' },
+      { icon:'🌿', title:'배꼽 소독', body:'하루 1~2회 소독하고 건조하게 유지해요. 보통 2~3주 후 자연 탈락.' },
+    ],
+    note: null
+  };
+  if (days <= 21) return {
+    sub: '2~3주 — 첫 번째 성장급등',
+    tips: [
+      { icon:'🔥', title:'성장급등 진행 중', body:'2~3주는 첫 번째 성장급등기. 갑자기 더 자주 먹으려 해도 정상. 젖이 부족한 게 아니에요!' },
+      { icon:'😊', title:'반사적 미소 시작', body:'이 시기부터 자는 중 미소가 나타나요. 진짜 사회적 미소는 6주 이후.' },
+      { icon:'🌙', title:'수면 패턴 없음', body:'아직 밤낮 구분이 없어요. 낮에 빛 노출을 늘리면 조금 빠르게 자리잡혀요.' },
+    ],
+    note: null
+  };
+  if (days <= 45) return {
+    sub: '3~6주 — 사회적 발달 시작',
+    tips: [
+      { icon:'😄', title:'사회적 미소 시작', body:'엄마 아빠 얼굴을 보고 방긋 웃기 시작해요. 눈 맞추며 많이 이야기해줘요.' },
+      { icon:'🔥', title:'6주 성장급등', body:'6주 전후로 두 번째 성장급등기. 더 자주 먹고 보채는 것 정상이에요.' },
+      { icon:'☀️', title:'비타민D', body:'모유수유 중이면 매일 400IU 비타민D를 먹여야 해요.' },
+    ],
+    note: null
+  };
+  if (days <= 90) return {
+    sub: '2~3개월 — 목 가누기 시작',
+    tips: [
+      { icon:'💪', title:'터미타임 시작', body:'하루 2~3회, 3~5분씩 엎드려 놀기를 해주세요. 목과 등 근육 발달에 필수.' },
+      { icon:'😴', title:'수면퇴행 주의', body:'3~4개월에 잘 자던 아이가 갑자기 자주 깨는 수면퇴행이 와요. 1~3주 후 회복.' },
+      { icon:'💉', title:'2개월 접종', body:'DTaP, 폴리오, b형헤모필루스, 폐렴구균, 로타바이러스 5가지 예방접종을 맞아요.' },
+    ],
+    note: null
+  };
+  if (days <= 180) return {
+    sub: '4~6개월 — 이유식 준비',
+    tips: [
+      { icon:'🔄', title:'뒤집기 연습', body:'4개월 전후 뒤집기 시작. 뒤집은 후 낙상 주의! 혼자 두지 마세요.' },
+      { icon:'🥣', title:'이유식 시작 (6개월)', body:'6개월부터 쌀미음으로 시작. 철분 보충이 중요한 시기예요.' },
+      { icon:'😴', title:'수면 루틴 만들기', body:'이 시기부터 잠자리 루틴(목욕→수유→자장가)을 정해두면 수면이 안정돼요.' },
+    ],
+    note: null
+  };
+  return {
+    sub: '후기 성장 — 활발한 탐색기',
+    tips: [
+      { icon:'🐛', title:'기어다니기 시작', body:'안전사고 주의! 이물질, 전선, 계단 등 위험요소를 미리 제거해요.' },
+      { icon:'🦷', title:'이 나기', body:'잇몸 간지러움으로 뭐든 입에 넣어요. 치발기를 활용하고 이가 나면 거즈로 닦아줘요.' },
+      { icon:'🎂', title:'돌 준비', body:'12개월이면 출생 체중의 약 3배, 키는 1.5배. 첫 걸음마와 첫 단어도 이 무렵.' },
+    ],
+    note: null
+  };
 }
 
-/* ===== RECORDS ===== */
-function getRecords() {
-  try { return JSON.parse(localStorage.getItem('babyRecords') || '[]'); }
-  catch { return []; }
-}
-function saveRecords(r) { localStorage.setItem('babyRecords', JSON.stringify(r)); }
+/* ============================================================
+   INIT / 지금 TAB
+   ============================================================ */
+function initPage() {
+  const days = getDays();
+  document.getElementById('ddayBadge').textContent = `🌱 D+${days}`;
+  document.getElementById('ageBadge').textContent = ageLabel(days);
+  document.getElementById('nowTitle').textContent = `📍 현재 — ${ageLabel(days)}`;
 
-function addRecord() {
-  const date = document.getElementById('recDate').value;
-  const weight = parseFloat(document.getElementById('recWeight').value);
-  const height = parseFloat(document.getElementById('recHeight').value);
-  const note = document.getElementById('recNote').value.trim();
+  const { sub, tips, note } = getAgeTips(days);
+  document.getElementById('nowSub').textContent = sub;
 
-  if (!date) { alert('날짜를 입력해 주세요.'); return; }
-  if (isNaN(weight) && isNaN(height)) { alert('체중 또는 키를 하나 이상 입력해 주세요.'); return; }
+  document.getElementById('nowTips').innerHTML = tips.map(t =>
+    `<div class="tip"><div class="tip-icon">${t.icon}</div><div class="tip-text"><h4>${t.title}</h4><p>${t.body}</p></div></div>`
+  ).join('');
 
-  const records = getRecords();
-  records.push({ date, weight: isNaN(weight) ? null : weight, height: isNaN(height) ? null : height, note: note || null });
-  records.sort((a, b) => b.date.localeCompare(a.date));
-  saveRecords(records);
+  document.getElementById('nowNote').innerHTML = note
+    ? `<div class="note yellow">${note}</div>` : '';
 
-  document.getElementById('recWeight').value = '';
-  document.getElementById('recHeight').value = '';
-  document.getElementById('recNote').value = '';
-  renderRecords();
-}
-
-function deleteRecord(idx) {
-  if (!confirm('이 기록을 삭제할까요?')) return;
-  const records = getRecords();
-  records.splice(idx, 1);
-  saveRecords(records);
-  renderRecords();
-}
-
-function getWHOVal(days, arr) {
-  const m = Math.min(Math.max(Math.floor(days / 30.44), 0), 12);
-  return arr[m];
-}
-
-function compareCmp(val, who) {
-  const pct = (val - who) / who * 100;
-  if (pct > 15)  return { cls: 'high', text: `평균보다 높음 (+${pct.toFixed(0)}%)` };
-  if (pct < -15) return { cls: 'low',  text: `평균보다 낮음 (${pct.toFixed(0)}%)` };
-  return { cls: 'avg', text: `평균 수준 (${pct >= 0 ? '+' : ''}${pct.toFixed(0)}%)` };
-}
-
-function renderRecords() {
-  const records = getRecords();
-  const list = document.getElementById('recList');
-  document.getElementById('recCount').textContent = records.length > 0 ? `(${records.length}건)` : '';
-
-  if (records.length === 0) {
-    list.innerHTML = '<div class="record-empty">아직 기록이 없어요.<br>첫 번째 측정값을 입력해 보세요! 🌱</div>';
-    return;
+  // Last measurements
+  const gs = load('babyGrowth');
+  if (gs.length > 0) {
+    const last = gs[0];
+    const lDays = Math.floor((new Date(last.date) - BIRTH) / 86400000);
+    document.getElementById('nowWeight').textContent = last.weight ? `${last.weight}kg` : '—';
+    document.getElementById('nowHeight').textContent = last.height ? `${last.height}cm` : '—';
+    document.getElementById('nowPctCard').style.display = '';
+    if (last.weight) renderPctBar(calcPct(last.weight, lDays, WHO_W), 'wPctWrap');
+    if (last.height) renderPctBar(calcPct(last.height, lDays, WHO_H), 'hPctWrap');
   }
 
-  list.innerHTML = records.map((r, i) => {
-    const days = Math.floor((new Date(r.date) - BIRTH) / 86400000);
-    const wWho = r.weight != null ? getWHOVal(days, WHO_WEIGHT) : null;
-    const hWho = r.height != null ? getWHOVal(days, WHO_HEIGHT) : null;
-    const wCmp = r.weight && wWho ? compareCmp(r.weight, wWho) : null;
-    const hCmp = r.height && hWho ? compareCmp(r.height, hWho) : null;
-    const ageStr = days >= 0 ? getAgeLabel(days) : '—';
-    const hasBoth = r.weight != null && r.height != null;
+  // Today feeds
+  const feeds = load('babyFeeds').filter(f => f.time.startsWith(todayStr()));
+  document.getElementById('nowFeed').textContent = feeds.length > 0 ? `${feeds.length}회` : '기록없음';
 
-    return `<div class="card" style="margin-bottom:10px">
-      <div class="card-body">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start">
-          <div>
-            <div style="font-weight:700;font-size:15px">${r.date}</div>
-            <div style="font-size:12px;color:#6b7280;margin-top:1px">${ageStr}${r.note ? ` · ${r.note}` : ''}</div>
-          </div>
-          <button class="btn-del" onclick="deleteRecord(${i})">삭제</button>
-        </div>
-        <div class="${hasBoth ? 'grid2' : ''}" style="margin-top:10px">
-          ${r.weight != null ? `<div class="info-card">
-            <div class="label">⚖️ 체중</div>
-            <div class="val">${r.weight}kg</div>
-            ${wCmp ? `<div style="margin-top:5px"><span class="cmp ${wCmp.cls}">${wCmp.text}</span></div>` : ''}
-            ${wWho ? `<div style="font-size:11px;color:#9ca3af;margin-top:3px">WHO 평균 ${wWho}kg</div>` : ''}
-          </div>` : ''}
-          ${r.height != null ? `<div class="info-card">
-            <div class="label">📏 키</div>
-            <div class="val">${r.height}cm</div>
-            ${hCmp ? `<div style="margin-top:5px"><span class="cmp ${hCmp.cls}">${hCmp.text}</span></div>` : ''}
-            ${hWho ? `<div style="font-size:11px;color:#9ca3af;margin-top:3px">WHO 평균 ${hWho}cm</div>` : ''}
-          </div>` : ''}
+  // Today sleep
+  const sleeps = load('babySleeps').filter(s => s.start && s.start.startsWith(todayStr()));
+  const totalSleepMin = sleeps.reduce((acc, s) => acc + durMin(s.start, s.end), 0);
+  document.getElementById('nowSleep').textContent = totalSleepMin > 0
+    ? `${(totalSleepMin/60).toFixed(1)}시간` : '기록없음';
+
+  // Default form values
+  document.getElementById('gDate').value = todayStr();
+  const now = nowLocalStr();
+  ['fTime','sStart','sEnd','dTime'].forEach(id => { document.getElementById(id).value = now; });
+
+  renderFeedList(); renderSleepList(); renderDiaperList(); renderGrowthList();
+  updateFeedStats(); updateSleepStats(); updateDiaperStats();
+}
+
+/* ============================================================
+   GROWTH
+   ============================================================ */
+let chartMode = 'w';
+
+function saveGrowth() {
+  const date   = document.getElementById('gDate').value;
+  const weight = parseFloat(document.getElementById('gWeight').value);
+  const height = parseFloat(document.getElementById('gHeight').value);
+  const note   = document.getElementById('gNote').value.trim() || null;
+  if (!date) { alert('날짜를 입력해 주세요.'); return; }
+  if (isNaN(weight) && isNaN(height)) { alert('체중 또는 키를 입력해 주세요.'); return; }
+  const records = load('babyGrowth');
+  records.push({ date, weight: isNaN(weight)?null:weight, height: isNaN(height)?null:height, note });
+  records.sort((a,b) => b.date.localeCompare(a.date));
+  save('babyGrowth', records);
+  document.getElementById('gWeight').value = '';
+  document.getElementById('gHeight').value = '';
+  document.getElementById('gNote').value = '';
+  renderGrowthList();
+  renderChart();
+  initPage();
+}
+
+function delGrowth(i) {
+  if (!confirm('삭제할까요?')) return;
+  const r = load('babyGrowth'); r.splice(i,1); save('babyGrowth', r);
+  renderGrowthList(); renderChart(); initPage();
+}
+
+function renderGrowthList() {
+  const records = load('babyGrowth');
+  document.getElementById('gCount').textContent = records.length > 0 ? `(${records.length}건)` : '';
+  const el = document.getElementById('gList');
+  if (!records.length) { el.innerHTML = '<div class="empty">아직 기록이 없어요.<br>첫 번째 측정값을 입력해 보세요! 🌱</div>'; return; }
+  el.innerHTML = records.map((r,i) => {
+    const days = Math.floor((new Date(r.date) - BIRTH) / 86400000);
+    const wPct = r.weight ? calcPct(r.weight, days, WHO_W) : null;
+    const hPct = r.height ? calcPct(r.height, days, WHO_H) : null;
+    const wInfo = wPct ? pctLabel(wPct) : null;
+    const hInfo = hPct ? pctLabel(hPct) : null;
+    return `<div class="rec-item">
+      <div class="rec-main">
+        <div class="rec-date">${r.date} <span style="font-size:12px;color:#9ca3af;font-weight:400">(${ageLabel(days)})</span></div>
+        ${r.note ? `<div class="rec-sub">${r.note}</div>` : ''}
+        <div class="rec-val">
+          ${r.weight ? `⚖️ ${r.weight}kg${wInfo?`<span class="pb ${wInfo.cls}">${wInfo.txt}</span>`:''}` : ''}
+          ${r.weight && r.height ? '&nbsp;&nbsp;' : ''}
+          ${r.height ? `📏 ${r.height}cm${hInfo?`<span class="pb ${hInfo.cls}">${hInfo.txt}</span>`:''}` : ''}
         </div>
       </div>
+      <button class="btn-del" onclick="delGrowth(${i})">×</button>
     </div>`;
   }).join('');
 }
 
-/* ===== SUB TABS ===== */
-function showSub(id, el) {
-  const parent = el.closest('.content');
-  parent.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
-  parent.querySelectorAll('.sub-content').forEach(c => c.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  el.classList.add('active');
+/* ============================================================
+   GROWTH CHART
+   ============================================================ */
+function switchChart(mode) {
+  chartMode = mode;
+  document.getElementById('ctW').classList.toggle('on', mode==='w');
+  document.getElementById('ctH').classList.toggle('on', mode==='h');
+  renderChart();
 }
 
-function selectType(btn, groupId) {
-  document.getElementById(groupId).querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-}
+function renderChart() {
+  const records = load('babyGrowth');
+  const hasW = records.some(r => r.weight);
+  const hasH = records.some(r => r.height);
+  if (!hasW && !hasH) { document.getElementById('chartArea').style.display='none'; return; }
+  document.getElementById('chartArea').style.display='';
 
-function getSelectedType(groupId) {
-  const active = document.querySelector(`#${groupId} .type-btn.active`);
-  return active ? active.dataset.val : '';
-}
+  if (chartMode === 'w' && !hasW) switchChart('h');
+  if (chartMode === 'h' && !hasH) switchChart('w');
 
-/* ===== FEED ===== */
-function getFeeds()  { try { return JSON.parse(localStorage.getItem('babyFeeds')  || '[]'); } catch { return []; } }
-function saveFeeds(r) { localStorage.setItem('babyFeeds', JSON.stringify(r)); }
+  const table = chartMode === 'w' ? WHO_W : WHO_H;
+  const field = chartMode === 'w' ? 'weight' : 'height';
+  const label = chartMode === 'w' ? '⚖️ 체중 성장 곡선 (WHO 기준)' : '📏 키 성장 곡선 (WHO 기준)';
+  document.getElementById('chartTitle').textContent = label;
 
-function addFeed() {
-  const time  = document.getElementById('feedTime').value;
-  const type  = getSelectedType('feedTypeGroup');
-  const amt   = parseInt(document.getElementById('feedAmt').value) || null;
-  const min   = parseInt(document.getElementById('feedMin').value) || null;
-  const note  = document.getElementById('feedNote').value.trim() || null;
-  if (!time) { alert('수유 시각을 입력해 주세요.'); return; }
-  const feeds = getFeeds();
-  feeds.unshift({ time, type, amt, min, note });
-  saveFeeds(feeds);
-  document.getElementById('feedAmt').value = '';
-  document.getElementById('feedMin').value = '';
-  document.getElementById('feedNote').value = '';
-  renderFeeds();
-}
+  const pts = records
+    .filter(r => r[field] != null)
+    .map(r => {
+      const days = Math.floor((new Date(r.date) - BIRTH) / 86400000);
+      return { months: Math.max(0, getMonths(days)), value: r[field] };
+    })
+    .sort((a,b) => a.months - b.months);
 
-function deleteFeed(i) {
-  if (!confirm('삭제할까요?')) return;
-  const feeds = getFeeds(); feeds.splice(i,1); saveFeeds(feeds); renderFeeds();
-}
+  // Chart dimensions
+  const VW=320, VH=200, ML=36, MR=12, MT=10, MB=32;
+  const PW=VW-ML-MR, PH=VH-MT-MB;
 
-function renderFeeds() {
-  const feeds = getFeeds();
-  document.getElementById('feedCount').textContent = feeds.length > 0 ? `(${feeds.length}건)` : '';
-  const list = document.getElementById('feedList');
-  if (!feeds.length) { list.innerHTML = '<div class="record-empty">아직 기록이 없어요. 🍼</div>'; return; }
-  list.innerHTML = feeds.map((f, i) => {
-    const d = new Date(f.time);
-    const dateStr = `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
-    const detail = [f.amt ? `${f.amt}ml` : null, f.min ? `${f.min}분` : null].filter(Boolean).join(' · ');
-    return `<div class="card" style="margin-bottom:8px"><div class="card-body">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div>
-          <span style="font-weight:700;font-size:14px">${dateStr}</span>
-          <span style="margin-left:8px;font-size:13px;color:#16a34a;font-weight:600">${f.type}</span>
-          ${detail ? `<span style="margin-left:6px;font-size:12px;color:#6b7280">${detail}</span>` : ''}
-        </div>
-        <button class="btn-del" onclick="deleteFeed(${i})">삭제</button>
-      </div>
-      ${f.note ? `<div style="font-size:12px;color:#6b7280;margin-top:4px">${f.note}</div>` : ''}
-    </div></div>`;
-  }).join('');
-}
+  const yMin = table[0][0] * 0.97;
+  const yMax = table[12][6] * 1.02;
+  const xOf = m => ML + Math.min(m/12,1) * PW;
+  const yOf = v => MT + PH * (1 - (v-yMin)/(yMax-yMin));
 
-/* ===== SLEEP ===== */
-function getSleeps()  { try { return JSON.parse(localStorage.getItem('babySleeps')  || '[]'); } catch { return []; } }
-function saveSleeps(r) { localStorage.setItem('babySleeps', JSON.stringify(r)); }
+  let svg = '';
 
-function addSleep() {
-  const start = document.getElementById('sleepStart').value;
-  const end   = document.getElementById('sleepEnd').value;
-  const type  = getSelectedType('sleepTypeGroup');
-  const note  = document.getElementById('sleepNote').value.trim() || null;
-  if (!start) { alert('잠든 시각을 입력해 주세요.'); return; }
-  const sleeps = getSleeps();
-  sleeps.unshift({ start, end: end || null, type, note });
-  saveSleeps(sleeps);
-  document.getElementById('sleepNote').value = '';
-  renderSleeps();
-}
+  // Background rect
+  svg += `<rect x="${ML}" y="${MT}" width="${PW}" height="${PH}" fill="#fafffe" rx="3"/>`;
 
-function deleteSleep(i) {
-  if (!confirm('삭제할까요?')) return;
-  const s = getSleeps(); s.splice(i,1); saveSleeps(s); renderSleeps();
-}
+  // Grid
+  for (let m=0; m<=12; m+=3) {
+    const x=xOf(m);
+    svg += `<line x1="${x}" y1="${MT}" x2="${x}" y2="${MT+PH}" stroke="#e5e7eb" stroke-width="0.5"/>`;
+    svg += `<text x="${x}" y="${VH-4}" text-anchor="middle" font-size="9" fill="#9ca3af">${m}개월</text>`;
+  }
+  const yStep=(yMax-yMin)/4;
+  for (let i=0;i<=4;i++) {
+    const v=yMin+i*yStep, y=yOf(v);
+    if(i>0) svg += `<line x1="${ML}" y1="${y}" x2="${ML+PW}" y2="${y}" stroke="#f3f4f6" stroke-width="0.5"/>`;
+    svg += `<text x="${ML-3}" y="${y+3}" text-anchor="end" font-size="9" fill="#9ca3af">${v.toFixed(1)}</text>`;
+  }
 
-function fmtDT(dtStr) {
-  if (!dtStr) return '—';
-  const d = new Date(dtStr);
-  return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
-}
+  // P10-P90 band
+  let top='', bot='';
+  for (let m=0; m<=12; m++) {
+    const x=xOf(m), y10=yOf(table[m][1]), y90=yOf(table[m][5]);
+    top += (m===0?`M${x},${y10}`:`L${x},${y10}`);
+    bot += (m===0?`M${x},${y90}`:`L${x},${y90}`);
+  }
+  // Combine into closed path
+  let bandPts='';
+  for(let m=0;m<=12;m++) bandPts += (m===0?`M${xOf(m)},${yOf(table[m][1])}`:`L${xOf(m)},${yOf(table[m][1])}`);
+  for(let m=12;m>=0;m--) bandPts += `L${xOf(m)},${yOf(table[m][5])}`;
+  svg += `<path d="${bandPts}Z" fill="rgba(34,197,94,0.12)"/>`;
 
-function sleepDuration(start, end) {
-  if (!start || !end) return '';
-  const diff = (new Date(end) - new Date(start)) / 60000;
-  if (diff <= 0) return '';
-  const h = Math.floor(diff / 60), m = Math.round(diff % 60);
-  return h > 0 ? `${h}시간 ${m}분` : `${m}분`;
-}
+  // P50 dashed line
+  let p50='';
+  for(let m=0;m<=12;m++) p50 += (m===0?`M${xOf(m)},${yOf(table[m][3])}`:`L${xOf(m)},${yOf(table[m][3])}`);
+  svg += `<path d="${p50}" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.8"/>`;
 
-function renderSleeps() {
-  const sleeps = getSleeps();
-  document.getElementById('sleepCount').textContent = sleeps.length > 0 ? `(${sleeps.length}건)` : '';
-  const list = document.getElementById('sleepList');
-  if (!sleeps.length) { list.innerHTML = '<div class="record-empty">아직 기록이 없어요. 💤</div>'; return; }
-  list.innerHTML = sleeps.map((s, i) => {
-    const dur = sleepDuration(s.start, s.end);
-    return `<div class="card" style="margin-bottom:8px"><div class="card-body">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div>
-          <span style="font-weight:700;font-size:13px">${fmtDT(s.start)} → ${fmtDT(s.end)}</span>
-          ${dur ? `<span style="margin-left:6px;background:#f0fdf4;color:#16a34a;border-radius:8px;padding:2px 7px;font-size:11px;font-weight:700">${dur}</span>` : ''}
-        </div>
-        <button class="btn-del" onclick="deleteSleep(${i})">삭제</button>
-      </div>
-      <div style="margin-top:4px">
-        <span style="font-size:12px;color:#16a34a;font-weight:600">${s.type}</span>
-        ${s.note ? `<span style="font-size:12px;color:#6b7280;margin-left:6px">${s.note}</span>` : ''}
-      </div>
-    </div></div>`;
-  }).join('');
-}
+  // Baby's line
+  if (pts.length > 1) {
+    let line='';
+    pts.forEach((p,i) => line += (i===0?`M${xOf(p.months)},${yOf(p.value)}`:`L${xOf(p.months)},${yOf(p.value)}`));
+    svg += `<path d="${line}" fill="none" stroke="#15803d" stroke-width="2.5"/>`;
+  }
 
-/* ===== DIAPER ===== */
-function getDiapers()  { try { return JSON.parse(localStorage.getItem('babyDiapers')  || '[]'); } catch { return []; } }
-function saveDiapers(r) { localStorage.setItem('babyDiapers', JSON.stringify(r)); }
-
-function addDiaper() {
-  const time  = document.getElementById('diaperTime').value;
-  const type  = getSelectedType('diaperTypeGroup');
-  const note  = document.getElementById('diaperNote').value.trim() || null;
-  if (!time) { alert('시각을 입력해 주세요.'); return; }
-  const diapers = getDiapers();
-  diapers.unshift({ time, type, note });
-  saveDiapers(diapers);
-  document.getElementById('diaperNote').value = '';
-  renderDiapers();
-}
-
-function deleteDiaper(i) {
-  if (!confirm('삭제할까요?')) return;
-  const d = getDiapers(); d.splice(i,1); saveDiapers(d); renderDiapers();
-}
-
-function renderDiapers() {
-  const diapers = getDiapers();
-  document.getElementById('diaperCount').textContent = diapers.length > 0 ? `(${diapers.length}건)` : '';
-
-  // 오늘 기저귀 횟수
-  const todayStr = new Date().toISOString().split('T')[0];
-  const todayCount = diapers.filter(d => d.time.startsWith(todayStr)).length;
-  document.getElementById('diaperToday').textContent = todayCount > 0 ? `· 오늘 ${todayCount}회` : '';
-
-  const list = document.getElementById('diaperList');
-  if (!diapers.length) { list.innerHTML = '<div class="record-empty">아직 기록이 없어요. 💩</div>'; return; }
-
-  const typeEmoji = { '소변': '💧', '대변': '💩', '혼합': '💧💩' };
-  list.innerHTML = diapers.map((d, i) => {
-    const dt = new Date(d.time);
-    const dateStr = `${dt.getMonth()+1}/${dt.getDate()} ${String(dt.getHours()).padStart(2,'0')}:${String(dt.getMinutes()).padStart(2,'0')}`;
-    return `<div class="card" style="margin-bottom:8px"><div class="card-body">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div>
-          <span style="font-size:20px;margin-right:6px">${typeEmoji[d.type]||'💩'}</span>
-          <span style="font-weight:700;font-size:14px">${d.type}</span>
-          <span style="font-size:12px;color:#6b7280;margin-left:8px">${dateStr}</span>
-        </div>
-        <button class="btn-del" onclick="deleteDiaper(${i})">삭제</button>
-      </div>
-      ${d.note ? `<div style="font-size:12px;color:#6b7280;margin-top:4px">${d.note}</div>` : ''}
-    </div></div>`;
-  }).join('');
-}
-
-window.addEventListener('DOMContentLoaded', function() {
-  initPage();
-  // 현재 시각을 datetime-local 기본값으로 설정
-  const nowLocal = new Date(Date.now() - new Date().getTimezoneOffset()*60000).toISOString().slice(0,16);
-  ['feedTime','sleepStart','sleepEnd','diaperTime'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = nowLocal;
+  // Baby's dots
+  pts.forEach((p,i) => {
+    const x=xOf(p.months), y=yOf(p.value), isLast=i===pts.length-1;
+    svg += `<circle cx="${x}" cy="${y}" r="${isLast?5.5:3.5}" fill="${isLast?'#15803d':'#4ade80'}" stroke="white" stroke-width="${isLast?2.5:1.5}"/>`;
+    if (isLast) {
+      const lx = x>PW*0.7 ? x-6 : x+7;
+      const anchor = x>PW*0.7 ? 'end' : 'start';
+      svg += `<text x="${lx}" y="${y-6}" text-anchor="${anchor}" font-size="10" fill="#15803d" font-weight="bold">${p.value}</text>`;
+    }
   });
-  renderFeeds();
-  renderSleeps();
-  renderDiapers();
-});
+
+  document.getElementById('growthSvg').innerHTML = svg;
+}
+
+/* ============================================================
+   FEED
+   ============================================================ */
+function saveFeed() {
+  const time = document.getElementById('fTime').value;
+  const type = getType('fTypeG');
+  const amt  = parseInt(document.getElementById('fAmt').value)||null;
+  const min  = parseInt(document.getElementById('fMin').value)||null;
+  if (!time) { alert('시각을 입력해 주세요.'); return; }
+  const r = load('babyFeeds');
+  r.unshift({ time, type, amt, min });
+  save('babyFeeds', r);
+  document.getElementById('fAmt').value='';
+  document.getElementById('fMin').value='';
+  renderFeedList(); updateFeedStats(); initPage();
+}
+function delFeed(i) {
+  if (!confirm('삭제할까요?')) return;
+  const r=load('babyFeeds'); r.splice(i,1); save('babyFeeds',r);
+  renderFeedList(); updateFeedStats(); initPage();
+}
+function updateFeedStats() {
+  const today = load('babyFeeds').filter(f => f.time.startsWith(todayStr()));
+  document.getElementById('ftCount').textContent = today.length;
+  const totalAmt = today.filter(f=>f.amt).reduce((a,f)=>a+f.amt,0);
+  document.getElementById('ftAmt').textContent = totalAmt > 0 ? totalAmt : '—';
+  const last = today[0];
+  document.getElementById('ftLast').textContent = last ? fmtTime(last.time) : '—';
+}
+function renderFeedList() {
+  const r = load('babyFeeds');
+  const el = document.getElementById('fList');
+  if (!r.length) { el.innerHTML='<div class="empty">아직 기록이 없어요. 🍼</div>'; return; }
+  el.innerHTML = r.slice(0,20).map((f,i)=>`
+    <div class="rec-item">
+      <div class="rec-main">
+        <div class="rec-date">${fmtDT(f.time)} <span style="font-size:13px;font-weight:700;color:#16a34a;margin-left:4px">${f.type}</span></div>
+        <div class="rec-val">${f.amt?`${f.amt}ml`:''}${f.amt&&f.min?' · ':''}${f.min?`${f.min}분`:''}</div>
+      </div>
+      <button class="btn-del" onclick="delFeed(${i})">×</button>
+    </div>`).join('');
+}
+
+/* ============================================================
+   SLEEP
+   ============================================================ */
+function saveSleep() {
+  const start=document.getElementById('sStart').value;
+  const end  =document.getElementById('sEnd').value;
+  const type =getType('sTypeG');
+  if (!start) { alert('잠든 시각을 입력해 주세요.'); return; }
+  const r=load('babySleeps');
+  r.unshift({ start, end:end||null, type });
+  save('babySleeps', r);
+  renderSleepList(); updateSleepStats(); initPage();
+}
+function delSleep(i) {
+  if (!confirm('삭제할까요?')) return;
+  const r=load('babySleeps'); r.splice(i,1); save('babySleeps',r);
+  renderSleepList(); updateSleepStats(); initPage();
+}
+function updateSleepStats() {
+  const today = load('babySleeps').filter(s=>s.start&&s.start.startsWith(todayStr()));
+  document.getElementById('stCount').textContent = today.length;
+  const mins = today.reduce((a,s)=>a+durMin(s.start,s.end),0);
+  document.getElementById('stTotal').textContent = mins>0 ? (mins/60).toFixed(1) : '0';
+}
+function renderSleepList() {
+  const r=load('babySleeps');
+  const el=document.getElementById('sList');
+  if (!r.length) { el.innerHTML='<div class="empty">아직 기록이 없어요. 💤</div>'; return; }
+  el.innerHTML = r.slice(0,20).map((s,i)=>{
+    const dur=durMin(s.start,s.end);
+    return `<div class="rec-item">
+      <div class="rec-main">
+        <div class="rec-date">${fmtDT(s.start)} → ${s.end?fmtTime(s.end):'진행중'}</div>
+        <div class="rec-val">${s.type}${dur?` · ${Math.floor(dur/60)}시간 ${dur%60}분`:''}</div>
+      </div>
+      <button class="btn-del" onclick="delSleep(${i})">×</button>
+    </div>`;
+  }).join('');
+}
+
+/* ============================================================
+   DIAPER
+   ============================================================ */
+function quickDiaper(type) {
+  const r=load('babyDiapers');
+  r.unshift({ time: nowLocalStr(), type, note:null });
+  save('babyDiapers', r);
+  renderDiaperList(); updateDiaperStats(); initPage();
+}
+function saveDiaper() {
+  const time=document.getElementById('dTime').value;
+  const type=getType('dTypeG');
+  const note=document.getElementById('dNote').value.trim()||null;
+  if (!time) { alert('시각을 입력해 주세요.'); return; }
+  const r=load('babyDiapers');
+  r.unshift({ time, type, note });
+  save('babyDiapers', r);
+  document.getElementById('dNote').value='';
+  renderDiaperList(); updateDiaperStats(); initPage();
+}
+function delDiaper(i) {
+  if (!confirm('삭제할까요?')) return;
+  const r=load('babyDiapers'); r.splice(i,1); save('babyDiapers',r);
+  renderDiaperList(); updateDiaperStats(); initPage();
+}
+function updateDiaperStats() {
+  const today=load('babyDiapers').filter(d=>d.time.startsWith(todayStr()));
+  document.getElementById('dtAll').textContent=today.length;
+  document.getElementById('dtWet').textContent=today.filter(d=>d.type==='소변'||d.type==='혼합').length;
+  document.getElementById('dtPoo').textContent=today.filter(d=>d.type==='대변'||d.type==='혼합').length;
+}
+function renderDiaperList() {
+  const r=load('babyDiapers');
+  const el=document.getElementById('dList');
+  if (!r.length) { el.innerHTML='<div class="empty">아직 기록이 없어요. 💩</div>'; return; }
+  const em={'소변':'💧','대변':'💩','혼합':'💧💩'};
+  el.innerHTML = r.slice(0,30).map((d,i)=>`
+    <div class="rec-item">
+      <div class="rec-main">
+        <div class="rec-date">${em[d.type]||'💩'} ${d.type} <span style="font-weight:400;font-size:12px;color:#9ca3af">${fmtDT(d.time)}</span></div>
+        ${d.note?`<div class="rec-sub">${d.note}</div>`:''}
+      </div>
+      <button class="btn-del" onclick="delDiaper(${i})">×</button>
+    </div>`).join('');
+}
+
+window.addEventListener('DOMContentLoaded', initPage);
 </script>
 </body>
 </html>
