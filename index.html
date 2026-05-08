@@ -14,6 +14,8 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
 .header-badges { display: flex; gap: 10px; justify-content: center; margin-top: 8px; }
 .hbadge { background: rgba(255,255,255,0.25); border-radius: 20px; padding: 4px 14px; font-size: 13px; font-weight: 700; }
 .hbadge.big { background: rgba(255,255,255,0.38); font-size: 17px; padding: 5px 16px; }
+.header-dates { margin-top: 7px; font-size: 12px; opacity: 0.82; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.hdate-sep { opacity: 0.5; }
 
 /* TABS */
 .tabs { display: flex; background: #fff; border-bottom: 2px solid #e5e7eb; overflow-x: auto; position: sticky; top: 0; z-index: 100; scrollbar-width: none; box-shadow: 0 2px 6px rgba(0,0,0,0.07); }
@@ -231,6 +233,11 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
   <div class="header-badges">
     <span class="hbadge big" id="ddayBadge">🌱 D+0</span>
     <span class="hbadge" id="ageBadge">생후 0일</span>
+  </div>
+  <div class="header-dates">
+    <span>🎂 2026.05.01 출생</span>
+    <span class="hdate-sep">·</span>
+    <span id="todayBadge">📅 오늘</span>
   </div>
 </div>
 
@@ -1174,6 +1181,11 @@ function initPage() {
   const days = getDays();
   document.getElementById('ddayBadge').textContent = `🌱 D+${days}`;
   document.getElementById('ageBadge').textContent = ageLabel(days);
+  const now = new Date();
+  const yy = now.getFullYear();
+  const mm = String(now.getMonth()+1).padStart(2,'0');
+  const dd = String(now.getDate()).padStart(2,'0');
+  document.getElementById('todayBadge').textContent = `📅 ${yy}.${mm}.${dd}`;
   document.getElementById('nowTitle').textContent = `📍 현재 — ${ageLabel(days)}`;
 
   const { sub, tips, note } = getAgeTips(days);
