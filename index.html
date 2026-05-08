@@ -148,6 +148,79 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
   .tab { padding: 0 10px; font-size: 12px; }
   .milestone-grid { grid-template-columns: 1fr; }
 }
+
+/* ── 아빠일과 TIMELINE ── */
+.tl-wrap { padding: 8px 0 24px; }
+.tl-section { margin-bottom: 6px; }
+.tl-section-label {
+  font-size: 11px; font-weight: 800; color: #9ca3af; letter-spacing: 0.8px;
+  text-transform: uppercase; margin: 20px 0 10px 48px;
+}
+.tl-item {
+  display: flex; align-items: flex-start; gap: 0; margin-bottom: 0; position: relative;
+}
+/* 왼쪽 시간 열 */
+.tl-time {
+  width: 48px; flex-shrink: 0; text-align: right; padding-right: 10px;
+  padding-top: 14px; font-size: 11px; font-weight: 700; color: #9ca3af; line-height: 1.2;
+}
+/* 세로선 + 점 */
+.tl-line-col {
+  width: 20px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center;
+}
+.tl-dot {
+  width: 14px; height: 14px; border-radius: 50%; border: 3px solid #fff;
+  box-shadow: 0 0 0 2px currentColor; margin-top: 14px; flex-shrink: 0; z-index: 1;
+}
+.tl-vline {
+  width: 2px; background: #e5e7eb; flex: 1; min-height: 12px;
+}
+.tl-item:last-child .tl-vline { background: transparent; }
+/* 카드 */
+.tl-card {
+  flex: 1; background: #fff; border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin: 8px 0 4px 8px;
+  padding: 12px 14px; min-height: 52px;
+}
+.tl-card-top { display: flex; align-items: center; gap: 8px; }
+.tl-emoji { font-size: 20px; flex-shrink: 0; }
+.tl-title { font-size: 14px; font-weight: 800; color: #1a2e1a; }
+.tl-badge {
+  margin-left: auto; font-size: 10px; font-weight: 700;
+  padding: 2px 8px; border-radius: 20px; white-space: nowrap;
+}
+.tl-detail { font-size: 12px; color: #6b7280; margin-top: 6px; line-height: 1.7; }
+.tl-sub-list { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 5px; }
+.tl-sub-tag {
+  font-size: 11px; background: #f3f4f6; color: #374151;
+  border-radius: 6px; padding: 2px 8px; font-weight: 600;
+}
+/* 카테고리 색상 */
+.cat-morning  { color: #f59e0b; }
+.cat-food     { color: #ef4444; }
+.cat-body     { color: #3b82f6; }
+.cat-work     { color: #6b7280; }
+.cat-baby     { color: #22c55e; }
+.cat-night    { color: #8b5cf6; }
+.cat-sleep    { color: #1d4ed8; }
+.badge-morning { background: #fef3c7; color: #d97706; }
+.badge-food    { background: #fee2e2; color: #dc2626; }
+.badge-body    { background: #dbeafe; color: #2563eb; }
+.badge-work    { background: #f3f4f6; color: #4b5563; }
+.badge-baby    { background: #dcfce7; color: #16a34a; }
+.badge-night   { background: #ede9fe; color: #7c3aed; }
+.badge-sleep   { background: #dbeafe; color: #1d4ed8; }
+/* 하루 요약 배너 */
+.tl-summary {
+  background: linear-gradient(135deg, #22c55e, #15803d);
+  color: white; border-radius: 16px; padding: 16px 18px;
+  margin-bottom: 18px; box-shadow: 0 4px 14px rgba(22,163,74,0.28);
+}
+.tl-summary h3 { font-size: 15px; font-weight: 800; margin-bottom: 10px; }
+.tl-sum-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.tl-sum-item { background: rgba(255,255,255,0.18); border-radius: 10px; padding: 8px 10px; text-align: center; }
+.tl-sum-item .tsi-v { font-size: 16px; font-weight: 800; }
+.tl-sum-item .tsi-l { font-size: 10px; opacity: 0.85; margin-top: 2px; }
 </style>
 </head>
 <body>
@@ -169,6 +242,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
   <div class="tab" data-tab="diaper" onclick="showTab('diaper',this)">💩 기저귀</div>
   <div class="tab" data-tab="sleep" onclick="showTab('sleep',this)">💤 수면</div>
   <div class="tab" data-tab="guide" onclick="showTab('guide',this)">📚 성장가이드</div>
+  <div class="tab" data-tab="daddy" onclick="showTab('daddy',this)">👨 아빠일과</div>
 </div>
 
 <!-- ====== 📍 지금 ====== -->
@@ -643,6 +717,242 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
     </div>
   </div>
 
+</div>
+
+<!-- ====== 👨 아빠일과 ====== -->
+<div id="daddy" class="content">
+
+  <!-- 요약 배너 -->
+  <div class="tl-summary">
+    <h3>👨 아빠의 하루 루틴</h3>
+    <div class="tl-sum-grid">
+      <div class="tl-sum-item">
+        <div class="tsi-v">17h</div>
+        <div class="tsi-l">활동시간</div>
+      </div>
+      <div class="tl-sum-item">
+        <div class="tsi-v">2회</div>
+        <div class="tsi-l">샤워</div>
+      </div>
+      <div class="tl-sum-item">
+        <div class="tsi-v">7h</div>
+        <div class="tsi-l">수면</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tl-wrap">
+
+    <!-- AM 섹션 -->
+    <div class="tl-section-label">🌅 아침 루틴</div>
+
+    <!-- 기상 -->
+    <div class="tl-item">
+      <div class="tl-time">06:00</div>
+      <div class="tl-line-col">
+        <div class="tl-dot cat-morning" style="color:#f59e0b"></div>
+        <div class="tl-vline"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-card-top">
+          <span class="tl-emoji">⏰</span>
+          <span class="tl-title">기상</span>
+          <span class="tl-badge badge-morning">모닝</span>
+        </div>
+        <div class="tl-detail">하루의 시작. 물 한 잔으로 가볍게</div>
+      </div>
+    </div>
+
+    <!-- 집안일 -->
+    <div class="tl-item">
+      <div class="tl-time">06:00<br>~07:00</div>
+      <div class="tl-line-col">
+        <div class="tl-dot" style="color:#f59e0b"></div>
+        <div class="tl-vline"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-card-top">
+          <span class="tl-emoji">🧹</span>
+          <span class="tl-title">집안일</span>
+          <span class="tl-badge badge-morning">1시간</span>
+        </div>
+        <div class="tl-sub-list">
+          <span class="tl-sub-tag">🛏 안방 — 배변패드·이부자리·물걸레·환기</span>
+          <span class="tl-sub-tag">🛋 거실 — 정리·먼지·물걸레·환기</span>
+          <span class="tl-sub-tag">🍳 주방 — 설거지</span>
+          <span class="tl-sub-tag">👕 베란다 — 빨래</span>
+          <span class="tl-sub-tag">📦 택배 정리</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 아침/도시락 -->
+    <div class="tl-item">
+      <div class="tl-time">07:00<br>~08:00</div>
+      <div class="tl-line-col">
+        <div class="tl-dot cat-food" style="color:#ef4444"></div>
+        <div class="tl-vline"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-card-top">
+          <span class="tl-emoji">🍱</span>
+          <span class="tl-title">아침 & 도시락 준비</span>
+          <span class="tl-badge badge-food">식사</span>
+        </div>
+        <div class="tl-detail">아침 식사 + 점심 도시락 챙기기</div>
+      </div>
+    </div>
+
+    <!-- 운동·샤워·출근준비 -->
+    <div class="tl-item">
+      <div class="tl-time">08:00<br>~09:00</div>
+      <div class="tl-line-col">
+        <div class="tl-dot cat-body" style="color:#3b82f6"></div>
+        <div class="tl-vline"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-card-top">
+          <span class="tl-emoji">💪</span>
+          <span class="tl-title">운동 → 샤워 → 출근준비</span>
+          <span class="tl-badge badge-body">1시간</span>
+        </div>
+        <div class="tl-sub-list">
+          <span class="tl-sub-tag">🏃 운동</span>
+          <span class="tl-sub-tag">🚿 샤워 #1</span>
+          <span class="tl-sub-tag">👔 출근준비</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 출근 -->
+    <div class="tl-item">
+      <div class="tl-time">09:00</div>
+      <div class="tl-line-col">
+        <div class="tl-dot cat-work" style="color:#6b7280"></div>
+        <div class="tl-vline"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-card-top">
+          <span class="tl-emoji">🚗</span>
+          <span class="tl-title">출근</span>
+          <span class="tl-badge badge-work">직장</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 직장 -->
+    <div class="tl-section-label">🏢 직장</div>
+
+    <div class="tl-item">
+      <div class="tl-time">09:00<br>~19시</div>
+      <div class="tl-line-col">
+        <div class="tl-dot cat-work" style="color:#9ca3af"></div>
+        <div class="tl-vline"></div>
+      </div>
+      <div class="tl-card" style="background:#f9fafb;">
+        <div class="tl-card-top">
+          <span class="tl-emoji">💼</span>
+          <span class="tl-title">근무</span>
+          <span class="tl-badge badge-work">~10h</span>
+        </div>
+        <div class="tl-detail">수고하고 있어요 🫶</div>
+      </div>
+    </div>
+
+    <!-- 저녁 루틴 -->
+    <div class="tl-section-label">🌇 저녁 루틴</div>
+
+    <!-- 퇴근 -->
+    <div class="tl-item">
+      <div class="tl-time">19:00<br>~20:00</div>
+      <div class="tl-line-col">
+        <div class="tl-dot cat-work" style="color:#6b7280"></div>
+        <div class="tl-vline"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-card-top">
+          <span class="tl-emoji">🏠</span>
+          <span class="tl-title">퇴근 · 귀가</span>
+          <span class="tl-badge badge-work">귀가</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 샤워 #2 -->
+    <div class="tl-item">
+      <div class="tl-time">귀가 후</div>
+      <div class="tl-line-col">
+        <div class="tl-dot cat-body" style="color:#3b82f6"></div>
+        <div class="tl-vline"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-card-top">
+          <span class="tl-emoji">🚿</span>
+          <span class="tl-title">샤워 #2</span>
+          <span class="tl-badge badge-body">위생</span>
+        </div>
+        <div class="tl-detail">외출 후 바로 씻고 아기 안기 — 신생아 면역 보호</div>
+      </div>
+    </div>
+
+    <!-- 아기 돌봄 교대 -->
+    <div class="tl-item">
+      <div class="tl-time">20:00<br>~21:00</div>
+      <div class="tl-line-col">
+        <div class="tl-dot cat-baby" style="color:#22c55e"></div>
+        <div class="tl-vline"></div>
+      </div>
+      <div class="tl-card" style="border: 1.5px solid #bbf7d0;">
+        <div class="tl-card-top">
+          <span class="tl-emoji">👶</span>
+          <span class="tl-title">아기 돌봄 교대 + 저녁</span>
+          <span class="tl-badge badge-baby">핵심!</span>
+        </div>
+        <div class="tl-detail">아내 교대 → 아내 저녁·휴식 시간<br>아빠가 새싹이 안아주기·놀아주기</div>
+        <div class="tl-sub-list">
+          <span class="tl-sub-tag">🍽 저녁 식사 (21시 전)</span>
+          <span class="tl-sub-tag">🤱 아내 휴식 교대</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 아기 목욕 -->
+    <div class="tl-item">
+      <div class="tl-time">21:00<br>~22:00</div>
+      <div class="tl-line-col">
+        <div class="tl-dot cat-night" style="color:#8b5cf6"></div>
+        <div class="tl-vline"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-card-top">
+          <span class="tl-emoji">🛁</span>
+          <span class="tl-title">새싹이 목욕</span>
+          <span class="tl-badge badge-night">취침준비</span>
+        </div>
+        <div class="tl-detail">목욕 → 로션 → 수유 → 재우기<br>아기 취침 루틴 고정이 수면 훈련에 도움이 돼요</div>
+      </div>
+    </div>
+
+    <!-- 취침 -->
+    <div class="tl-section-label">🌙 취침</div>
+
+    <div class="tl-item">
+      <div class="tl-time">22:00<br>~23:00</div>
+      <div class="tl-line-col">
+        <div class="tl-dot cat-sleep" style="color:#1d4ed8"></div>
+        <div class="tl-vline"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-card-top">
+          <span class="tl-emoji">😴</span>
+          <span class="tl-title">취침</span>
+          <span class="tl-badge badge-sleep">7h 수면</span>
+        </div>
+        <div class="tl-detail">내일도 수고해요. 고생했어요 💚</div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <script>
