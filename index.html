@@ -136,8 +136,8 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
   <div class="tab active" data-tab="now" onclick="showTab('now',this)">📍 지금</div>
   <div class="tab" data-tab="growth" onclick="showTab('growth',this)">📊 성장기록</div>
   <div class="tab" data-tab="feed" onclick="showTab('feed',this)">🍼 수유</div>
-  <div class="tab" data-tab="sleep" onclick="showTab('sleep',this)">💤 수면</div>
   <div class="tab" data-tab="diaper" onclick="showTab('diaper',this)">💩 기저귀</div>
+  <div class="tab" data-tab="sleep" onclick="showTab('sleep',this)">💤 수면</div>
 </div>
 
 <!-- ====== 📍 지금 ====== -->
@@ -241,14 +241,32 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
     <div class="frow">
       <label class="fl">방법</label>
       <div class="type-row" id="fTypeG">
-        <button class="tb on" data-v="모유" onclick="selType(this,'fTypeG')">🤱 모유</button>
-        <button class="tb" data-v="분유" onclick="selType(this,'fTypeG')">🍼 분유</button>
-        <button class="tb" data-v="혼합" onclick="selType(this,'fTypeG')">✨ 혼합</button>
+        <button class="tb on" data-v="모유" onclick="selType(this,'fTypeG');toggleFeedFields()">🤱 모유</button>
+        <button class="tb" data-v="분유" onclick="selType(this,'fTypeG');toggleFeedFields()">🍼 분유</button>
+        <button class="tb" data-v="혼합" onclick="selType(this,'fTypeG');toggleFeedFields()">✨ 혼합</button>
       </div>
     </div>
-    <div class="frow2" style="margin-bottom:0">
-      <div><label class="fl">양 (ml)</label><input type="number" class="fi" id="fAmt" placeholder="80" step="5" min="0" max="300"></div>
-      <div><label class="fl">시간 (분)</label><input type="number" class="fi" id="fMin" placeholder="15" step="1" min="0" max="60"></div>
+    <!-- 모유일 때: 수유 시간 + 젖 방향 -->
+    <div id="fBreastFields">
+      <div class="frow">
+        <label class="fl">수유 시간 (분)</label>
+        <input type="number" class="fi" id="fMin" placeholder="15분" step="1" min="0" max="60">
+      </div>
+      <div class="frow" style="margin-bottom:0">
+        <label class="fl">젖 방향</label>
+        <div class="type-row" id="fSideG">
+          <button class="tb on" data-v="왼쪽" onclick="selType(this,'fSideG')">◀ 왼쪽</button>
+          <button class="tb" data-v="오른쪽" onclick="selType(this,'fSideG')">오른쪽 ▶</button>
+          <button class="tb" data-v="양쪽" onclick="selType(this,'fSideG')">양쪽</button>
+        </div>
+      </div>
+    </div>
+    <!-- 분유/혼합일 때: 양 + 시간 -->
+    <div id="fBottleFields" style="display:none">
+      <div class="frow2" style="margin-bottom:0">
+        <div><label class="fl">양 (ml)</label><input type="number" class="fi" id="fAmt" placeholder="80" step="5" min="0" max="300"></div>
+        <div><label class="fl">시간 (분)</label><input type="number" class="fi" id="fMinB" placeholder="15" step="1" min="0" max="60"></div>
+      </div>
     </div>
   </div>
   <button class="btn-save" onclick="saveFeed()">+ 수유 저장</button>
@@ -459,56 +477,82 @@ function showTab(id, el) {
    ============================================================ */
 function getAgeTips(days) {
   if (days <= 7) return {
-    sub: '출생 첫 주 — 체중 회복 중',
+    sub: '출생 첫 주 — 적응과 회복',
     tips: [
-      { icon:'🍼', title:'수유 간격 2~3시간', body:'배고픔 신호(입 오물거리기, 손 빨기)가 보이면 바로 수유해요. 8~12회/일이 정상이에요.' },
-      { icon:'💛', title:'황달 모니터링', body:'눈 흰자와 피부가 노란지 확인하세요. 3~5일이 피크예요. 심하면 병원.' },
-      { icon:'🌿', title:'배꼽 소독', body:'하루 1~2회 소독하고 건조하게 유지해요. 보통 2~3주 후 자연 탈락.' },
+      { icon:'🤱', title:'수유 신호 먼저 보세요', body:'울기 전에 이미 배고프다는 신호가 있어요. <b>입 오물거리기, 손을 입으로 가져가기, 고개 돌리기(루팅)</b>가 보이면 바로 수유 시작. 울기 시작하면 이미 너무 배고픈 상태예요.' },
+      { icon:'💛', title:'황달 — 3~5일이 피크예요', body:'신생아 황달은 정상이에요. 눈 흰자·피부가 노랗게 변하는지 체크. <b>38도 이상 발열, 먹기 거부, 잠에서 잘 안 깨면</b> 즉시 병원. 햇빛(직접 아님, 창가)이 도움돼요.' },
+      { icon:'🌿', title:'배꼽 — 건조하게 유지', body:'목욕 후 물기를 완전히 닦고, 기저귀가 배꼽을 덮지 않게 접어서 채워요. <b>빨갛게 붓거나 냄새가 나면</b> 병원. 보통 2~3주 안에 자연 탈락해요.' },
+      { icon:'😴', title:'잠만 자는 게 정상이에요', body:'하루 16~18시간 수면은 정상. 단, <b>4시간 이상 연속으로 자면 깨워서 수유</b>해야 해요. 이 시기엔 아직 배고픔에 깨는 능력이 부족해요.' },
     ],
     note: null
   };
-  if (days <= 21) return {
-    sub: '2~3주 — 첫 번째 성장급등',
+  if (days <= 14) return {
+    sub: '2주차 — 체중 회복 확인',
     tips: [
-      { icon:'🔥', title:'성장급등 진행 중', body:'2~3주는 첫 번째 성장급등기. 갑자기 더 자주 먹으려 해도 정상. 젖이 부족한 게 아니에요!' },
-      { icon:'😊', title:'반사적 미소 시작', body:'이 시기부터 자는 중 미소가 나타나요. 진짜 사회적 미소는 6주 이후.' },
-      { icon:'🌙', title:'수면 패턴 없음', body:'아직 밤낮 구분이 없어요. 낮에 빛 노출을 늘리면 조금 빠르게 자리잡혀요.' },
+      { icon:'⚖️', title:'체중 회복 확인', body:'출생 체중으로 돌아왔는지 꼭 확인해요. 새싹이는 4일차에 이미 회복! 👏 이후 <b>하루 20~30g씩 증가</b>가 정상이에요.' },
+      { icon:'🤱', title:'모유수유 — 하루 8~12회', body:'수유 간격이 3시간을 넘지 않도록 해요. 밤에도 예외 없어요. 젖이 양쪽 번갈아 나오게 하고, <b>한쪽을 완전히 비운 후 반대쪽</b>으로 넘어가는 게 좋아요.' },
+      { icon:'💩', title:'변 색깔로 수유 확인', body:'태변(검정)→갈색→<b>겨자색 또는 황금색</b>으로 바뀌면 모유가 충분히 들어가고 있다는 증거. 하루 3~8회 황금색 변이 나오면 잘 먹고 있는 거예요.' },
+      { icon:'☀️', title:'비타민D 시작', body:'모유에는 비타민D가 거의 없어요. <b>매일 400IU</b>를 수유 직후 입 안에 한 방울 떨어뜨려 주세요. 구루병 예방에 필수.' },
+    ],
+    note: null
+  };
+  if (days <= 28) return {
+    sub: '3~4주 — 첫 성장급등기',
+    tips: [
+      { icon:'🔥', title:'성장급등 — 젖 부족이 아니에요', body:'2~3주는 <b>첫 번째 성장급등기</b>. 갑자기 더 자주(1~1.5시간마다) 먹으려 하고 보채요. 이건 젖이 부족한 게 아니라 성장하는 것. 더 자주 수유하면 2~3일 후 안정돼요.' },
+      { icon:'👁️', title:'눈 맞추기 시도', body:'이 시기 시야는 <b>20~30cm</b>예요. 얼굴을 가까이 대고 눈을 맞추며 천천히 이야기해줘요. 아기는 엄마 목소리를 가장 좋아해요.' },
+      { icon:'🛁', title:'첫 통목욕 준비', body:'배꼽이 떨어지면 통목욕이 가능해요. <b>물온도 37~38도</b>(팔꿈치 담갔을 때 따뜻한 정도), 5~10분 이내, 매일 하지 않아도 돼요(2~3일에 한 번 충분).' },
+      { icon:'🌙', title:'밤낮 구분 만들기', body:'낮엔 밝게, 밤엔 어둡고 조용하게 유지해요. 아직 생체시계가 없지만 <b>지금부터 환경을 구분</b>해주면 6~8주 무렵 밤잠이 더 빨리 잡혀요.' },
     ],
     note: null
   };
   if (days <= 45) return {
-    sub: '3~6주 — 사회적 발달 시작',
+    sub: '1개월 — 사회적 미소 시작',
     tips: [
-      { icon:'😄', title:'사회적 미소 시작', body:'엄마 아빠 얼굴을 보고 방긋 웃기 시작해요. 눈 맞추며 많이 이야기해줘요.' },
-      { icon:'🔥', title:'6주 성장급등', body:'6주 전후로 두 번째 성장급등기. 더 자주 먹고 보채는 것 정상이에요.' },
-      { icon:'☀️', title:'비타민D', body:'모유수유 중이면 매일 400IU 비타민D를 먹여야 해요.' },
+      { icon:'😊', title:'진짜 미소가 시작돼요', body:'6주 전후, 엄마 아빠 얼굴을 보고 <b>의도적으로 방긋 웃기</b> 시작해요. 반응형 미소예요. 눈 맞추며 "방긋!" 하면 따라해요. 많이 반응해줄수록 정서 발달에 좋아요.' },
+      { icon:'🔥', title:'6주 성장급등 — 두 번째', body:'6주 전후 두 번째 성장급등기. 다시 더 자주 먹으려 해요. <b>1~3일 지나면 자연히 안정</b>돼요. 분유 양을 억지로 늘리지 말고, 모유는 더 자주 물려요.' },
+      { icon:'💉', title:'1개월 건강검진 + 접종', body:'<b>B형간염 2차 접종</b>이 있어요. 접종 후 당일은 목욕 피하고, 발열 38도 이상이면 해열제(타이레놀 시럽, 소아용). 접종 부위가 빨개지는 건 정상.' },
+      { icon:'🧠', title:'자극을 줘도 괜찮아요', body:'이 시기 아기 뇌는 폭발적으로 발달해요. 눈 따라가기(모빌), 소리 반응(딸랑이), 얼굴 표정 모방을 놀이처럼 해줘요. 단, 과자극은 금물 — 눈을 피하거나 고개를 돌리면 쉬라는 신호예요.' },
     ],
     note: null
   };
   if (days <= 90) return {
-    sub: '2~3개월 — 목 가누기 시작',
+    sub: '2~3개월 — 목 가누기, 상호작용',
     tips: [
-      { icon:'💪', title:'터미타임 시작', body:'하루 2~3회, 3~5분씩 엎드려 놀기를 해주세요. 목과 등 근육 발달에 필수.' },
-      { icon:'😴', title:'수면퇴행 주의', body:'3~4개월에 잘 자던 아이가 갑자기 자주 깨는 수면퇴행이 와요. 1~3주 후 회복.' },
-      { icon:'💉', title:'2개월 접종', body:'DTaP, 폴리오, b형헤모필루스, 폐렴구균, 로타바이러스 5가지 예방접종을 맞아요.' },
+      { icon:'💪', title:'터미타임 — 하루 3~5회', body:'엎드려 놀기를 하루 3~5회, 깨어있을 때 해줘요. 처음엔 3분도 힘들어하지만 <b>점차 늘려요</b>. 목과 허리 근육 발달에 필수. 엎드린 채 재우면 절대 안 돼요(영아돌연사 위험).' },
+      { icon:'😴', title:'3~4개월 수면퇴행 예고', body:'잘 자던 아이가 <b>3~4개월에 갑자기 자주 깨요</b>. 뇌 발달로 인한 수면 구조 변화 때문. 1~3주 후 자연히 회복돼요. 이 시기부터 잠자리 루틴(목욕→수유→자장가→침대)을 만들어두면 도움돼요.' },
+      { icon:'💉', title:'2개월 예방접종 5종', body:'DTaP(디프테리아·파상풍·백일해), 폴리오, b형헤모필루스, 폐렴구균, 로타바이러스. <b>한꺼번에 맞아도 안전</b>해요. 접종 후 24~48시간 미열, 보챔 정상. 38.5도 이상이면 소아과 전화.' },
+      { icon:'🗣️', title:'옹알이에 꼭 반응해줘요', body:'2개월부터 "아~", "구~" 소리를 내요. 아기가 소리 내면 <b>똑같이 따라해주거나 말로 반응</b>해줘요. 언어 발달의 첫 번째 단계예요. TV보다 엄마 아빠 말이 100배 효과적이에요.' },
+    ],
+    note: null
+  };
+  if (days <= 120) return {
+    sub: '4개월 — 뒤집기, 수면퇴행',
+    tips: [
+      { icon:'🔄', title:'뒤집기 — 낙상 주의 시작', body:'4개월 전후 뒤집기 성공. <b>성공한 순간부터 소파, 침대, 기저귀 교환대에 혼자 두면 안 돼요.</b> 뒤집기 후 다시 뒤집는 건 5~6개월에 가능해요. 배 깔고 자면 즉시 뒤집어줘야 해요.' },
+      { icon:'😴', title:'4개월 수면퇴행 진행 중', body:'이 시기 가장 힘든 수면퇴행이에요. 잠자리 연상 없애기가 중요해요. <b>안고 재우다 내려놓지 말고, 졸린 상태에서 침대에 눕혀</b> 스스로 잠들게 연습 시작.' },
+      { icon:'🗣️', title:'소리 내어 웃기 시작', body:'배를 간지럽히거나 "까꿍" 게임에 소리 내어 웃어요. <b>눈 맞춤, 표정 모방</b>을 적극적으로 해줘요. 이 시기 상호작용이 뇌 발달에 결정적이에요.' },
+      { icon:'✋', title:'손 탐색 — 뭐든 입으로', body:'손을 빤다고 배고픈 게 아니에요. <b>손으로 세상을 탐색하는 것</b>. 깨끗한 치발기를 줘도 좋아요. 딸랑이를 손에 쥐어줄 수 있어요.' },
     ],
     note: null
   };
   if (days <= 180) return {
-    sub: '4~6개월 — 이유식 준비',
+    sub: '5~6개월 — 이유식 준비',
     tips: [
-      { icon:'🔄', title:'뒤집기 연습', body:'4개월 전후 뒤집기 시작. 뒤집은 후 낙상 주의! 혼자 두지 마세요.' },
-      { icon:'🥣', title:'이유식 시작 (6개월)', body:'6개월부터 쌀미음으로 시작. 철분 보충이 중요한 시기예요.' },
-      { icon:'😴', title:'수면 루틴 만들기', body:'이 시기부터 잠자리 루틴(목욕→수유→자장가)을 정해두면 수면이 안정돼요.' },
+      { icon:'🥣', title:'이유식 시작 신호 체크', body:'①목을 충분히 가눔 ②음식에 관심 보임 ③혀로 음식 밀어내지 않음 — 세 가지 모두 해당되면 이유식 시작. 보통 <b>생후 180일(6개월) 전후</b>. 쌀미음 1~2 숟가락부터 시작.' },
+      { icon:'🦷', title:'이앓이 시작', body:'잇몸이 가렵고 침을 많이 흘려요. <b>차갑게 식힌 치발기</b>가 도움돼요. 이가 나기 전 1~2주 동안 보채고 잠을 잘 못 자는 건 정상. 열이 나도 38도 이하면 이앓이 때문일 수 있어요.' },
+      { icon:'🪑', title:'앉히기 연습', body:'6개월에는 등을 받쳐주면 앉을 수 있어요. <b>완전히 혼자 앉기</b>는 7~8개월 정도. 억지로 앉히면 척추에 무리가 갈 수 있어요. 쿠션으로 받쳐주는 방식이 안전해요.' },
+      { icon:'💉', title:'6개월 접종', body:'DTaP 3차, 폴리오 3차, b형헤모필루스 3차, 폐렴구균 3차, B형간염 3차. 독감 예방접종은 <b>10월 이후</b> 맞아요(6개월 이상부터 가능).' },
     ],
     note: null
   };
   return {
-    sub: '후기 성장 — 활발한 탐색기',
+    sub: '후기 성장 — 탐색과 자율성',
     tips: [
-      { icon:'🐛', title:'기어다니기 시작', body:'안전사고 주의! 이물질, 전선, 계단 등 위험요소를 미리 제거해요.' },
-      { icon:'🦷', title:'이 나기', body:'잇몸 간지러움으로 뭐든 입에 넣어요. 치발기를 활용하고 이가 나면 거즈로 닦아줘요.' },
-      { icon:'🎂', title:'돌 준비', body:'12개월이면 출생 체중의 약 3배, 키는 1.5배. 첫 걸음마와 첫 단어도 이 무렵.' },
+      { icon:'🔐', title:'집 안전 점검 필수', body:'기어다니기 시작하면 모든 게 위험해요. <b>전기 콘센트 커버, 서랍 잠금장치, 계단 안전문, 바닥 이물질 제거</b>를 지금 해두세요. 아기는 생각보다 훨씬 빠르게 이동해요.' },
+      { icon:'🗣️', title:'언어 폭발 준비', body:'"엄마", "아빠" 흉내를 시작해요. <b>아기가 뭔가 가리키면 이름을 말해줘요</b>. "저건 강아지야~" 이런 식으로요. TV·영상보다 직접 대화가 언어 발달에 압도적으로 효과적이에요.' },
+      { icon:'😰', title:'분리불안 — 정상이에요', body:'7~9개월 낯가림·분리불안이 최고조예요. <b>엄마가 안 보이면 우는 것은 정상적인 발달</b>. "엄마 잠깐 화장실 다녀올게"처럼 반드시 말하고 돌아오면 예고하는 습관을 들여요.' },
+      { icon:'🎂', title:'돌 체크리스트', body:'12개월: 출생 체중 3배, 키 1.5배. <b>혼자 서기, 첫 걸음마 시도, 엄마/아빠 말하기</b>가 이 무렵. 컵으로 마시기 연습 시작, 분유 끊고 생우유(200ml/일)로 전환 준비.' },
     ],
     note: null
   };
@@ -722,17 +766,31 @@ function renderChart() {
 /* ============================================================
    FEED
    ============================================================ */
+function toggleFeedFields() {
+  const type = getType('fTypeG');
+  const isBreast = type === '모유';
+  document.getElementById('fBreastFields').style.display = isBreast ? '' : 'none';
+  document.getElementById('fBottleFields').style.display = isBreast ? 'none' : '';
+}
+
 function saveFeed() {
   const time = document.getElementById('fTime').value;
   const type = getType('fTypeG');
-  const amt  = parseInt(document.getElementById('fAmt').value)||null;
-  const min  = parseInt(document.getElementById('fMin').value)||null;
   if (!time) { alert('시각을 입력해 주세요.'); return; }
+  let amt = null, min = null, side = null;
+  if (type === '모유') {
+    min  = parseInt(document.getElementById('fMin').value)||null;
+    side = getType('fSideG')||null;
+    document.getElementById('fMin').value='';
+  } else {
+    amt  = parseInt(document.getElementById('fAmt').value)||null;
+    min  = parseInt(document.getElementById('fMinB').value)||null;
+    document.getElementById('fAmt').value='';
+    document.getElementById('fMinB').value='';
+  }
   const r = load('babyFeeds');
-  r.unshift({ time, type, amt, min });
+  r.unshift({ time, type, amt, min, side });
   save('babyFeeds', r);
-  document.getElementById('fAmt').value='';
-  document.getElementById('fMin').value='';
   renderFeedList(); updateFeedStats(); initPage();
 }
 function delFeed(i) {
@@ -752,14 +810,23 @@ function renderFeedList() {
   const r = load('babyFeeds');
   const el = document.getElementById('fList');
   if (!r.length) { el.innerHTML='<div class="empty">아직 기록이 없어요. 🍼</div>'; return; }
-  el.innerHTML = r.slice(0,20).map((f,i)=>`
-    <div class="rec-item">
+  el.innerHTML = r.slice(0,30).map((f,i)=>{
+    const details = [];
+    if (f.type==='모유') {
+      if (f.side) details.push(f.side);
+      if (f.min)  details.push(`${f.min}분`);
+    } else {
+      if (f.amt) details.push(`${f.amt}ml`);
+      if (f.min) details.push(`${f.min}분`);
+    }
+    return `<div class="rec-item">
       <div class="rec-main">
         <div class="rec-date">${fmtDT(f.time)} <span style="font-size:13px;font-weight:700;color:#16a34a;margin-left:4px">${f.type}</span></div>
-        <div class="rec-val">${f.amt?`${f.amt}ml`:''}${f.amt&&f.min?' · ':''}${f.min?`${f.min}분`:''}</div>
+        ${details.length?`<div class="rec-val">${details.join(' · ')}</div>`:''}
       </div>
       <button class="btn-del" onclick="delFeed(${i})">×</button>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 /* ============================================================
