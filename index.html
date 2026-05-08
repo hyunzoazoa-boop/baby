@@ -1174,10 +1174,10 @@ function getAgeTips(days) {
 function initPage() {
   const days = getDays();
   document.getElementById('ddayBadge').textContent = `D+${days}`;
-  const now = new Date();
-  const yy = now.getFullYear();
-  const mm = String(now.getMonth()+1).padStart(2,'0');
-  const dd = String(now.getDate()).padStart(2,'0');
+  const todayNow = new Date();
+  const yy = todayNow.getFullYear();
+  const mm = String(todayNow.getMonth()+1).padStart(2,'0');
+  const dd = String(todayNow.getDate()).padStart(2,'0');
   document.getElementById('todayBadge').textContent = `${yy}년 ${mm}월 ${dd}일`;
   document.getElementById('nowTitle').textContent = `📍 현재 — ${ageLabel(days)}`;
 
