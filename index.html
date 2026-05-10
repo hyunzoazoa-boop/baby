@@ -149,12 +149,32 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
   .milestone-grid { grid-template-columns: 1fr; }
 }
 
-/* ── 수면루틴 차트 ── */
-.sc-legend { display: flex; flex-direction: column; gap: 10px; }
-.sc-item { display: flex; align-items: center; gap: 12px; }
-.sc-dot { width: 14px; height: 14px; border-radius: 4px; flex-shrink: 0; }
-.sc-name { font-size: 13px; font-weight: 700; color: #1a2e1a; }
-.sc-time { font-size: 11px; color: #6b7280; margin-top: 2px; }
+/* ── 수면루틴 ── */
+.sc-head { text-align:center; padding:6px 0 18px; }
+.sc-head-title { font-size:20px; font-weight:900; color:#111; letter-spacing:-0.5px; }
+.sc-head-sub { font-size:12px; color:#9ca3af; margin-top:4px; font-weight:500; }
+
+.sc-bar-card { background:#fff; border-radius:20px; padding:18px 16px 14px; margin-bottom:14px; box-shadow:0 2px 12px rgba(0,0,0,0.07); }
+.sc-bar-wrap { display:flex; height:48px; border-radius:10px; overflow:hidden; gap:1.5px; background:#f3f4f6; }
+.sc-seg { height:100%; flex-shrink:0; }
+.sc-axis { display:flex; justify-content:space-between; margin-top:9px; padding:0 1px; }
+.sc-axis span { font-size:10px; color:#9ca3af; font-weight:600; }
+
+.sc-act { background:#fff; border-radius:18px; margin-bottom:10px; box-shadow:0 2px 10px rgba(0,0,0,0.06); display:flex; overflow:hidden; }
+.sc-act-bar { width:5px; flex-shrink:0; }
+.sc-act-body { padding:15px 15px 14px 14px; flex:1; min-width:0; }
+.sc-act-top { display:flex; align-items:center; gap:8px; margin-bottom:5px; }
+.sc-act-emoji { font-size:22px; flex-shrink:0; }
+.sc-act-name { font-size:15px; font-weight:800; color:#111; flex:1; }
+.sc-act-pill { font-size:11px; font-weight:700; padding:3px 9px; border-radius:20px; color:#fff; white-space:nowrap; flex-shrink:0; }
+.sc-act-time { font-size:22px; font-weight:900; color:#111; letter-spacing:-0.5px; margin-bottom:5px; }
+.sc-act-desc { font-size:12px; color:#6b7280; line-height:1.65; }
+.sc-act-sub { font-size:11px; color:#9ca3af; margin-top:4px; display:flex; align-items:center; gap:5px; }
+
+.sc-tip-row { display:flex; gap:8px; margin-bottom:8px; background:#f9fafb; border-radius:12px; padding:12px 13px; align-items:flex-start; }
+.sc-tip-icon { font-size:18px; flex-shrink:0; margin-top:1px; }
+.sc-tip-text { font-size:12px; color:#374151; line-height:1.65; }
+.sc-tip-text b { color:#111; font-weight:700; }
 
 /* ── 아빠일과 TIMELINE ── */
 .tl-wrap { padding: 8px 0 24px; }
@@ -731,35 +751,116 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
 <!-- ====== 🌙 수면루틴 ====== -->
 <div id="sleepchart" class="content active">
 
-  <div class="card">
-    <div class="card-body" style="padding:14px 10px 10px;">
-      <div class="card-title">🌙 새싹이 24시간 수면 루틴</div>
-      <div id="sleepCircleWrap"></div>
+  <!-- 타이틀 -->
+  <div class="sc-head">
+    <div class="sc-head-title">새싹이 하루 루틴</div>
+    <div class="sc-head-sub">24시간 수면 · 활동 계획</div>
+  </div>
+
+  <!-- 24h 바 -->
+  <div class="sc-bar-card">
+    <div class="sc-bar-wrap">
+      <!-- 0:00→1:00 통잠 4.17% -->
+      <div class="sc-seg" style="width:4.17%;background:#3730a3;border-radius:8px 0 0 8px"></div>
+      <!-- 1:00→1:20 수유 1.39% -->
+      <div class="sc-seg" style="width:1.39%;background:#93c5fd"></div>
+      <!-- 1:20→4:20 통잠 12.5% -->
+      <div class="sc-seg" style="width:12.5%;background:#3730a3"></div>
+      <!-- 4:20→17:00 자유 52.78% -->
+      <div class="sc-seg" style="width:52.78%;background:#fbbf24"></div>
+      <!-- 17:00→19:00 낮잠 8.33% -->
+      <div class="sc-seg" style="width:8.33%;background:#f97316"></div>
+      <!-- 19:00→21:30 깨있기 10.42% -->
+      <div class="sc-seg" style="width:10.42%;background:#4ade80"></div>
+      <!-- 21:30→22:00 목욕 2.08% -->
+      <div class="sc-seg" style="width:2.08%;background:#22d3ee"></div>
+      <!-- 22:00→24:00 통잠 8.33% -->
+      <div class="sc-seg" style="width:8.33%;background:#3730a3;border-radius:0 8px 8px 0"></div>
+    </div>
+    <div class="sc-axis">
+      <span>0시</span><span>6시</span><span>12시</span><span>18시</span><span>24시</span>
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-body">
-      <div class="card-title">📋 구간 설명</div>
-      <div class="sc-legend">
-        <div class="sc-item"><div class="sc-dot" style="background:#4338ca"></div><div><div class="sc-name">밤 통잠</div><div class="sc-time">22:00 → 01:00 (3시간)</div></div></div>
-        <div class="sc-item"><div class="sc-dot" style="background:#60a5fa"></div><div><div class="sc-name">새벽 수유</div><div class="sc-time">01:00 → 01:20 (빠르고 조용하게)</div></div></div>
-        <div class="sc-item"><div class="sc-dot" style="background:#4338ca"></div><div><div class="sc-name">통잠 (새벽)</div><div class="sc-time">01:20 → 04:20 (3시간)</div></div></div>
-        <div class="sc-item"><div class="sc-dot" style="background:#fbbf24"></div><div><div class="sc-name">자유 시간</div><div class="sc-time">04:20 → 17:00 (수유·낮잠 자유롭게)</div></div></div>
-        <div class="sc-item"><div class="sc-dot" style="background:#fb923c"></div><div><div class="sc-name">낮잠 💪</div><div class="sc-time">17:00 → 19:00 (무조건 재우기)</div></div></div>
-        <div class="sc-item"><div class="sc-dot" style="background:#4ade80"></div><div><div class="sc-name">깨있기 / 놀기</div><div class="sc-time">19:00 → 21:30</div></div></div>
-        <div class="sc-item"><div class="sc-dot" style="background:#22d3ee"></div><div><div class="sc-name">목욕 → 수유 → 취침</div><div class="sc-time">21:30 → 22:00 (수유량 +20ml)</div></div></div>
+  <!-- 😴 밤 통잠 -->
+  <div class="sc-act">
+    <div class="sc-act-bar" style="background:#3730a3"></div>
+    <div class="sc-act-body">
+      <div class="sc-act-top">
+        <span class="sc-act-emoji">😴</span>
+        <span class="sc-act-name">밤 통잠</span>
+        <span class="sc-act-pill" style="background:#3730a3">약 6시간</span>
       </div>
+      <div class="sc-act-time">22:00 → 04:20</div>
+      <div class="sc-act-desc">새벽 1시 수유 후 즉시 재우기</div>
+      <div class="sc-act-sub">🍼 <span>새벽 수유 — 불 끄고, 눈 맞추지 말고, 조용히</span></div>
     </div>
   </div>
 
-  <div class="card">
+  <!-- ☀️ 자유 시간 -->
+  <div class="sc-act">
+    <div class="sc-act-bar" style="background:#f59e0b"></div>
+    <div class="sc-act-body">
+      <div class="sc-act-top">
+        <span class="sc-act-emoji">🌅</span>
+        <span class="sc-act-name">자유 시간</span>
+        <span class="sc-act-pill" style="background:#f59e0b">12시간 40분</span>
+      </div>
+      <div class="sc-act-time">04:20 → 17:00</div>
+      <div class="sc-act-desc">수유·낮잠 아기 맘대로</div>
+    </div>
+  </div>
+
+  <!-- 😴 낮잠 -->
+  <div class="sc-act">
+    <div class="sc-act-bar" style="background:#f97316"></div>
+    <div class="sc-act-body">
+      <div class="sc-act-top">
+        <span class="sc-act-emoji">😴</span>
+        <span class="sc-act-name">낮잠 (필수)</span>
+        <span class="sc-act-pill" style="background:#f97316">2시간</span>
+      </div>
+      <div class="sc-act-time">17:00 → 19:00</div>
+      <div class="sc-act-desc">무조건 재우기 — 황혼 울음 방지, 밤 통잠에도 도움</div>
+    </div>
+  </div>
+
+  <!-- 🎮 깨있기 -->
+  <div class="sc-act">
+    <div class="sc-act-bar" style="background:#16a34a"></div>
+    <div class="sc-act-body">
+      <div class="sc-act-top">
+        <span class="sc-act-emoji">🎮</span>
+        <span class="sc-act-name">깨있기 · 놀기</span>
+        <span class="sc-act-pill" style="background:#16a34a">2시간 30분</span>
+      </div>
+      <div class="sc-act-time">19:00 → 21:30</div>
+      <div class="sc-act-desc">아빠 퇴근 후 교대 — 새싹이랑 놀아주기</div>
+    </div>
+  </div>
+
+  <!-- 🛁 목욕 취침 루틴 -->
+  <div class="sc-act">
+    <div class="sc-act-bar" style="background:#0891b2"></div>
+    <div class="sc-act-body">
+      <div class="sc-act-top">
+        <span class="sc-act-emoji">🛁</span>
+        <span class="sc-act-name">목욕 → 수유 → 취침</span>
+        <span class="sc-act-pill" style="background:#0891b2">30분</span>
+      </div>
+      <div class="sc-act-time">21:30 → 22:00</div>
+      <div class="sc-act-desc">매일 같은 순서 고정 — 수유량 평소보다 +20ml</div>
+    </div>
+  </div>
+
+  <!-- 핵심 포인트 -->
+  <div class="card" style="margin-top:4px;">
     <div class="card-body">
-      <div class="card-title">💡 핵심 포인트</div>
-      <div class="tip"><div class="tip-icon">🛁</div><div class="tip-text"><h4>목욕 → 수유 → 취침 루틴 고정</h4><p>매일 같은 순서를 반복하면 아기가 "목욕 = 곧 잠"을 학습해요. 취침 신호가 강해질수록 빨리 잠들어요.</p></div></div>
-      <div class="tip"><div class="tip-icon">🍼</div><div class="tip-text"><h4>자기 전 수유 +20ml</h4><p>배를 든든하게 채워 통잠 가능성을 높이는 전략. 억지로 먹이지 말고 아기가 배고파하면 자연스럽게.</p></div></div>
-      <div class="tip"><div class="tip-icon">😴</div><div class="tip-text"><h4>오후 5~7시 낮잠 필수</h4><p>이 시간에 피곤이 극에 달해 황혼 울음이 심해져요. 낮잠을 재워 피로를 덜어주면 밤 통잠에 오히려 도움이 돼요.</p></div></div>
-      <div class="tip"><div class="tip-icon">🌙</div><div class="tip-text"><h4>새벽 수유는 최대한 자극 없이</h4><p>불 켜지 말고, 말 걸지 말고, 눈 안 마주치기. 먹고 바로 재우는 게 목표. 기저귀는 심하게 젖었을 때만.</p></div></div>
+      <div class="card-title" style="margin-bottom:12px;">💡 핵심 포인트</div>
+      <div class="sc-tip-row"><div class="sc-tip-icon">🍼</div><div class="sc-tip-text"><b>취침 전 +20ml</b> 배 든든히 채워 통잠 유도. 억지로 먹이지는 말기.</div></div>
+      <div class="sc-tip-row"><div class="sc-tip-icon">🌙</div><div class="sc-tip-text"><b>새벽 수유 = 자극 제로</b> 불 켜지 말고, 눈 맞추지 말고, 기저귀도 심할 때만.</div></div>
+      <div class="sc-tip-row"><div class="sc-tip-icon">😴</div><div class="sc-tip-text"><b>낮잠은 통잠의 적이 아님</b> 오히려 충분히 재워야 밤에 잘 자요.</div></div>
+      <div class="sc-tip-row" style="margin-bottom:0"><div class="sc-tip-icon">🔄</div><div class="sc-tip-text"><b>루틴 반복이 핵심</b> 목욕→수유→취침 순서를 매일 지키면 아기가 취침 신호를 학습해요.</div></div>
     </div>
   </div>
 
@@ -1558,7 +1659,8 @@ function renderDiaperList() {
 
 window.addEventListener('DOMContentLoaded', () => { initPage(); renderSleepChart(); });
 
-function renderSleepChart() {
+function renderSleepChart() { /* static HTML, no render needed */ }
+function renderSleepChart_OLD() {
   const wrap = document.getElementById('sleepCircleWrap');
   if (!wrap || wrap.dataset.rendered) return;
   wrap.dataset.rendered = '1';
