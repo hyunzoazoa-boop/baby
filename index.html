@@ -149,6 +149,13 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
   .milestone-grid { grid-template-columns: 1fr; }
 }
 
+/* ── 수면루틴 차트 ── */
+.sc-legend { display: flex; flex-direction: column; gap: 10px; }
+.sc-item { display: flex; align-items: center; gap: 12px; }
+.sc-dot { width: 14px; height: 14px; border-radius: 4px; flex-shrink: 0; }
+.sc-name { font-size: 13px; font-weight: 700; color: #1a2e1a; }
+.sc-time { font-size: 11px; color: #6b7280; margin-top: 2px; }
+
 /* ── 아빠일과 TIMELINE ── */
 .tl-wrap { padding: 8px 0 24px; }
 .tl-section { margin-bottom: 6px; }
@@ -243,6 +250,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
   <div class="tab" data-tab="diaper" onclick="showTab('diaper',this)">💩 기저귀</div>
   <div class="tab" data-tab="sleep" onclick="showTab('sleep',this)">💤 수면</div>
   <div class="tab" data-tab="guide" onclick="showTab('guide',this)">📚 성장가이드</div>
+  <div class="tab" data-tab="sleepchart" onclick="showTab('sleepchart',this)">🌙 수면루틴</div>
   <div class="tab" data-tab="daddy" onclick="showTab('daddy',this)">👨 아빠일과</div>
 </div>
 
@@ -720,6 +728,43 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
 
 </div>
 
+<!-- ====== 🌙 수면루틴 ====== -->
+<div id="sleepchart" class="content">
+
+  <div class="card">
+    <div class="card-body" style="padding:14px 10px 10px;">
+      <div class="card-title">🌙 새싹이 24시간 수면 루틴</div>
+      <div id="sleepCircleWrap"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">📋 구간 설명</div>
+      <div class="sc-legend">
+        <div class="sc-item"><div class="sc-dot" style="background:#4338ca"></div><div><div class="sc-name">밤 통잠</div><div class="sc-time">22:00 → 01:00 (3시간)</div></div></div>
+        <div class="sc-item"><div class="sc-dot" style="background:#60a5fa"></div><div><div class="sc-name">새벽 수유</div><div class="sc-time">01:00 → 01:20 (빠르고 조용하게)</div></div></div>
+        <div class="sc-item"><div class="sc-dot" style="background:#a78bfa"></div><div><div class="sc-name">통잠 유도</div><div class="sc-time">01:20 → 04:20 (3시간)</div></div></div>
+        <div class="sc-item"><div class="sc-dot" style="background:#fbbf24"></div><div><div class="sc-name">자유 시간</div><div class="sc-time">04:20 → 17:00 (수유·낮잠 자유롭게)</div></div></div>
+        <div class="sc-item"><div class="sc-dot" style="background:#fb923c"></div><div><div class="sc-name">낮잠 💪</div><div class="sc-time">17:00 → 19:00 (무조건 재우기)</div></div></div>
+        <div class="sc-item"><div class="sc-dot" style="background:#4ade80"></div><div><div class="sc-name">깨있기 / 놀기</div><div class="sc-time">19:00 → 21:30</div></div></div>
+        <div class="sc-item"><div class="sc-dot" style="background:#22d3ee"></div><div><div class="sc-name">목욕 → 수유 → 취침</div><div class="sc-time">21:30 → 22:00 (수유량 +20ml)</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">💡 핵심 포인트</div>
+      <div class="tip"><div class="tip-icon">🛁</div><div class="tip-text"><h4>목욕 → 수유 → 취침 루틴 고정</h4><p>매일 같은 순서를 반복하면 아기가 "목욕 = 곧 잠"을 학습해요. 취침 신호가 강해질수록 빨리 잠들어요.</p></div></div>
+      <div class="tip"><div class="tip-icon">🍼</div><div class="tip-text"><h4>자기 전 수유 +20ml</h4><p>배를 든든하게 채워 통잠 가능성을 높이는 전략. 억지로 먹이지 말고 아기가 배고파하면 자연스럽게.</p></div></div>
+      <div class="tip"><div class="tip-icon">😴</div><div class="tip-text"><h4>오후 5~7시 낮잠 필수</h4><p>이 시간에 피곤이 극에 달해 황혼 울음이 심해져요. 낮잠을 재워 피로를 덜어주면 밤 통잠에 오히려 도움이 돼요.</p></div></div>
+      <div class="tip"><div class="tip-icon">🌙</div><div class="tip-text"><h4>새벽 수유는 최대한 자극 없이</h4><p>불 켜지 말고, 말 걸지 말고, 눈 안 마주치기. 먹고 바로 재우는 게 목표. 기저귀는 심하게 젖었을 때만.</p></div></div>
+    </div>
+  </div>
+
+</div>
+
 <!-- ====== 👨 아빠일과 ====== -->
 <div id="daddy" class="content">
 
@@ -1061,6 +1106,7 @@ function showTab(id, el) {
   el.classList.add('active');
   window.scrollTo(0,0);
   if (id === 'growth') renderChart();
+  if (id === 'sleepchart') renderSleepChart();
 }
 
 /* ============================================================
@@ -1511,6 +1557,83 @@ function renderDiaperList() {
 }
 
 window.addEventListener('DOMContentLoaded', initPage);
+
+function renderSleepChart() {
+  const wrap = document.getElementById('sleepCircleWrap');
+  if (!wrap || wrap.dataset.rendered) return;
+  wrap.dataset.rendered = '1';
+
+  const cx=150, cy=155, OR=118, IR=74, W=300, H=310;
+  const rad = h => (h / 24 * 2 * Math.PI) - Math.PI / 2;
+  const f = n => n.toFixed(2);
+  const pt = (h, r) => { const a=rad(h); return [cx+r*Math.cos(a), cy+r*Math.sin(a)]; };
+
+  function arc(h1, h2, fill) {
+    const large = (h2-h1) > 12 ? 1 : 0;
+    const [ox1,oy1]=pt(h1,OR), [ox2,oy2]=pt(h2,OR);
+    const [ix1,iy1]=pt(h1,IR), [ix2,iy2]=pt(h2,IR);
+    return `<path fill="${fill}" stroke="#fff" stroke-width="2.5" d="M${f(ox1)},${f(oy1)} A${OR},${OR},0,${large},1,${f(ox2)},${f(oy2)} L${f(ix2)},${f(iy2)} A${IR},${IR},0,${large},0,${f(ix1)},${f(iy1)}Z"/>`;
+  }
+  function tick(h) {
+    const maj = h%6===0, [x1,y1]=pt(h,OR+1), [x2,y2]=pt(h,OR+(maj?9:5));
+    return `<line x1="${f(x1)}" y1="${f(y1)}" x2="${f(x2)}" y2="${f(y2)}" stroke="#d1d5db" stroke-width="${maj?2:1}"/>`;
+  }
+  function lbl(h, text, r=OR+20, size=10) {
+    const [x,y]=pt(h,r);
+    return `<text x="${f(x)}" y="${f(y)}" text-anchor="middle" dominant-baseline="middle" font-size="${size}" fill="#4b5563" font-weight="700">${text}</text>`;
+  }
+  function emoji(h, icon) {
+    const [x,y]=pt(h,(OR+IR)/2);
+    return `<text x="${f(x)}" y="${f(y)}" text-anchor="middle" dominant-baseline="middle" font-size="15">${icon}</text>`;
+  }
+  function timeLbl(h, text) {
+    const [x,y]=pt(h,OR-14);
+    return `<text x="${f(x)}" y="${f(y)}" text-anchor="middle" dominant-baseline="middle" font-size="9" fill="rgba(255,255,255,0.85)" font-weight="700">${text}</text>`;
+  }
+
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" xmlns="http://www.w3.org/2000/svg">`;
+  // BG
+  s += `<circle cx="${cx}" cy="${cy}" r="${OR+20}" fill="#f0fdf4"/>`;
+  // Arcs (segments)
+  s += arc(22, 24, '#4338ca');       // 밤통잠 part1
+  s += arc(0,  1,  '#4338ca');       // 밤통잠 part2
+  s += arc(1,  1.333, '#60a5fa');    // 새벽수유
+  s += arc(1.333, 4.333, '#a78bfa');// 통잠유도
+  s += arc(4.333, 11,  '#fde68a');   // 자유(아침)
+  s += arc(11, 17,  '#fcd34d');      // 자유(낮)
+  s += arc(17, 19,  '#fb923c');      // 낮잠
+  s += arc(19, 21.5,'#4ade80');      // 깨있기
+  s += arc(21.5,22, '#22d3ee');      // 목욕+수유
+  // White center
+  s += `<circle cx="${cx}" cy="${cy}" r="${IR}" fill="white" filter="drop-shadow(0 1px 3px rgba(0,0,0,0.08))"/>`;
+  // Ticks
+  for(let h=0;h<24;h++) s += tick(h);
+  // Compass labels
+  s += lbl(0,'자정'); s += lbl(6,'6시'); s += lbl(12,'정오'); s += lbl(18,'18시');
+  // Time labels inside arcs
+  s += timeLbl(23,'통잠');
+  s += timeLbl(0.5,'통잠');
+  s += timeLbl(2.8,'유도');
+  s += timeLbl(7.5,'자유');
+  s += timeLbl(14,'자유');
+  s += timeLbl(18,'낮잠');
+  s += timeLbl(20.25,'놀기');
+  s += timeLbl(21.75,'목욕');
+  // Emojis
+  s += emoji(23,'😴'); s += emoji(0.5,'😴');
+  s += emoji(1.17,'🍼');
+  s += emoji(2.8,'💤');
+  s += emoji(7.5,'🌅');
+  s += emoji(14,'☀️');
+  s += emoji(18,'😴');
+  s += emoji(20.25,'🎮');
+  s += emoji(21.75,'🛁');
+  // Center text
+  s += `<text x="${cx}" y="${cy-9}" text-anchor="middle" font-size="15" font-weight="900" fill="#15803d">새싹이</text>`;
+  s += `<text x="${cx}" y="${cy+11}" text-anchor="middle" font-size="11" fill="#6b7280">24h 루틴</text>`;
+  s += '</svg>';
+  wrap.innerHTML = s;
+}
 
 function toggleGuide(header) {
   const body = header.nextElementSibling;
