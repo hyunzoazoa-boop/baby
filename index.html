@@ -744,7 +744,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
       <div class="sc-legend">
         <div class="sc-item"><div class="sc-dot" style="background:#4338ca"></div><div><div class="sc-name">밤 통잠</div><div class="sc-time">22:00 → 01:00 (3시간)</div></div></div>
         <div class="sc-item"><div class="sc-dot" style="background:#60a5fa"></div><div><div class="sc-name">새벽 수유</div><div class="sc-time">01:00 → 01:20 (빠르고 조용하게)</div></div></div>
-        <div class="sc-item"><div class="sc-dot" style="background:#a78bfa"></div><div><div class="sc-name">통잠 유도</div><div class="sc-time">01:20 → 04:20 (3시간)</div></div></div>
+        <div class="sc-item"><div class="sc-dot" style="background:#4338ca"></div><div><div class="sc-name">통잠 (새벽)</div><div class="sc-time">01:20 → 04:20 (3시간)</div></div></div>
         <div class="sc-item"><div class="sc-dot" style="background:#fbbf24"></div><div><div class="sc-name">자유 시간</div><div class="sc-time">04:20 → 17:00 (수유·낮잠 자유롭게)</div></div></div>
         <div class="sc-item"><div class="sc-dot" style="background:#fb923c"></div><div><div class="sc-name">낮잠 💪</div><div class="sc-time">17:00 → 19:00 (무조건 재우기)</div></div></div>
         <div class="sc-item"><div class="sc-dot" style="background:#4ade80"></div><div><div class="sc-name">깨있기 / 놀기</div><div class="sc-time">19:00 → 21:30</div></div></div>
@@ -1602,7 +1602,7 @@ function renderSleepChart() {
   s += arc(22, 24,      '#4338ca');
   s += arc(0,  1,       '#4338ca');
   s += arc(1,  1.333,   '#60a5fa');
-  s += arc(1.333, 4.333,'#a78bfa');
+  s += arc(1.333, 4.333,'#4338ca');
   s += arc(4.333, 11,   '#fde68a');
   s += arc(11, 17,      '#fcd34d');
   s += arc(17, 19,      '#fb923c');
@@ -1626,7 +1626,7 @@ function renderSleepChart() {
   // 구간 텍스트
   s += segLbl(23,    '통잠');
   s += segLbl(0.5,   '통잠');
-  s += segLbl(2.8,   '유도');
+  s += segLbl(2.8,   '통잠');
   s += segLbl(7.5,   '자유');
   s += segLbl(14,    '자유');
   s += segLbl(18,    '낮잠');
