@@ -1563,78 +1563,67 @@ function renderSleepChart() {
   if (!wrap || wrap.dataset.rendered) return;
   wrap.dataset.rendered = '1';
 
-  const cx=155, cy=155, OR=110, W=310, H=310;
+  // 파이를 작게, 라벨 공간 넉넉히
+  const cx=180, cy=180, OR=100, LR=148, W=360, H=360;
   const rad = h => (h / 24 * 2 * Math.PI) - Math.PI / 2;
   const f = n => n.toFixed(2);
   const pt = (h, r) => { const a=rad(h); return [cx+r*Math.cos(a), cy+r*Math.sin(a)]; };
 
-  // 파이 슬라이스 (중심에서 바깥으로)
   function arc(h1, h2, fill) {
     const large = (h2-h1) > 12 ? 1 : 0;
     const [ox1,oy1]=pt(h1,OR), [ox2,oy2]=pt(h2,OR);
     return `<path fill="${fill}" stroke="#fff" stroke-width="2" d="M${cx},${cy} L${f(ox1)},${f(oy1)} A${OR},${OR},0,${large},1,${f(ox2)},${f(oy2)}Z"/>`;
   }
-
-  // 외곽 시간 눈금
   function tick(h) {
     const maj = h%6===0;
-    const [x1,y1]=pt(h, OR+2), [x2,y2]=pt(h, OR+(maj?12:6));
+    const [x1,y1]=pt(h, OR+2), [x2,y2]=pt(h, OR+(maj?14:7));
     return `<line x1="${f(x1)}" y1="${f(y1)}" x2="${f(x2)}" y2="${f(y2)}" stroke="${maj?'#9ca3af':'#d1d5db'}" stroke-width="${maj?1.5:1}"/>`;
   }
-
-  // 외곽 시간 숫자 (24개 전부)
   function hourLbl(h) {
-    const [x,y]=pt(h, OR+22);
+    const [x,y] = pt(h, LR);
     const maj = h%6===0;
-    const color = maj ? '#374151' : '#9ca3af';
-    const size  = maj ? 10 : 8.5;
-    const weight = maj ? '800' : '600';
     const txt = h===0?'자정': h===12?'정오': `${h}`;
-    return `<text x="${f(x)}" y="${f(y)}" text-anchor="middle" dominant-baseline="middle" font-size="${size}" fill="${color}" font-weight="${weight}">${txt}</text>`;
+    return `<text x="${f(x)}" y="${f(y)}" text-anchor="middle" dominant-baseline="middle"
+      font-size="${maj?11:9}" fill="${maj?'#1f2937':'#6b7280'}" font-weight="${maj?'800':'500'}">${txt}</text>`;
   }
-
-  // 슬라이스 내부 이모지
-  function emoji(h, icon, r=OR*0.62) {
-    const [x,y]=pt(h, r);
-    return `<text x="${f(x)}" y="${f(y)}" text-anchor="middle" dominant-baseline="middle" font-size="16">${icon}</text>`;
+  function emoji(h, icon) {
+    const [x,y]=pt(h, OR*0.60);
+    return `<text x="${f(x)}" y="${f(y)}" text-anchor="middle" dominant-baseline="middle" font-size="17">${icon}</text>`;
   }
-
-  // 슬라이스 내부 텍스트
-  function segLbl(h, text, r=OR*0.38) {
-    const [x,y]=pt(h, r);
-    return `<text x="${f(x)}" y="${f(y)}" text-anchor="middle" dominant-baseline="middle" font-size="8.5" fill="rgba(255,255,255,0.9)" font-weight="700">${text}</text>`;
+  function segLbl(h, text) {
+    const [x,y]=pt(h, OR*0.33);
+    return `<text x="${f(x)}" y="${f(y)}" text-anchor="middle" dominant-baseline="middle" font-size="8" fill="rgba(255,255,255,0.88)" font-weight="700">${text}</text>`;
   }
 
   let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" xmlns="http://www.w3.org/2000/svg">`;
-
-  // 배경
-  s += `<circle cx="${cx}" cy="${cy}" r="${OR+30}" fill="#f8fafc"/>`;
+  s += `<circle cx="${cx}" cy="${cy}" r="${LR+14}" fill="#f8fafc"/>`;
 
   // 파이 슬라이스
-  s += arc(22, 24,    '#4338ca');   // 밤통잠 ①
-  s += arc(0,  1,     '#4338ca');   // 밤통잠 ②
-  s += arc(1,  1.333, '#60a5fa');   // 새벽수유
-  s += arc(1.333, 4.333, '#a78bfa');// 통잠유도
-  s += arc(4.333, 11,  '#fde68a'); // 자유(아침)
-  s += arc(11, 17,    '#fcd34d');   // 자유(낮)
-  s += arc(17, 19,    '#fb923c');   // 낮잠
-  s += arc(19, 21.5,  '#4ade80');   // 깨있기/놀기
-  s += arc(21.5, 22,  '#22d3ee');   // 목욕+수유
+  s += arc(22, 24,      '#4338ca');
+  s += arc(0,  1,       '#4338ca');
+  s += arc(1,  1.333,   '#60a5fa');
+  s += arc(1.333, 4.333,'#a78bfa');
+  s += arc(4.333, 11,   '#fde68a');
+  s += arc(11, 17,      '#fcd34d');
+  s += arc(17, 19,      '#fb923c');
+  s += arc(19, 21.5,    '#4ade80');
+  s += arc(21.5, 22,    '#22d3ee');
 
-  // 눈금 + 시간 숫자
+  // 눈금
   for(let h=0;h<24;h++) s += tick(h);
+  // 시간 라벨 (원 바깥 넉넉하게)
   for(let h=0;h<24;h++) s += hourLbl(h);
 
-  // 이모지 (큰 구간만)
-  s += emoji(23,   '😴');
-  s += emoji(0.5,  '😴');
-  s += emoji(2.8,  '💤');
-  s += emoji(7.5,  '🌅');
-  s += emoji(14,   '☀️');
-  s += emoji(18,   '😴');
-  s += emoji(20.25,'🎮');
+  // 이모지
+  s += emoji(23,    '😴');
+  s += emoji(0.5,   '😴');
+  s += emoji(2.8,   '💤');
+  s += emoji(7.5,   '🌅');
+  s += emoji(14,    '☀️');
+  s += emoji(18,    '😴');
+  s += emoji(20.25, '🎮');
 
-  // 구간 라벨 (슬라이스 안쪽)
+  // 구간 텍스트
   s += segLbl(23,    '통잠');
   s += segLbl(0.5,   '통잠');
   s += segLbl(2.8,   '유도');
@@ -1644,10 +1633,9 @@ function renderSleepChart() {
   s += segLbl(20.25, '놀기');
   s += segLbl(21.75, '목욕');
 
-  // 중앙 텍스트
+  // 중앙
   s += `<text x="${cx}" y="${cy-8}" text-anchor="middle" font-size="14" font-weight="900" fill="#15803d">새싹이</text>`;
   s += `<text x="${cx}" y="${cy+10}" text-anchor="middle" font-size="10" fill="#6b7280">24h 루틴</text>`;
-
   s += '</svg>';
   wrap.innerHTML = s;
 }
